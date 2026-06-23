@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>git restore beats git reset · ikhsan haikal</title>
+  <meta name="description" content="--staged unstages without touching your working tree. No more accidental --hard disasters.">
+  <link rel="stylesheet" href="/css/main.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>[x-cloak] { display: none !important; }</style>
+</head>
+<body class="bg-nord-bg min-h-screen">
+  
+
+
+
+
+
+  
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+    
+      
+    
+      
+        
+        
+  
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="xl:flex xl:min-h-screen xl:max-w-[1280px] xl:mx-auto">
+
+  
+
+
+
+
+
+<aside class="hidden xl:flex flex-col w-[260px] flex-none px-7 py-8 border-r border-nord-border bg-nord-bg2">
+
+  
+  <div class="relative mb-[-8px] flex-none">
+    <img src="/images/avatar.svg" class="w-full block" alt="ikhsan haikal">
+    <div class="absolute bottom-0 left-0 right-0 h-28 pointer-events-none"
+         style="background:linear-gradient(to top,#252c38,transparent)"></div>
+  </div>
+
+  
+  <div class="font-serif text-[20px] text-nord-bright leading-tight relative z-10">ikhsan haikal</div>
+  <div class="font-mono text-xs text-nord-accent mt-1.5">software developer</div>
+  <div class="font-serif italic text-md text-nord-faint mt-1.5 leading-relaxed">"My bugs have a public record."</div>
+
+  
+  <div class="flex items-center gap-1.5 mt-3">
+    <span class="w-2 h-2 rounded-full bg-nord-green flex-none block"></span>
+    <span class="font-mono text-xs text-nord-faint">Employed · open to freelance</span>
+  </div>
+
+  
+  <div class="h-px mt-4 mb-4 flex-none" style="background:linear-gradient(to right,#434c5e,transparent)"></div>
+
+  
+  <nav class="flex flex-col gap-1.5 mb-5">
+    
+    <a href="/til/"
+       class="nav-link text-base py-1 active">
+      til
+    </a>
+    
+    <a href="/blog/"
+       class="nav-link text-base py-1 ">
+      blog
+    </a>
+    
+    <a href="/resume.pdf"
+       class="nav-link text-base py-1 ">
+      resume
+    </a>
+    
+  </nav>
+
+  
+  <div class="flex flex-col gap-2 mb-4">
+    <a href="/resume.pdf" class="btn-primary font-mono text-md py-2.5">Résumé ↓</a>
+    <a href="mailto:hi@ikhsanhaikal.dev" class="btn-outline font-mono text-md py-2.5">Email me</a>
+  </div>
+
+  
+  <div class="font-mono text-xs text-nord-subtle mb-3">
+    <span class="text-nord-accent">2</span> notes ·
+    <span class="text-nord-accent">4</span> tags ·
+    since <span class="text-nord-accent">2024</span>
+  </div>
+
+  
+  <a href="https://github.com/ikhsanhaikal" target="_blank"
+     class="font-mono text-xs text-nord-subtle mt-auto hover:text-nord-accent transition-colors">
+    github.com/ikhsanhaikal ↗
+  </a>
+
+</aside>
+
+
+  <main class="flex-1 min-w-0">
+
+    <div class="max-w-mobile mx-auto xl:max-w-none">
+      
+
+<div class="xl:hidden">
+  <nav
+    id="site-nav"
+    class="sticky top-0 z-50 border-b px-6 py-2.5 flex justify-between items-center"
+    style="background:#252c38;border-color:#3b4252;transition:background 220ms ease,border-color 220ms ease;"
+  >
+    <a href="/"
+      id="nav-identity"
+      class="flex items-center gap-2.5 no-underline"
+      style="opacity:1;transform:translateY(0);pointer-events:auto;transition:opacity 220ms ease,transform 220ms ease;"
+    >
+      <img src="/images/avatar.svg"
+           class="w-[30px] h-[30px] rounded-full object-cover border border-nord-accent/80 flex-none"
+           style="object-position:50% 12%"
+           alt="ikhsan haikal">
+      <span class="font-mono text-sm text-nord-bright">ikhsan haikal</span>
+    </a>
+    <div class="flex gap-5 ml-auto">
+      
+      <a href="/til/"
+         class="nav-link active">
+        til
+      </a>
+      
+      <a href="/blog/"
+         class="nav-link ">
+        blog
+      </a>
+      
+      <a href="/resume.pdf"
+         class="nav-link ">
+        resume
+      </a>
+      
+    </div>
+  </nav>
+</div>
+    </div>
+
+    <div class="max-w-mobile mx-auto xl:max-w-none xl:px-11 xl:py-9">
+
+      
+      <div class="px-6 xl:px-0 pt-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-2 font-mono text-sm">
+          <a href="/til/" class="text-nord-accent hover:underline">←</a>
+          <a href="/til/" class="text-nord-faint hover:text-nord-accent transition-colors">til</a>
+          <span class="text-nord-subtle">/</span>
+          <span class="text-nord-bright">#git</span>
+        </div>
+        <div class="flex gap-4 font-mono text-xs text-nord-subtle">
+          <span>⌘K</span>
+          <a href="https://ikhsanhaikal.com/til/git-restore-vs-reset/" target="_blank" class="hover:text-nord-accent transition-colors">↗</a>
+        </div>
+      </div>
+
+      
+      <div class="px-6 xl:px-0 pt-3.5 flex items-center gap-2.5 flex-wrap">
+        
+        <a href="/tags/git/"
+           class="font-mono text-sm rounded-full px-3 py-1 border border-nord-accent/35 bg-nord-accent/10 text-nord-accent hover:bg-nord-accent/20 transition-colors">
+          #git
+        </a>
+        
+        <a href="/tags/workflow/"
+           class="font-mono text-sm rounded-full px-3 py-1 border border-nord-accent/35 bg-nord-accent/10 text-nord-accent hover:bg-nord-accent/20 transition-colors">
+          #workflow
+        </a>
+        
+        <a href="/tags/frontend/"
+           class="font-mono text-sm rounded-full px-3 py-1 border border-nord-accent/35 bg-nord-accent/10 text-nord-accent hover:bg-nord-accent/20 transition-colors">
+          #frontend
+        </a>
+        
+        <span class="font-mono text-xs text-nord-subtle">Jun 18, 2026</span>
+        <span class="text-nord-border text-xs">·</span>
+        <span class="font-mono text-xs text-nord-subtle">1 min read</span>
+      </div>
+
+      
+      <div class="px-6 xl:px-0 pt-4">
+        <h1 class="font-serif text-4xl xl:text-[36px] leading-tight text-nord-bright text-pretty">git restore beats git reset</h1>
+      </div>
+
+      
+      <div class="divider-accent mx-6 xl:mx-0 mt-5"></div>
+
+      
+      <div class="px-6 xl:px-0 pt-4 til-prose">
+        <p>For months I reached for <code>reset HEAD</code> to unstage files. It works — but it&rsquo;s the wrong tool. Git 2.23 added <code>restore</code> specifically for index and working-tree operations:</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-bash" data-lang="bash"><span class="line"><span class="cl"><span class="c1"># unstage — keep working tree changes</span>
+</span></span><span class="line"><span class="cl">git restore --staged file.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># discard working tree changes</span>
+</span></span><span class="line"><span class="cl">git restore file.txt
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c1"># both at once</span>
+</span></span><span class="line"><span class="cl">git restore --staged --worktree file.txt
+</span></span></code></pre></div><p>The key distinction: <em>reset moves HEAD</em> — it can rewrite history with <code>--hard</code> and blow away your work. <em>restore</em> only touches the index or working tree. Much safer for day-to-day use.</p>
+<p>Also worth knowing: <code>git switch</code> is the equivalent replacement for <code>checkout</code> when changing branches.</p>
+
+      </div>
+
+      
+      <div class="px-6 xl:px-0 pt-5 flex gap-2 flex-wrap">
+        
+        <a href="/tags/git/"
+           class="tag-chip active">#git</a>
+        
+        <a href="/tags/workflow/"
+           class="tag-chip ">#workflow</a>
+        
+        <a href="/tags/frontend/"
+           class="tag-chip ">#frontend</a>
+        
+      </div>
+
+      
+      <div class="divider-subtle mx-6 xl:mx-0 mt-6"></div>
+
+      
+      
+      <div class="xl:hidden px-6 pt-4 pb-1 font-mono text-2xs tracking-widest uppercase text-nord-subtle">
+        Related · #git
+      </div>
+      <div class="xl:hidden px-6 space-y-2 pb-2">
+        
+        <a href="/til/git-restore-vs-reset/" class="related-card no-underline">
+          <div>
+            <div class="text-base text-nord-bright leading-snug">git restore beats git reset</div>
+            <div class="font-mono text-2xs text-nord-subtle mt-1">Jun 18, 2026</div>
+          </div>
+          <span class="text-nord-accent text-base flex-none">→</span>
+        </a>
+        
+      </div>
+      
+
+      
+      <div class="px-6 xl:px-0 pt-3 pb-3 grid grid-cols-2 gap-2.5">
+        
+        <a href="/til/css-has-parent-selector/"
+           class="bg-nord-surface border border-nord-border rounded-lg p-3.5 no-underline hover:border-nord-accent/40 transition-colors">
+          <div class="font-mono text-2xs text-nord-subtle mb-1.5">← prev</div>
+          <div class="text-md text-nord-body leading-snug">CSS :has() is a real parent selector</div>
+        </a>
+        
+
+        <div></div>
+      </div>
+
+      
+      <div class="px-6 xl:px-0 pt-2 pb-12 text-center">
+        <a href="/til/" class="font-mono text-sm text-nord-accent hover:underline">← back to til</a>
+      </div>
+
+    </div>
+  </main>
+
+  
+
+
+
+
+<aside class="hidden xl:flex flex-col w-[220px] flex-none px-6 py-9 border-l border-nord-border">
+
+  
+  
+  <div class="mb-7">
+    <div class="font-mono text-2xs tracking-widest uppercase text-nord-subtle mb-3">
+      Related · #git
+    </div>
+    
+    <a href="/til/git-restore-vs-reset/" class="related-card no-underline block mb-2">
+      <div>
+        <div class="text-md text-nord-bright leading-snug mb-1">git restore beats git reset</div>
+        <div class="font-mono text-2xs text-nord-subtle">Jun 18</div>
+      </div>
+      <span class="text-nord-accent flex-none">→</span>
+    </a>
+    
+  </div>
+  
+
+  
+  <div>
+    <div class="font-mono text-2xs tracking-widest uppercase text-nord-subtle mb-3">All tags</div>
+    <div class="font-mono text-md">
+      
+      <div class="flex justify-between py-1.5 border-b border-nord-surface last:border-0">
+        <a href="/tags/git/"
+           class="text-nord-accent transition-colors">
+          #git
+        </a>
+      </div>
+      
+      <div class="flex justify-between py-1.5 border-b border-nord-surface last:border-0">
+        <a href="/tags/workflow/"
+           class="text-nord-faint hover:text-nord-accent transition-colors">
+          #workflow
+        </a>
+      </div>
+      
+      <div class="flex justify-between py-1.5 border-b border-nord-surface last:border-0">
+        <a href="/tags/frontend/"
+           class="text-nord-faint hover:text-nord-accent transition-colors">
+          #frontend
+        </a>
+      </div>
+      
+      <div class="flex justify-between py-1.5 border-b border-nord-surface last:border-0">
+        <a href="/tags/css/"
+           class="text-nord-faint hover:text-nord-accent transition-colors">
+          #css
+        </a>
+      </div>
+      
+    </div>
+  </div>
+
+</aside>
+
+
+</div>
+
+</body>
+</html>

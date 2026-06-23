@@ -1,0 +1,752 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>til · ikhsan haikal</title>
+  <meta name="description" content="today i learned — a running log of things I want to remember">
+  <link rel="stylesheet" href="/css/main.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+  <style>[x-cloak] { display: none !important; }</style>
+</head>
+<body class="bg-nord-bg min-h-screen">
+  
+
+
+
+
+
+
+<div class="xl:flex xl:min-h-screen xl:max-w-[1280px] xl:mx-auto">
+
+  
+
+
+
+
+
+<aside class="hidden xl:flex flex-col w-[260px] flex-none px-7 py-8 border-r border-nord-border bg-nord-bg2">
+
+  
+  <div class="relative mb-[-8px] flex-none">
+    <img src="/images/avatar.svg" class="w-full block" alt="ikhsan haikal">
+    <div class="absolute bottom-0 left-0 right-0 h-28 pointer-events-none"
+         style="background:linear-gradient(to top,#252c38,transparent)"></div>
+  </div>
+
+  
+  <div class="font-serif text-[20px] text-nord-bright leading-tight relative z-10">ikhsan haikal</div>
+  <div class="font-mono text-xs text-nord-accent mt-1.5">software developer</div>
+  <div class="font-serif italic text-md text-nord-faint mt-1.5 leading-relaxed">"My bugs have a public record."</div>
+
+  
+  <div class="flex items-center gap-1.5 mt-3">
+    <span class="w-2 h-2 rounded-full bg-nord-green flex-none block"></span>
+    <span class="font-mono text-xs text-nord-faint">Employed · open to freelance</span>
+  </div>
+
+  
+  <div class="h-px mt-4 mb-4 flex-none" style="background:linear-gradient(to right,#434c5e,transparent)"></div>
+
+  
+  <nav class="flex flex-col gap-1.5 mb-5">
+    
+    <a href="/til/"
+       class="nav-link text-base py-1 active">
+      til
+    </a>
+    
+    <a href="/blog/"
+       class="nav-link text-base py-1 ">
+      blog
+    </a>
+    
+    <a href="/resume.pdf"
+       class="nav-link text-base py-1 ">
+      resume
+    </a>
+    
+  </nav>
+
+  
+  <div class="flex flex-col gap-2 mb-4">
+    <a href="/resume.pdf" class="btn-primary font-mono text-md py-2.5">Résumé ↓</a>
+    <a href="mailto:hi@ikhsanhaikal.dev" class="btn-outline font-mono text-md py-2.5">Email me</a>
+  </div>
+
+  
+  <div class="font-mono text-xs text-nord-subtle mb-3">
+    <span class="text-nord-accent">2</span> notes ·
+    <span class="text-nord-accent">4</span> tags ·
+    since <span class="text-nord-accent">2024</span>
+  </div>
+
+  
+  <a href="https://github.com/ikhsanhaikal" target="_blank"
+     class="font-mono text-xs text-nord-subtle mt-auto hover:text-nord-accent transition-colors">
+    github.com/ikhsanhaikal ↗
+  </a>
+
+</aside>
+
+
+  <main class="flex-1 min-w-0">
+
+    <div class="max-w-mobile mx-auto xl:max-w-none">
+      
+
+<div class="xl:hidden">
+  <nav
+    id="site-nav"
+    class="sticky top-0 z-50 border-b px-6 py-2.5 flex justify-between items-center"
+    style="background:#252c38;border-color:#3b4252;transition:background 220ms ease,border-color 220ms ease;"
+  >
+    <a href="/"
+      id="nav-identity"
+      class="flex items-center gap-2.5 no-underline"
+      style="opacity:1;transform:translateY(0);pointer-events:auto;transition:opacity 220ms ease,transform 220ms ease;"
+    >
+      <img src="/images/avatar.svg"
+           class="w-[30px] h-[30px] rounded-full object-cover border border-nord-accent/80 flex-none"
+           style="object-position:50% 12%"
+           alt="ikhsan haikal">
+      <span class="font-mono text-sm text-nord-bright">ikhsan haikal</span>
+    </a>
+    <div class="flex gap-5 ml-auto">
+      
+      <a href="/til/"
+         class="nav-link active">
+        til
+      </a>
+      
+      <a href="/blog/"
+         class="nav-link ">
+        blog
+      </a>
+      
+      <a href="/resume.pdf"
+         class="nav-link ">
+        resume
+      </a>
+      
+    </div>
+  </nav>
+</div>
+    </div>
+
+    <div class="max-w-mobile mx-auto xl:max-w-none xl:px-11 xl:py-9">
+
+      
+      <div class="px-6 xl:px-0 pt-6 xl:pt-0 pb-0">
+        <h1 class="font-serif text-5xl text-nord-bright tracking-tight">til</h1>
+        <p class="font-serif italic text-base text-nord-faint mt-1.5">
+          today i learned — a running log of things I want to remember
+        </p>
+        <div class="flex gap-4 mt-3.5 font-mono text-xs text-nord-subtle">
+          <span><span class="text-nord-accent">2</span> notes</span>
+          <span class="text-nord-border">·</span>
+          <span><span class="text-nord-accent">4</span> tags</span>
+          <span class="text-nord-border">·</span>
+          <span>since <span class="text-nord-accent">2024</span></span>
+        </div>
+      </div>
+
+      
+      <div class="px-6 xl:px-0 pt-5 flex flex-col xl:flex-row items-stretch xl:items-center gap-3">
+        <div class="flex items-center gap-2.5 bg-nord-surface border border-nord-border rounded-xl px-4 py-3 flex-1">
+          <span class="text-nord-faint text-lg flex-none">⌕</span>
+          <span class="text-md text-nord-subtle flex-1">Search notes…</span>
+          <span class="font-mono text-xs text-nord-dim border border-nord-border rounded px-1.5 py-0.5">⌘K</span>
+        </div>
+        <div class="flex gap-1.5 font-mono text-xs flex-none">
+          <span class="tag-chip active">2026</span>
+          <span class="tag-chip">2025</span>
+          <span class="tag-chip">all time</span>
+        </div>
+      </div>
+
+      
+      <div class="chips flex gap-2 px-6 xl:px-0 pt-3 overflow-x-auto">
+        <a href="/til/" class="flex-none tag-chip active">all</a>
+        
+        <a href="/tags/git/" class="flex-none tag-chip">#git</a>
+        
+        <a href="/tags/workflow/" class="flex-none tag-chip">#workflow</a>
+        
+        <a href="/tags/frontend/" class="flex-none tag-chip">#frontend</a>
+        
+        <a href="/tags/css/" class="flex-none tag-chip">#css</a>
+        
+      </div>
+
+      
+      
+      
+      <div class="pt-5 pb-2 px-6 xl:px-0 flex items-center gap-3">
+        <div class="flex-1 h-px bg-nord-surface"></div>
+        <span class="font-mono text-2xs tracking-widest uppercase text-nord-subtle flex-none">
+          June 2026 · 2 notes
+        </span>
+        <div class="flex-1 h-px bg-nord-surface"></div>
+      </div>
+
+      <div class="px-6 xl:px-0" x-data="{ expanded: '400c48e9ceb4c6e88e740110daae395d' }">
+        
+        
+        <div class="mb-0.5">
+          
+          <div
+            @click="expanded = expanded === '400c48e9ceb4c6e88e740110daae395d' ? null : '400c48e9ceb4c6e88e740110daae395d'"
+            :class="expanded === '400c48e9ceb4c6e88e740110daae395d' ? 'bg-nord-surface border border-nord-border rounded-xl rounded-b-none border-b-0' : 'hover:bg-nord-surface/40 rounded-xl'"
+            class="flex items-baseline gap-2.5 px-3.5 py-2.5 cursor-pointer transition-colors duration-150"
+          >
+            <span class="font-mono text-2xs text-nord-subtle flex-none w-10">Jun 18</span>
+            <span class="text-md text-nord-bright flex-1 leading-snug">git restore beats git reset</span>
+            <span class="font-mono text-2xs text-nord-accent flex-none">
+              <span x-text="expanded === '400c48e9ceb4c6e88e740110daae395d' ? '▾' : '▸'">▸</span>
+              #git
+            </span>
+          </div>
+
+          
+          <div
+            x-show="expanded === '400c48e9ceb4c6e88e740110daae395d'"
+            x-transition:enter="transition ease-out duration-150"
+            x-transition:enter-start="opacity-0 -translate-y-1"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            class="bg-nord-surface border border-nord-border border-t-0 rounded-xl rounded-t-none px-3.5 pb-3.5 pt-3"
+          >
+            <p class="text-md text-nord-faint leading-relaxed">--staged unstages without touching your working tree. No more accidental --hard disasters.</p>
+            
+            <div class="code-block mt-2.5">
+              <div class="code-block-body text-nord-body text-xs">true</div>
+            </div>
+            
+            <a href="/til/git-restore-vs-reset/"
+               class="inline-block mt-2.5 font-mono text-xs text-nord-accent hover:underline">
+              read full note →
+            </a>
+          </div>
+        </div>
+
+        <div x-show="expanded !== '400c48e9ceb4c6e88e740110daae395d'" class="border-t border-nord-surface/60"></div>
+        
+        
+        <div class="mb-0.5">
+          
+          <div
+            @click="expanded = expanded === '1dff7bf9cfdb1850df35e883da6025e2' ? null : '1dff7bf9cfdb1850df35e883da6025e2'"
+            :class="expanded === '1dff7bf9cfdb1850df35e883da6025e2' ? 'bg-nord-surface border border-nord-border rounded-xl rounded-b-none border-b-0' : 'hover:bg-nord-surface/40 rounded-xl'"
+            class="flex items-baseline gap-2.5 px-3.5 py-2.5 cursor-pointer transition-colors duration-150"
+          >
+            <span class="font-mono text-2xs text-nord-subtle flex-none w-10">Jun 09</span>
+            <span class="text-md text-nord-bright flex-1 leading-snug">CSS :has() is a real parent selector</span>
+            <span class="font-mono text-2xs text-nord-accent flex-none">
+              <span x-text="expanded === '1dff7bf9cfdb1850df35e883da6025e2' ? '▾' : '▸'">▸</span>
+              #css
+            </span>
+          </div>
+
+          
+          <div
+            x-show="expanded === '1dff7bf9cfdb1850df35e883da6025e2'"
+            x-transition:enter="transition ease-out duration-150"
+            x-transition:enter-start="opacity-0 -translate-y-1"
+            x-transition:enter-end="opacity-100 translate-y-0"
+            class="bg-nord-surface border border-nord-border border-t-0 rounded-xl rounded-t-none px-3.5 pb-3.5 pt-3"
+          >
+            <p class="text-md text-nord-faint leading-relaxed">form:has(input:invalid) lets you style the whole form when any field is bad. No JS, finally.</p>
+            
+            <a href="/til/css-has-parent-selector/"
+               class="inline-block mt-2.5 font-mono text-xs text-nord-accent hover:underline">
+              read full note →
+            </a>
+          </div>
+        </div>
+
+        <div x-show="expanded !== '1dff7bf9cfdb1850df35e883da6025e2'" class="border-t border-nord-surface/60"></div>
+        
+      </div>
+      
+
+      
+      <div class="px-6 xl:px-0 pt-5 pb-12 text-center">
+        <button class="font-mono text-sm text-nord-accent border border-nord-accent/30
+                       rounded-lg px-6 py-3 hover:border-nord-accent/60 transition-colors w-full xl:w-auto">
+          load older notes ↓
+        </button>
+      </div>
+
+    </div>
+  </main>
+
+  
+<aside class="hidden xl:flex flex-col w-[220px] flex-none px-6 py-9 border-l border-nord-border">
+
+  
+  <div class="mb-7">
+    <div class="font-mono text-2xs tracking-widest uppercase text-nord-subtle mb-3">Activity</div>
+    <div class="grid gap-[3px] mb-2" style="grid-template-columns:repeat(13,1fr);">
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.06)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.18)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.42)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,0.68)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+      
+      
+      
+      <span class="cal-cell" style="background:rgba(136,192,208,1.0)"></span>
+      
+    </div>
+    
+    <div class="font-mono text-2xs text-nord-subtle">
+      <span class="text-nord-accent">2</span> notes · <span class="text-nord-accent">2</span> years
+    </div>
+  </div>
+
+  
+  <div>
+    <div class="font-mono text-2xs tracking-widest uppercase text-nord-subtle mb-3">Jump to</div>
+    <div class="font-mono text-md">
+      <div class="flex justify-between py-1.5 border-b border-nord-surface"><span class="text-nord-accent">Jun 2026</span><span class="text-nord-subtle">8</span></div>
+      <div class="flex justify-between py-1.5 border-b border-nord-surface"><span class="text-nord-faint hover:text-nord-accent transition-colors cursor-pointer">May 2026</span><span class="text-nord-subtle">4</span></div>
+      <div class="flex justify-between py-1.5 border-b border-nord-surface"><span class="text-nord-faint hover:text-nord-accent transition-colors cursor-pointer">Apr 2026</span><span class="text-nord-subtle">6</span></div>
+      <div class="flex justify-between py-1.5 border-b border-nord-surface"><span class="text-nord-faint hover:text-nord-accent transition-colors cursor-pointer">Mar 2026</span><span class="text-nord-subtle">5</span></div>
+      <div class="flex justify-between py-1.5 border-b border-nord-surface"><span class="text-nord-faint hover:text-nord-accent transition-colors cursor-pointer">2025</span><span class="text-nord-subtle">89</span></div>
+      <div class="flex justify-between py-1.5"><span class="text-nord-faint hover:text-nord-accent transition-colors cursor-pointer">2024</span><span class="text-nord-subtle">30</span></div>
+    </div>
+  </div>
+
+</aside>
+
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Tags on ikhsan haikal</title>
+    <link>https://ikhsanhaikal.com/tags/</link>
+    <description>Recent content in Tags on ikhsan haikal</description>
+    <generator>Hugo</generator>
+    <language>en-us</language>
+    <lastBuildDate>Thu, 18 Jun 2026 00:00:00 +0000</lastBuildDate>
+    <atom:link href="https://ikhsanhaikal.com/tags/index.xml" rel="self" type="application/rss+xml" />
+    <item>
+      <title>Frontend</title>
+      <link>https://ikhsanhaikal.com/tags/frontend/</link>
+      <pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://ikhsanhaikal.com/tags/frontend/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Git</title>
+      <link>https://ikhsanhaikal.com/tags/git/</link>
+      <pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://ikhsanhaikal.com/tags/git/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Workflow</title>
+      <link>https://ikhsanhaikal.com/tags/workflow/</link>
+      <pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://ikhsanhaikal.com/tags/workflow/</guid>
+      <description></description>
+    </item>
+    <item>
+      <title>Css</title>
+      <link>https://ikhsanhaikal.com/tags/css/</link>
+      <pubDate>Tue, 09 Jun 2026 00:00:00 +0000</pubDate>
+      <guid>https://ikhsanhaikal.com/tags/css/</guid>
+      <description></description>
+    </item>
+  </channel>
+</rss>
