@@ -1,0 +1,29 @@
+{{/* Mobile-only sticky nav — hidden at xl via xl:hidden */}}
+{{ $isInner := not .IsHome }}
+<div class="xl:hidden">
+  <nav
+    id="site-nav"
+    class="sticky top-0 z-50 border-b px-6 py-2.5 flex justify-between items-center"
+    style="background:{{ if $isInner }}#252c38{{ else }}transparent{{ end }};border-color:{{ if $isInner }}#3b4252{{ else }}transparent{{ end }};transition:background 220ms ease,border-color 220ms ease;"
+  >
+    <a href="/"
+      id="nav-identity"
+      class="flex items-center gap-2.5 no-underline"
+      style="opacity:{{ if $isInner }}1{{ else }}0{{ end }};transform:{{ if $isInner }}translateY(0){{ else }}translateY(-8px){{ end }};pointer-events:{{ if $isInner }}auto{{ else }}none{{ end }};transition:opacity 220ms ease,transform 220ms ease;"
+    >
+      <img src="/images/avatar.svg"
+           class="w-[30px] h-[30px] rounded-full object-cover border border-nord-accent/80 flex-none"
+           style="object-position:50% 12%"
+           alt="{{ .Site.Params.author }}">
+      <span class="font-mono text-sm text-nord-bright">{{ .Site.Params.author }}</span>
+    </a>
+    <div class="flex gap-5 ml-auto">
+      {{ range .Site.Menus.main }}
+      <a href="{{ .URL }}"
+         class="nav-link {{ if or (eq $.RelPermalink .URL) (and (hasPrefix $.RelPermalink .URL) (ne .URL "/")) }}active{{ end }}">
+        {{ .Name }}
+      </a>
+      {{ end }}
+    </div>
+  </nav>
+</div>

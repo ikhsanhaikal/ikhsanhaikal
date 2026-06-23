@@ -1,0 +1,16 @@
+{
+  "name": "ikhsanhaikal",
+  "version": "1.0.0",
+  "description": "ikhsan haikal personal site — Hugo + Tailwind CSS + Alpine.js",
+  "scripts": {
+    "build:css": "tailwindcss -i ./themes/nord/assets/css/main.css -o ./themes/nord/static/css/main.css --minify",
+    "watch:css": "tailwindcss -i ./themes/nord/assets/css/main.css -o ./themes/nord/static/css/main.css --watch",
+    "build": "npm run build:css && hugo --minify",
+    "dev": "concurrently \"npm run watch:css\" \"hugo server --buildDrafts --disableFastRender\""
+  },
+  "devDependencies": {
+    "@tailwindcss/typography": "^0.5.0",
+    "concurrently": "^9.0.0",
+    "tailwindcss": "^3.4.0"
+  }
+}

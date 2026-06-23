@@ -1,0 +1,99 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap');
+
+@layer base {
+  *, *::before, *::after { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    @apply bg-nord-bg text-nord-body font-sans;
+    margin: 0;
+  }
+  /* hide scrollbar for chip rows */
+  .chips::-webkit-scrollbar { display: none; }
+  .chips { -ms-overflow-style: none; scrollbar-width: none; }
+}
+
+@layer components {
+  /* ── Nav ── */
+  .nav-link {
+    @apply font-mono text-sm text-nord-faint transition-colors duration-150 cursor-pointer;
+  }
+  .nav-link.active {
+    @apply text-nord-accent border-b border-nord-accent pb-0.5;
+  }
+  .nav-link:hover { @apply text-nord-bright; }
+
+  /* ── Tag chip ── */
+  .tag-chip {
+    @apply font-mono text-sm rounded-full px-3 py-1 border border-nord-border
+           bg-nord-surface text-nord-body cursor-pointer transition-colors duration-150;
+  }
+  .tag-chip.active,
+  .tag-chip:hover {
+    background: rgba(136,192,208,0.15);
+    @apply text-nord-accent border-nord-accent/40;
+  }
+
+  /* ── Card ── */
+  .til-card {
+    @apply bg-nord-surface border border-nord-border rounded-2xl p-4
+           transition-colors duration-150 cursor-pointer;
+  }
+  .til-card:hover { @apply border-nord-accent/40; }
+
+  /* ── Code block ── */
+  .code-block {
+    @apply bg-nord-bg3 border border-nord-border rounded-xl overflow-hidden;
+  }
+  .code-block-header {
+    @apply flex justify-between items-center px-3.5 py-2
+           border-b border-nord-bg bg-[#232b36] font-mono text-xs text-nord-accent;
+  }
+  .code-block-body {
+    @apply p-4 font-mono text-md leading-relaxed;
+  }
+
+  /* ── Gradient divider ── */
+  .divider-accent {
+    height: 1px;
+    background: linear-gradient(to right, #88c0d0, rgba(136,192,208,0.3) 40%, transparent);
+  }
+  .divider-subtle {
+    height: 1px;
+    background: linear-gradient(to right, transparent, #434c5e 20%, #434c5e 80%, transparent);
+  }
+
+  /* ── Prose overrides for TIL detail ── */
+  .til-prose p    { @apply font-serif text-lg text-nord-body leading-relaxed; }
+  .til-prose code { @apply font-mono text-sm text-nord-accent; }
+  .til-prose em   { @apply text-nord-bright not-italic; font-style: italic; }
+
+  /* ── Button ── */
+  .btn-primary {
+    @apply bg-nord-accent text-nord-bg font-semibold text-base rounded-xl
+           px-4 py-3 text-center cursor-pointer transition-opacity duration-150;
+  }
+  .btn-primary:hover { @apply opacity-90; }
+  .btn-outline {
+    @apply text-nord-bright text-base border border-nord-border rounded-xl
+           px-4 py-3 text-center cursor-pointer transition-colors duration-150;
+  }
+  .btn-outline:hover { @apply border-nord-faint; }
+
+  /* ── Activity calendar cell ── */
+  .cal-cell {
+    aspect-ratio: 1;
+    border-radius: 2px;
+    display: block;
+  }
+
+  /* ── Related note card ── */
+  .related-card {
+    @apply bg-nord-surface border border-nord-border rounded-lg p-3.5
+           flex justify-between items-center cursor-pointer transition-colors duration-150;
+  }
+  .related-card:hover { @apply border-nord-accent/40; }
+}

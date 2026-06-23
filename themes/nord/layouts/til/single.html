@@ -1,0 +1,147 @@
+{{ define "main" }}
+{{ $tilPages := where .Site.RegularPages "Section" "til" }}
+
+{{/* Prev / Next */}}
+{{ $idx := 0 }}
+{{ range $i, $p := $tilPages }}
+  {{ if eq $p.RelPermalink $.RelPermalink }}{{ $idx = $i }}{{ end }}
+{{ end }}
+{{ $prev := index $tilPages (add $idx 1) }}
+{{ $next := index $tilPages (sub $idx 1) }}
+
+{{/* Related — range-based tag intersection */}}
+{{ $currentTags := .Params.tags }}
+{{ $related := slice }}
+{{ range $tilPages }}
+  {{ if ne .RelPermalink $.RelPermalink }}
+    {{ range .Params.tags }}
+      {{ if in $currentTags . }}
+        {{ $related = $related | append $ }}
+        {{ break }}
+      {{ end }}
+    {{ end }}
+  {{ end }}
+{{ end }}
+{{ $related = first 2 $related }}
+
+{{/* All unique tags — for right gutter */}}
+{{ $allTags := slice }}
+{{ range $tilPages }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end }}
+{{ $allTags = $allTags | uniq }}
+
+{{/* Pass data to right gutter via Scratch */}}
+{{ .Scratch.Set "related" $related }}
+{{ .Scratch.Set "allTags" $allTags }}
+
+<div class="xl:flex xl:min-h-screen xl:max-w-[1280px] xl:mx-auto">
+
+  {{ partial "left-gutter.html" . }}
+
+  <main class="flex-1 min-w-0">
+
+    <div class="max-w-mobile mx-auto xl:max-w-none">
+      {{ partial "nav.html" . }}
+    </div>
+
+    <div class="max-w-mobile mx-auto xl:max-w-none xl:px-11 xl:py-9">
+
+      {{/* Breadcrumb */}}
+      <div class="px-6 xl:px-0 pt-3.5 flex items-center justify-between">
+        <div class="flex items-center gap-2 font-mono text-sm">
+          <a href="/til/" class="text-nord-accent hover:underline">←</a>
+          <a href="/til/" class="text-nord-faint hover:text-nord-accent transition-colors">til</a>
+          <span class="text-nord-subtle">/</span>
+          <span class="text-nord-bright">#{{ index .Params.tags 0 }}</span>
+        </div>
+        <div class="flex gap-4 font-mono text-xs text-nord-subtle">
+          <span>⌘K</span>
+          <a href="{{ .Permalink }}" target="_blank" class="hover:text-nord-accent transition-colors">↗</a>
+        </div>
+      </div>
+
+      {{/* Meta row */}}
+      <div class="px-6 xl:px-0 pt-3.5 flex items-center gap-2.5 flex-wrap">
+        {{ range .Params.tags }}
+        <a href="/tags/{{ . | urlize }}/"
+           class="font-mono text-sm rounded-full px-3 py-1 border border-nord-accent/35 bg-nord-accent/10 text-nord-accent hover:bg-nord-accent/20 transition-colors">
+          #{{ . }}
+        </a>
+        {{ end }}
+        <span class="font-mono text-xs text-nord-subtle">{{ .Date.Format "Jan 02, 2006" }}</span>
+        <span class="text-nord-border text-xs">·</span>
+        <span class="font-mono text-xs text-nord-subtle">{{ .ReadingTime }} min read</span>
+      </div>
+
+      {{/* Title */}}
+      <div class="px-6 xl:px-0 pt-4">
+        <h1 class="font-serif text-4xl xl:text-[36px] leading-tight text-nord-bright text-pretty">{{ .Title }}</h1>
+      </div>
+
+      {{/* Accent divider */}}
+      <div class="divider-accent mx-6 xl:mx-0 mt-5"></div>
+
+      {{/* Prose content */}}
+      <div class="px-6 xl:px-0 pt-4 til-prose">
+        {{ .Content }}
+      </div>
+
+      {{/* Tags */}}
+      <div class="px-6 xl:px-0 pt-5 flex gap-2 flex-wrap">
+        {{ range .Params.tags }}
+        <a href="/tags/{{ . | urlize }}/"
+           class="tag-chip {{ if eq . (index $.Params.tags 0) }}active{{ end }}">#{{ . }}</a>
+        {{ end }}
+      </div>
+
+      {{/* Subtle divider */}}
+      <div class="divider-subtle mx-6 xl:mx-0 mt-6"></div>
+
+      {{/* Related notes — mobile only (desktop gets right gutter) */}}
+      {{ if $related }}
+      <div class="xl:hidden px-6 pt-4 pb-1 font-mono text-2xs tracking-widest uppercase text-nord-subtle">
+        Related · #{{ index .Params.tags 0 }}
+      </div>
+      <div class="xl:hidden px-6 space-y-2 pb-2">
+        {{ range $related }}
+        <a href="{{ .RelPermalink }}" class="related-card no-underline">
+          <div>
+            <div class="text-base text-nord-bright leading-snug">{{ .Title }}</div>
+            <div class="font-mono text-2xs text-nord-subtle mt-1">{{ .Date.Format "Jan 02, 2006" }}</div>
+          </div>
+          <span class="text-nord-accent text-base flex-none">→</span>
+        </a>
+        {{ end }}
+      </div>
+      {{ end }}
+
+      {{/* Prev / Next */}}
+      <div class="px-6 xl:px-0 pt-3 pb-3 grid grid-cols-2 gap-2.5">
+        {{ if $prev }}
+        <a href="{{ $prev.RelPermalink }}"
+           class="bg-nord-surface border border-nord-border rounded-lg p-3.5 no-underline hover:border-nord-accent/40 transition-colors">
+          <div class="font-mono text-2xs text-nord-subtle mb-1.5">← prev</div>
+          <div class="text-md text-nord-body leading-snug">{{ $prev.Title }}</div>
+        </a>
+        {{ else }}<div></div>{{ end }}
+
+        {{ if $next }}
+        <a href="{{ $next.RelPermalink }}"
+           class="bg-nord-surface border border-nord-border rounded-lg p-3.5 text-right no-underline hover:border-nord-accent/40 transition-colors">
+          <div class="font-mono text-2xs text-nord-subtle mb-1.5">next →</div>
+          <div class="text-md text-nord-body leading-snug">{{ $next.Title }}</div>
+        </a>
+        {{ else }}<div></div>{{ end }}
+      </div>
+
+      {{/* Back link */}}
+      <div class="px-6 xl:px-0 pt-2 pb-12 text-center">
+        <a href="/til/" class="font-mono text-sm text-nord-accent hover:underline">← back to til</a>
+      </div>
+
+    </div>
+  </main>
+
+  {{ partial "right-gutter-detail.html" . }}
+
+</div>
+{{ end }}

@@ -1,0 +1,62 @@
+{{/*
+  Desktop left gutter — hidden on mobile, visible at xl+
+  Contains: avatar illustration, name, role, tagline, status, buttons, stats, github
+*/}}
+{{ $tilPages := where .Site.RegularPages "Section" "til" }}
+{{ $allTags := slice }}
+{{ range $tilPages }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end }}
+{{ $uniqueTags := $allTags | uniq }}
+
+<aside class="hidden xl:flex flex-col w-[260px] flex-none px-7 py-8 border-r border-nord-border bg-nord-bg2">
+
+  {{/* Illustration — fades into bg */}}
+  <div class="relative mb-[-8px] flex-none">
+    <img src="/images/avatar.svg" class="w-full block" alt="{{ .Site.Params.author }}">
+    <div class="absolute bottom-0 left-0 right-0 h-28 pointer-events-none"
+         style="background:linear-gradient(to top,#252c38,transparent)"></div>
+  </div>
+
+  {{/* Name + role */}}
+  <div class="font-serif text-[20px] text-nord-bright leading-tight relative z-10">{{ .Site.Params.author }}</div>
+  <div class="font-mono text-xs text-nord-accent mt-1.5">{{ .Site.Params.role }}</div>
+  <div class="font-serif italic text-md text-nord-faint mt-1.5 leading-relaxed">"{{ .Site.Params.tagline }}"</div>
+
+  {{/* Status dot */}}
+  <div class="flex items-center gap-1.5 mt-3">
+    <span class="w-2 h-2 rounded-full bg-nord-green flex-none block"></span>
+    <span class="font-mono text-xs text-nord-faint">{{ .Site.Params.status }}</span>
+  </div>
+
+  {{/* Divider */}}
+  <div class="h-px mt-4 mb-4 flex-none" style="background:linear-gradient(to right,#434c5e,transparent)"></div>
+
+  {{/* Nav links */}}
+  <nav class="flex flex-col gap-1.5 mb-5">
+    {{ range .Site.Menus.main }}
+    <a href="{{ .URL }}"
+       class="nav-link text-base py-1 {{ if or (eq $.RelPermalink .URL) (and (hasPrefix $.RelPermalink .URL) (ne .URL "/")) }}active{{ end }}">
+      {{ .Name }}
+    </a>
+    {{ end }}
+  </nav>
+
+  {{/* CTA Buttons */}}
+  <div class="flex flex-col gap-2 mb-4">
+    <a href="/resume.pdf" class="btn-primary font-mono text-md py-2.5">Résumé ↓</a>
+    <a href="mailto:{{ .Site.Params.email }}" class="btn-outline font-mono text-md py-2.5">Email me</a>
+  </div>
+
+  {{/* Stats */}}
+  <div class="font-mono text-xs text-nord-subtle mb-3">
+    <span class="text-nord-accent">{{ len $tilPages }}</span> notes ·
+    <span class="text-nord-accent">{{ len $uniqueTags }}</span> tags ·
+    since <span class="text-nord-accent">2024</span>
+  </div>
+
+  {{/* GitHub */}}
+  <a href="https://{{ .Site.Params.github }}" target="_blank"
+     class="font-mono text-xs text-nord-subtle mt-auto hover:text-nord-accent transition-colors">
+    {{ .Site.Params.github }} ↗
+  </a>
+
+</aside>

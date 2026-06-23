@@ -1,0 +1,40 @@
+baseURL: "https://ikhsanhaikal.dev/"
+languageCode: "en-us"
+title: "ikhsan haikal"
+theme: "nord"
+
+params:
+  author: "ikhsan haikal"
+  description: "software developer — frontend · backend · llm/ui"
+  tagline: "My bugs have a public record."
+  status: "Employed · open to freelance"
+  github: "github.com/ikhsanhaikal"
+  email: "hi@ikhsanhaikal.dev"
+  role: "software developer"
+  roleDetail: "Frontend · Backend · LLM/UI"
+
+menu:
+  main:
+    - name: til
+      url: /til/
+      weight: 1
+    - name: blog
+      url: /blog/
+      weight: 2
+    - name: resume
+      url: /resume.pdf
+      weight: 3
+
+taxonomies:
+  tag: tags
+
+pagination:
+  pagerSize: 20
+
+markup:
+  highlight:
+    noClasses: false
+    style: nord
+  goldmark:
+    renderer:
+      unsafe: true
