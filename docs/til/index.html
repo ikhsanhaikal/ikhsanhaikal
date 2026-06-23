@@ -92,19 +92,27 @@
 
   <main class="flex-1 min-w-0">
 
-    <div class="max-w-mobile mx-auto xl:max-w-none">
       
 
 <div class="xl:hidden">
   <nav
-    id="site-nav"
-    class="sticky top-0 z-50 border-b px-6 py-2.5 flex justify-between items-center"
-    style="background:#252c38;border-color:#3b4252;transition:background 220ms ease,border-color 220ms ease;"
+    x-data="{ scrolled: false, isInner: true }"
+    x-init="
+      if (!isInner) {
+        var avatar = document.getElementById('avatar-row');
+        if (avatar) {
+          new IntersectionObserver((entries) => {
+            scrolled = !entries[0].isIntersecting;
+          }, { threshold: 0, rootMargin: '-10px 0px 0px 0px' }).observe(avatar);
+        }
+      }
+    "
+    :class="(scrolled || isInner) ? 'bg-nord-bg2 border-nord-border' : 'bg-transparent border-transparent'"
+    class="sticky top-0 z-50 w-full border-b transition-all duration-200 px-6 py-2.5 flex justify-between items-center"
   >
     <a href="/"
-      id="nav-identity"
-      class="flex items-center gap-2.5 no-underline"
-      style="opacity:1;transform:translateY(0);pointer-events:auto;transition:opacity 220ms ease,transform 220ms ease;"
+      :class="(scrolled || isInner) ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'"
+      class="flex items-center gap-2.5 transition-all duration-200 no-underline"
     >
       <img src="/images/avatar.svg"
            class="w-[30px] h-[30px] rounded-full object-cover border border-nord-accent/80 flex-none"
@@ -132,10 +140,11 @@
     </div>
   </nav>
 </div>
-    </div>
+    
 
-    <div class="max-w-mobile mx-auto xl:max-w-none xl:px-11 xl:py-9">
+    
 
+    <div class="xl:px-11 xl:py-9">
       
       <div class="px-6 xl:px-0 pt-6 xl:pt-0 pb-0">
         <h1 class="font-serif text-5xl text-nord-bright tracking-tight">til</h1>

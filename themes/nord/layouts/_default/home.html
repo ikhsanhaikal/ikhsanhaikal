@@ -5,18 +5,33 @@
 {{ range $tilPages }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end }}
 {{ $uniqueTags := $allTags | uniq }}
 
+{{/*
+  Responsive shell:
+  mobile  → single column, max-w-mobile centred
+  xl+     → 3-col: [left-gutter 260px] [center flex-1] [right-gutter 220px]
+*/}}
 <div class="xl:flex xl:min-h-screen xl:max-w-[1280px] xl:mx-auto">
 
   {{ partial "left-gutter.html" . }}
 
+  {{/* ── CENTER COLUMN ── */}}
   <main class="flex-1 min-w-0">
 
+    {{/* Mobile-only top chrome */}}
     <div class="max-w-mobile mx-auto xl:max-w-none">
       {{ partial "nav.html" . }}
     </div>
 
-    <div class="max-w-mobile mx-auto xl:max-w-none xl:px-11 xl:py-9">
+    <!--
+    <div class="max-w-mobile mx-auto xl:max-w-none xl:px11 xl:py-9">
+    -->
+    
+    <div class="xl:px-11 xl:py-9">
 
+
+      {{/* ── INTRO (mobile full / desktop compact since bio is in left gutter) ── */}}
+
+      {{/* Mobile avatar + bio — hidden on desktop (left gutter has it) */}}
       <div class="xl:hidden px-6 pt-5 pb-6">
         <div id="avatar-row" class="flex items-center gap-4 mb-6">
           <div class="relative flex-none">
@@ -32,8 +47,6 @@
             <div class="font-mono text-xs text-nord-faint mt-1">{{ .Site.Params.roleDetail }}</div>
           </div>
         </div>
-        {{/* Sentinel — observer watches this; sits below avatar so navbar appears only after avatar fully scrolls away */}}
-        <div id="nav-sentinel" style="height:1px;"></div>
         <h1 class="font-serif text-4xl leading-tight text-nord-bright text-pretty">{{ .Site.Params.tagline }}</h1>
         <p class="text-base text-nord-faint leading-relaxed mt-3">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems.</p>
         <div class="flex items-center gap-2 mt-3.5">
@@ -52,6 +65,7 @@
         </div>
       </div>
 
+      {{/* Desktop hero headline — left gutter has bio so just tagline + desc here */}}
       <div class="hidden xl:block mb-8">
         <h1 class="font-serif text-[42px] leading-tight text-nord-bright text-pretty mb-3">{{ .Site.Params.tagline }}</h1>
         <p class="text-base text-nord-body leading-relaxed mb-2">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems.</p>
@@ -61,8 +75,10 @@
         </div>
       </div>
 
+      {{/* ── Divider ── */}}
       <div class="divider-subtle mx-6 xl:mx-0 xl:hidden"></div>
 
+      {{/* ── LOG SECTION ── */}}
       <div class="px-6 xl:px-0 pt-5 pb-2 flex justify-between items-baseline">
         <span class="font-mono text-2xs tracking-widest uppercase text-nord-accent">The log</span>
         <span class="font-mono text-xs text-nord-subtle">{{ $tilCount }} notes</span>
@@ -71,6 +87,7 @@
         Everything I learn, written down so future-me doesn't debug the same thing twice.
       </p>
 
+      {{/* Search */}}
       <div class="px-6 xl:px-0 pt-3.5">
         <div class="flex items-center gap-2.5 bg-nord-surface border border-nord-border rounded-xl px-4 py-3">
           <span class="text-nord-faint text-lg flex-none">⌕</span>
@@ -79,18 +96,21 @@
         </div>
       </div>
 
+      {{/* Tag chips */}}
       <div class="chips flex gap-2 px-6 xl:px-0 pt-3.5 pb-1 overflow-x-auto">
         {{ range first 6 $uniqueTags }}
         <a href="/tags/{{ . | urlize }}/" class="flex-none tag-chip">#{{ . }}</a>
         {{ end }}
       </div>
 
+      {{/* Month divider */}}
       <div class="flex items-center gap-3 px-6 xl:px-0 pt-5 pb-2.5">
         <div class="flex-1 h-px bg-nord-surface"></div>
         <span class="font-mono text-2xs tracking-widest uppercase text-nord-subtle flex-none">June 2026</span>
         <div class="flex-1 h-px bg-nord-surface"></div>
       </div>
 
+      {{/* TIL cards — 1-col mobile, 2-col desktop */}}
       <div class="px-6 xl:px-0 grid gap-3 xl:grid-cols-2">
         {{ range first 4 $tilPages }}
         <a href="{{ .RelPermalink }}" class="til-card block no-underline">
@@ -108,6 +128,7 @@
         {{ end }}
       </div>
 
+      {{/* Browse all */}}
       <div class="px-6 xl:px-0 pt-4 pb-12 text-center">
         <a href="/til/"
            class="font-mono text-sm text-nord-accent border border-nord-accent/30
@@ -122,31 +143,4 @@
   {{ partial "right-gutter-list.html" . }}
 
 </div>
-
-<script>
-(function () {
-  var sentinel = document.getElementById('nav-sentinel');
-  var nav      = document.getElementById('site-nav');
-  var identity = document.getElementById('nav-identity');
-  if (!sentinel || !nav || !identity) return;
-
-  new IntersectionObserver(function (entries) {
-    var compact = !entries[0].isIntersecting;
-    if (compact) {
-      nav.style.background = '#252c38';
-      nav.style.borderColor = '#3b4252';
-      identity.style.opacity = '1';
-      identity.style.transform = 'translateY(0)';
-      identity.style.pointerEvents = 'auto';
-    } else {
-      nav.style.background = 'transparent';
-      nav.style.borderColor = 'transparent';
-      identity.style.opacity = '0';
-      identity.style.transform = 'translateY(-8px)';
-      identity.style.pointerEvents = 'none';
-    }
-  }, { threshold: 0 }).observe(sentinel);
-})();
-</script>
-
 {{ end }}

@@ -18,6 +18,7 @@
 
 
 
+
 <div class="xl:flex xl:min-h-screen xl:max-w-[1280px] xl:mx-auto">
 
   
@@ -91,21 +92,32 @@
 </aside>
 
 
+  
   <main class="flex-1 min-w-0">
 
+    
     <div class="max-w-mobile mx-auto xl:max-w-none">
       
 
 <div class="xl:hidden">
   <nav
-    id="site-nav"
-    class="sticky top-0 z-50 border-b px-6 py-2.5 flex justify-between items-center"
-    style="background:transparent;border-color:transparent;transition:background 220ms ease,border-color 220ms ease;"
+    x-data="{ scrolled: false, isInner: false }"
+    x-init="
+      if (!isInner) {
+        var avatar = document.getElementById('avatar-row');
+        if (avatar) {
+          new IntersectionObserver((entries) => {
+            scrolled = !entries[0].isIntersecting;
+          }, { threshold: 0, rootMargin: '-10px 0px 0px 0px' }).observe(avatar);
+        }
+      }
+    "
+    :class="(scrolled || isInner) ? 'bg-nord-bg2 border-nord-border' : 'bg-transparent border-transparent'"
+    class="sticky top-0 z-50 w-full border-b transition-all duration-200 px-6 py-2.5 flex justify-between items-center"
   >
     <a href="/"
-      id="nav-identity"
-      class="flex items-center gap-2.5 no-underline"
-      style="opacity:0;transform:translateY(-8px);pointer-events:none;transition:opacity 220ms ease,transform 220ms ease;"
+      :class="(scrolled || isInner) ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'"
+      class="flex items-center gap-2.5 transition-all duration-200 no-underline"
     >
       <img src="/images/avatar.svg"
            class="w-[30px] h-[30px] rounded-full object-cover border border-nord-accent/80 flex-none"
@@ -135,8 +147,14 @@
 </div>
     </div>
 
-    <div class="max-w-mobile mx-auto xl:max-w-none xl:px-11 xl:py-9">
+    
+    
+    <div class="xl:px-11 xl:py-9">
 
+
+      
+
+      
       <div class="xl:hidden px-6 pt-5 pb-6">
         <div id="avatar-row" class="flex items-center gap-4 mb-6">
           <div class="relative flex-none">
@@ -152,8 +170,6 @@
             <div class="font-mono text-xs text-nord-faint mt-1">Frontend · Backend · LLM/UI</div>
           </div>
         </div>
-        
-        <div id="nav-sentinel" style="height:1px;"></div>
         <h1 class="font-serif text-4xl leading-tight text-nord-bright text-pretty">My bugs have a public record.</h1>
         <p class="text-base text-nord-faint leading-relaxed mt-3">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems.</p>
         <div class="flex items-center gap-2 mt-3.5">
@@ -172,6 +188,7 @@
         </div>
       </div>
 
+      
       <div class="hidden xl:block mb-8">
         <h1 class="font-serif text-[42px] leading-tight text-nord-bright text-pretty mb-3">My bugs have a public record.</h1>
         <p class="text-base text-nord-body leading-relaxed mb-2">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems.</p>
@@ -181,8 +198,10 @@
         </div>
       </div>
 
+      
       <div class="divider-subtle mx-6 xl:mx-0 xl:hidden"></div>
 
+      
       <div class="px-6 xl:px-0 pt-5 pb-2 flex justify-between items-baseline">
         <span class="font-mono text-2xs tracking-widest uppercase text-nord-accent">The log</span>
         <span class="font-mono text-xs text-nord-subtle">2 notes</span>
@@ -191,6 +210,7 @@
         Everything I learn, written down so future-me doesn't debug the same thing twice.
       </p>
 
+      
       <div class="px-6 xl:px-0 pt-3.5">
         <div class="flex items-center gap-2.5 bg-nord-surface border border-nord-border rounded-xl px-4 py-3">
           <span class="text-nord-faint text-lg flex-none">⌕</span>
@@ -199,6 +219,7 @@
         </div>
       </div>
 
+      
       <div class="chips flex gap-2 px-6 xl:px-0 pt-3.5 pb-1 overflow-x-auto">
         
         <a href="/tags/git/" class="flex-none tag-chip">#git</a>
@@ -211,12 +232,14 @@
         
       </div>
 
+      
       <div class="flex items-center gap-3 px-6 xl:px-0 pt-5 pb-2.5">
         <div class="flex-1 h-px bg-nord-surface"></div>
         <span class="font-mono text-2xs tracking-widest uppercase text-nord-subtle flex-none">June 2026</span>
         <div class="flex-1 h-px bg-nord-surface"></div>
       </div>
 
+      
       <div class="px-6 xl:px-0 grid gap-3 xl:grid-cols-2">
         
         <a href="/til/git-restore-vs-reset/" class="til-card block no-underline">
@@ -247,6 +270,7 @@
         
       </div>
 
+      
       <div class="px-6 xl:px-0 pt-4 pb-12 text-center">
         <a href="/til/"
            class="font-mono text-sm text-nord-accent border border-nord-accent/30
@@ -725,33 +749,6 @@
 
 
 </div>
-
-<script>
-(function () {
-  var sentinel = document.getElementById('nav-sentinel');
-  var nav      = document.getElementById('site-nav');
-  var identity = document.getElementById('nav-identity');
-  if (!sentinel || !nav || !identity) return;
-
-  new IntersectionObserver(function (entries) {
-    var compact = !entries[0].isIntersecting;
-    if (compact) {
-      nav.style.background = '#252c38';
-      nav.style.borderColor = '#3b4252';
-      identity.style.opacity = '1';
-      identity.style.transform = 'translateY(0)';
-      identity.style.pointerEvents = 'auto';
-    } else {
-      nav.style.background = 'transparent';
-      nav.style.borderColor = 'transparent';
-      identity.style.opacity = '0';
-      identity.style.transform = 'translateY(-8px)';
-      identity.style.pointerEvents = 'none';
-    }
-  }, { threshold: 0 }).observe(sentinel);
-})();
-</script>
-
 
 </body>
 </html>
