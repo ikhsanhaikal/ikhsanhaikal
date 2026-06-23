@@ -5,142 +5,149 @@
 {{ range $tilPages }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end }}
 {{ $uniqueTags := $allTags | uniq }}
 
-{{/*
-  Responsive shell:
-  mobile  → single column, max-w-mobile centred
-  xl+     → 3-col: [left-gutter 260px] [center flex-1] [right-gutter 220px]
-*/}}
-<div class="xl:flex xl:min-h-screen xl:max-w-[1280px] xl:mx-auto">
+{{/* ══════════════════ MOBILE (< xl) ══════════════════ */}}
+<div class="xl:hidden">
+
+  {{ partial "nav.html" . }}
+
+  <div class="px-6 pt-5 pb-6">
+    <div id="avatar-row" class="flex items-center gap-4 mb-6">
+      <div class="relative flex-none">
+        <img src="/images/avatar.svg"
+             class="w-[88px] h-[88px] rounded-full object-cover border-2 border-nord-accent"
+             style="object-position:50% 12%; box-shadow:0 0 0 4px rgba(136,192,208,0.1);"
+             alt="{{ .Site.Params.author }}">
+        <span class="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-nord-green border-[2.5px] border-nord-bg block"></span>
+      </div>
+      <div class="flex-1">
+        <div class="font-serif text-2xl text-nord-bright leading-tight">{{ .Site.Params.author }}</div>
+        <div class="font-mono text-xs text-nord-accent mt-1">{{ .Site.Params.role }}</div>
+        <div class="font-mono text-xs text-nord-faint mt-1">{{ .Site.Params.roleDetail }}</div>
+      </div>
+    </div>
+    <h1 class="font-serif text-4xl leading-tight text-nord-bright text-pretty">{{ .Site.Params.tagline }}</h1>
+    <p class="text-base text-nord-faint leading-relaxed mt-3">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems.</p>
+    <div class="flex items-center gap-2 mt-3.5">
+      <span class="w-2 h-2 rounded-full bg-nord-green flex-none block"></span>
+      <span class="font-mono text-xs text-nord-faint">{{ .Site.Params.status }}</span>
+    </div>
+    <div class="flex gap-2.5 mt-5">
+      <a href="/resume.pdf" class="btn-primary flex-1">Résumé ↓</a>
+      <a href="mailto:{{ .Site.Params.email }}" class="btn-outline flex-1">Email me</a>
+    </div>
+    <div class="text-center mt-3">
+      <a href="https://{{ .Site.Params.github }}" target="_blank"
+         class="font-mono text-xs text-nord-subtle hover:text-nord-accent transition-colors">
+        {{ .Site.Params.github }} ↗
+      </a>
+    </div>
+  </div>
+
+  <div class="divider-subtle mx-6"></div>
+
+  <div class="px-6 pt-5 pb-2 flex justify-between items-baseline">
+    <span class="font-mono text-2xs tracking-widest uppercase text-nord-accent">The log</span>
+    <span class="font-mono text-xs text-nord-subtle">{{ $tilCount }} notes</span>
+  </div>
+  <p class="px-6 pb-1.5 text-md text-nord-faint leading-relaxed">
+    Everything I learn, written down so future-me doesn't debug the same thing twice.
+  </p>
+
+  <div class="px-6 pt-3.5">
+    <div class="flex items-center gap-2.5 bg-nord-surface border border-nord-border rounded-xl px-4 py-3">
+      <span class="text-nord-faint text-lg flex-none">⌕</span>
+      <span class="text-md text-nord-subtle flex-1">Search {{ $tilCount }} notes…</span>
+      <span class="font-mono text-xs text-nord-dim border border-nord-border rounded px-1.5 py-0.5">⌘K</span>
+    </div>
+  </div>
+
+  <div class="chips flex gap-2 px-6 pt-3.5 pb-1 overflow-x-auto">
+    {{ range first 6 $uniqueTags }}
+    <a href="/tags/{{ . | urlize }}/" class="flex-none tag-chip">#{{ . }}</a>
+    {{ end }}
+  </div>
+
+  <div class="flex items-center gap-3 px-6 pt-5 pb-2.5">
+    <div class="flex-1 h-px bg-nord-surface"></div>
+    <span class="font-mono text-2xs tracking-widest uppercase text-nord-subtle flex-none">June 2026</span>
+    <div class="flex-1 h-px bg-nord-surface"></div>
+  </div>
+
+  <div class="px-6 grid gap-3">
+    {{ range first 4 $tilPages }}
+    <a href="{{ .RelPermalink }}" class="til-card block no-underline">
+      <div class="font-serif text-xl text-nord-bright leading-snug">{{ .Title }}</div>
+      <div class="text-md text-nord-faint leading-relaxed mt-1.5">{{ .Description | default (.Summary | truncate 120) }}</div>
+      <div class="flex justify-between items-center mt-3">
+        <span class="font-mono text-sm text-nord-accent">{{ range .Params.tags }}#{{ . }} {{ end }}</span>
+        <span class="font-mono text-xs text-nord-subtle">{{ .Date.Format "Jan 02" }}</span>
+      </div>
+    </a>
+    {{ end }}
+  </div>
+
+  <div class="px-6 pt-4 pb-12 text-center">
+    <a href="/til/"
+       class="font-mono text-sm text-nord-accent border border-nord-accent/30 rounded-lg px-6 py-3 inline-block hover:border-nord-accent/60 transition-colors">
+      browse all til →
+    </a>
+  </div>
+
+</div>
+
+{{/* ══════════════════ DESKTOP (xl+) ══════════════════ */}}
+<div class="hidden xl:grid" style="grid-template-columns:400px 1fr;min-height:100vh;">
 
   {{ partial "left-gutter.html" . }}
 
-  {{/* ── CENTER COLUMN ── */}}
-  <main class="flex-1 min-w-0">
+  {{/* Right content — upscaled for desktop */}}
+  <div class="overflow-auto" style="padding:72px 64px;background:#252c38;">
+    {{/* Role: 14px */}}
+    <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#88c0d0;letter-spacing:.08em;margin-bottom:12px;">{{ .Site.Params.role }}</div>
+    {{/* Name: 72px */}}
+    <div style="font-family:'Newsreader',serif;font-size:72px;line-height:1;color:#eceff4;letter-spacing:-.02em;">{{ .Site.Params.author }}</div>
+    {{/* Quote: 28px */}}
+    <div style="font-family:'Newsreader',serif;font-style:italic;font-size:28px;color:#9aa4ba;margin-top:14px;line-height:1.3;">"{{ .Site.Params.tagline }}"</div>
+    {{/* Description: 17px */}}
+    <div style="font-size:17px;line-height:1.65;color:#d8dee9;margin-top:18px;max-width:520px;">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems.</div>
+    {{/* Status dot */}}
+    <div class="flex items-center gap-2" style="margin-top:16px;">
+      <span class="w-[7px] h-[7px] rounded-full bg-nord-green flex-none block"></span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#9aa4ba;">{{ .Site.Params.status }}</span>
+    </div>
+    {{/* Buttons: 15px */}}
+    <div class="flex gap-3" style="margin-top:24px;">
+      <a href="/resume.pdf" class="no-underline" style="background:#88c0d0;color:#252c38;font-weight:600;font-size:15px;font-family:'IBM Plex Mono',monospace;border-radius:11px;padding:13px 28px;">Résumé ↓</a>
+      <a href="mailto:{{ .Site.Params.email }}" class="no-underline" style="color:#eceff4;font-size:15px;font-family:'IBM Plex Mono',monospace;border:1px solid #434c5e;border-radius:11px;padding:13px 28px;">Email me</a>
+    </div>
+    {{/* GitHub: 13px */}}
+    <div style="margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#7b88a1;">{{ .Site.Params.github }} ↗</div>
 
-    {{/* Mobile-only top chrome */}}
-    <div class="max-w-mobile mx-auto xl:max-w-none">
-      {{ partial "nav.html" . }}
+    {{/* Gradient divider */}}
+    <div class="divider-accent" style="margin:36px 0 28px;"></div>
+
+    {{/* Log section header: 13px */}}
+    <div class="flex justify-between items-baseline" style="margin-bottom:20px;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#88c0d0;">latest from the log</span>
+      <a href="/til/" class="no-underline" style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#88c0d0;">browse all →</a>
     </div>
 
-    <!--
-    <div class="max-w-mobile mx-auto xl:max-w-none xl:px11 xl:py-9">
-    -->
-    
-    <div class="xl:px-11 xl:py-9">
-
-
-      {{/* ── INTRO (mobile full / desktop compact since bio is in left gutter) ── */}}
-
-      {{/* Mobile avatar + bio — hidden on desktop (left gutter has it) */}}
-      <div class="xl:hidden px-6 pt-5 pb-6">
-        <div id="avatar-row" class="flex items-center gap-4 mb-6">
-          <div class="relative flex-none">
-            <img src="/images/avatar.svg"
-                 class="w-[88px] h-[88px] rounded-full object-cover border-2 border-nord-accent"
-                 style="object-position:50% 12%; box-shadow:0 0 0 4px rgba(136,192,208,0.1);"
-                 alt="{{ .Site.Params.author }}">
-            <span class="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-nord-green border-[2.5px] border-nord-bg block"></span>
-          </div>
-          <div class="flex-1">
-            <div class="font-serif text-2xl text-nord-bright leading-tight">{{ .Site.Params.author }}</div>
-            <div class="font-mono text-xs text-nord-accent mt-1">{{ .Site.Params.role }}</div>
-            <div class="font-mono text-xs text-nord-faint mt-1">{{ .Site.Params.roleDetail }}</div>
-          </div>
+    {{/* 2×2 card grid */}}
+    <div class="grid grid-cols-2 gap-3.5">
+      {{ range first 4 $tilPages }}
+      <a href="{{ .RelPermalink }}" class="no-underline block" style="background:#3b4252;border:1px solid #434c5e;border-radius:14px;padding:20px;">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7b88a1;margin-bottom:9px;">{{ .Date.Format "Jan 02" }} · #{{ index .Params.tags 0 }}</div>
+        <div style="font-family:'Newsreader',serif;font-size:22px;line-height:1.3;color:#eceff4;margin-bottom:9px;">{{ .Title }}</div>
+        <div style="font-size:15px;line-height:1.55;color:#9aa4ba;{{ if .Params.code_preview }}margin-bottom:13px;{{ end }}">{{ .Description | default (.Summary | truncate 90) }}</div>
+        {{ with .Params.code_preview }}
+        <div style="background:#252c38;border-radius:8px;padding:10px 13px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#d8dee9;">
+          <span style="color:#81a1c1;">git</span> restore --staged <span style="color:#a3be8c;">file</span>
         </div>
-        <h1 class="font-serif text-4xl leading-tight text-nord-bright text-pretty">{{ .Site.Params.tagline }}</h1>
-        <p class="text-base text-nord-faint leading-relaxed mt-3">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems.</p>
-        <div class="flex items-center gap-2 mt-3.5">
-          <span class="w-2 h-2 rounded-full bg-nord-green flex-none block"></span>
-          <span class="font-mono text-xs text-nord-faint">{{ .Site.Params.status }}</span>
-        </div>
-        <div class="flex gap-2.5 mt-5">
-          <a href="/resume.pdf" class="btn-primary flex-1">Résumé ↓</a>
-          <a href="mailto:{{ .Site.Params.email }}" class="btn-outline flex-1">Email me</a>
-        </div>
-        <div class="text-center mt-3">
-          <a href="https://{{ .Site.Params.github }}" target="_blank"
-             class="font-mono text-xs text-nord-subtle hover:text-nord-accent transition-colors">
-            {{ .Site.Params.github }} ↗
-          </a>
-        </div>
-      </div>
-
-      {{/* Desktop hero headline — left gutter has bio so just tagline + desc here */}}
-      <div class="hidden xl:block mb-8">
-        <h1 class="font-serif text-[42px] leading-tight text-nord-bright text-pretty mb-3">{{ .Site.Params.tagline }}</h1>
-        <p class="text-base text-nord-body leading-relaxed mb-2">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems.</p>
-        <div class="flex items-center gap-2">
-          <span class="w-2 h-2 rounded-full bg-nord-green flex-none block"></span>
-          <span class="font-mono text-xs text-nord-faint">{{ .Site.Params.status }}</span>
-        </div>
-      </div>
-
-      {{/* ── Divider ── */}}
-      <div class="divider-subtle mx-6 xl:mx-0 xl:hidden"></div>
-
-      {{/* ── LOG SECTION ── */}}
-      <div class="px-6 xl:px-0 pt-5 pb-2 flex justify-between items-baseline">
-        <span class="font-mono text-2xs tracking-widest uppercase text-nord-accent">The log</span>
-        <span class="font-mono text-xs text-nord-subtle">{{ $tilCount }} notes</span>
-      </div>
-      <p class="px-6 xl:px-0 pb-1.5 text-md text-nord-faint leading-relaxed">
-        Everything I learn, written down so future-me doesn't debug the same thing twice.
-      </p>
-
-      {{/* Search */}}
-      <div class="px-6 xl:px-0 pt-3.5">
-        <div class="flex items-center gap-2.5 bg-nord-surface border border-nord-border rounded-xl px-4 py-3">
-          <span class="text-nord-faint text-lg flex-none">⌕</span>
-          <span class="text-md text-nord-subtle flex-1">Search {{ $tilCount }} notes…</span>
-          <span class="font-mono text-xs text-nord-dim border border-nord-border rounded px-1.5 py-0.5">⌘K</span>
-        </div>
-      </div>
-
-      {{/* Tag chips */}}
-      <div class="chips flex gap-2 px-6 xl:px-0 pt-3.5 pb-1 overflow-x-auto">
-        {{ range first 6 $uniqueTags }}
-        <a href="/tags/{{ . | urlize }}/" class="flex-none tag-chip">#{{ . }}</a>
         {{ end }}
-      </div>
-
-      {{/* Month divider */}}
-      <div class="flex items-center gap-3 px-6 xl:px-0 pt-5 pb-2.5">
-        <div class="flex-1 h-px bg-nord-surface"></div>
-        <span class="font-mono text-2xs tracking-widest uppercase text-nord-subtle flex-none">June 2026</span>
-        <div class="flex-1 h-px bg-nord-surface"></div>
-      </div>
-
-      {{/* TIL cards — 1-col mobile, 2-col desktop */}}
-      <div class="px-6 xl:px-0 grid gap-3 xl:grid-cols-2">
-        {{ range first 4 $tilPages }}
-        <a href="{{ .RelPermalink }}" class="til-card block no-underline">
-          <div class="font-serif text-xl text-nord-bright leading-snug">{{ .Title }}</div>
-          <div class="text-md text-nord-faint leading-relaxed mt-1.5">
-            {{ .Description | default (.Summary | truncate 120) }}
-          </div>
-          <div class="flex justify-between items-center mt-3">
-            <span class="font-mono text-sm text-nord-accent">
-              {{ range .Params.tags }}#{{ . }} {{ end }}
-            </span>
-            <span class="font-mono text-xs text-nord-subtle">{{ .Date.Format "Jan 02" }}</span>
-          </div>
-        </a>
-        {{ end }}
-      </div>
-
-      {{/* Browse all */}}
-      <div class="px-6 xl:px-0 pt-4 pb-12 text-center">
-        <a href="/til/"
-           class="font-mono text-sm text-nord-accent border border-nord-accent/30
-                  rounded-lg px-6 py-3 inline-block hover:border-nord-accent/60 transition-colors">
-          browse all til →
-        </a>
-      </div>
-
+      </a>
+      {{ end }}
     </div>
-  </main>
-
-  {{ partial "right-gutter-list.html" . }}
+  </div>
 
 </div>
 {{ end }}

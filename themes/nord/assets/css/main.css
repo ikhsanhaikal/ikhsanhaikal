@@ -67,9 +67,15 @@
   }
 
   /* ── Prose overrides for TIL detail ── */
+  /* Mobile: 16px body. Desktop (xl+): 18px body / 1.8 line-height to match design. */
   .til-prose p    { @apply font-serif text-lg text-nord-body leading-relaxed; }
   .til-prose code { @apply font-mono text-sm text-nord-accent; }
   .til-prose em   { @apply text-nord-bright not-italic; font-style: italic; }
+
+  @media (min-width: 1280px) {
+    .til-prose p    { font-size: 18px; line-height: 1.8; }
+    .til-prose code { font-size: 14.5px; }
+  }
 
   /* ── Button ── */
   .btn-primary {
@@ -97,3 +103,4 @@
   }
   .related-card:hover { @apply border-nord-accent/40; }
 }
+

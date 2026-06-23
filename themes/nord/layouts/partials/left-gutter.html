@@ -1,62 +1,50 @@
 {{/*
-  Desktop left gutter — hidden on mobile, visible at xl+
-  Contains: avatar illustration, name, role, tagline, status, buttons, stats, github
+  Desktop left illustration column — sticky, 400px, hidden on mobile.
+  Exact font sizes from design:
+  - "ih" monogram: Newsreader serif italic 16px
+  - Nav links: IBM Plex Mono 13px
+  - Status: IBM Plex Mono 11px
 */}}
-{{ $tilPages := where .Site.RegularPages "Section" "til" }}
-{{ $allTags := slice }}
-{{ range $tilPages }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end }}
-{{ $uniqueTags := $allTags | uniq }}
+{{ $section := .Section }}
+{{ if .IsHome }}{{ $section = "home" }}{{ end }}
 
-<aside class="hidden xl:flex flex-col w-[260px] flex-none px-7 py-8 border-r border-nord-border bg-nord-bg2">
+<aside class="hidden xl:block w-[400px] flex-none">
+  <div class="sticky top-0 h-screen relative bg-[#1a2028]">
 
-  {{/* Illustration — fades into bg */}}
-  <div class="relative mb-[-8px] flex-none">
-    <img src="/images/avatar.svg" class="w-full block" alt="{{ .Site.Params.author }}">
-    <div class="absolute bottom-0 left-0 right-0 h-28 pointer-events-none"
-         style="background:linear-gradient(to top,#252c38,transparent)"></div>
+    {{/* Illustration — full width, anchored bottom */}}
+    <img src="/images/avatar.svg"
+         class="absolute bottom-0 left-0 w-full max-w-none"
+         alt="{{ .Site.Params.author }}">
+
+    {{/* Right gradient — fades dark left into lighter right content bg */}}
+    <div class="absolute inset-0" style="background:linear-gradient(to right,transparent 50%,#252c38 100%);"></div>
+    {{/* Bottom-fade gradient */}}
+    <div class="absolute inset-0" style="background:linear-gradient(to top,#1a2028 0%,transparent 35%);"></div>
+
+    {{/* Top: monogram + nav — upscaled for desktop */}}
+    <div class="absolute top-[22px] left-6 right-6 flex justify-between items-center">
+      {{/* "ih" monogram: 22px */}}
+      <a href="/" class="no-underline font-serif italic" style="font-size:22px;color:rgba(236,239,244,.7);">ih</a>
+      {{/* Nav: 16px */}}
+      <div class="flex gap-[18px]" style="font-family:'IBM Plex Mono',monospace;font-size:16px;">
+        {{ range .Site.Menus.main }}
+        {{ $isActive := false }}
+        {{ if and (eq .Name "til") (or (eq $section "til") (eq $section "tags")) }}{{ $isActive = true }}{{ end }}
+        {{ if and (eq .Name "blog") (eq $section "blog") }}{{ $isActive = true }}{{ end }}
+        <a href="{{ .URL }}"
+           class="no-underline"
+           style="{{ if $isActive }}color:#88c0d0;border-bottom:1px solid rgba(136,192,208,.6);padding-bottom:2px;{{ else }}color:rgba(154,164,186,.7);{{ end }}">
+          {{ .Name }}{{ if eq .Name "resume" }} ↗{{ end }}
+        </a>
+        {{ end }}
+      </div>
+    </div>
+
+    {{/* Bottom-left: status dot — 13px */}}
+    <div class="absolute bottom-[22px] left-6 flex items-center gap-[7px]">
+      <span class="w-[7px] h-[7px] rounded-full bg-nord-green flex-none block"></span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:rgba(154,164,186,.65);">open to freelance</span>
+    </div>
+
   </div>
-
-  {{/* Name + role */}}
-  <div class="font-serif text-[20px] text-nord-bright leading-tight relative z-10">{{ .Site.Params.author }}</div>
-  <div class="font-mono text-xs text-nord-accent mt-1.5">{{ .Site.Params.role }}</div>
-  <div class="font-serif italic text-md text-nord-faint mt-1.5 leading-relaxed">"{{ .Site.Params.tagline }}"</div>
-
-  {{/* Status dot */}}
-  <div class="flex items-center gap-1.5 mt-3">
-    <span class="w-2 h-2 rounded-full bg-nord-green flex-none block"></span>
-    <span class="font-mono text-xs text-nord-faint">{{ .Site.Params.status }}</span>
-  </div>
-
-  {{/* Divider */}}
-  <div class="h-px mt-4 mb-4 flex-none" style="background:linear-gradient(to right,#434c5e,transparent)"></div>
-
-  {{/* Nav links */}}
-  <nav class="flex flex-col gap-1.5 mb-5">
-    {{ range .Site.Menus.main }}
-    <a href="{{ .URL }}"
-       class="nav-link text-base py-1 {{ if or (eq $.RelPermalink .URL) (and (hasPrefix $.RelPermalink .URL) (ne .URL "/")) }}active{{ end }}">
-      {{ .Name }}
-    </a>
-    {{ end }}
-  </nav>
-
-  {{/* CTA Buttons */}}
-  <div class="flex flex-col gap-2 mb-4">
-    <a href="/resume.pdf" class="btn-primary font-mono text-md py-2.5">Résumé ↓</a>
-    <a href="mailto:{{ .Site.Params.email }}" class="btn-outline font-mono text-md py-2.5">Email me</a>
-  </div>
-
-  {{/* Stats */}}
-  <div class="font-mono text-xs text-nord-subtle mb-3">
-    <span class="text-nord-accent">{{ len $tilPages }}</span> notes ·
-    <span class="text-nord-accent">{{ len $uniqueTags }}</span> tags ·
-    since <span class="text-nord-accent">2024</span>
-  </div>
-
-  {{/* GitHub */}}
-  <a href="https://{{ .Site.Params.github }}" target="_blank"
-     class="font-mono text-xs text-nord-subtle mt-auto hover:text-nord-accent transition-colors">
-    {{ .Site.Params.github }} ↗
-  </a>
-
 </aside>

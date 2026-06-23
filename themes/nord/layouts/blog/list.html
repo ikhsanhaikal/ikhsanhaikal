@@ -1,51 +1,49 @@
 {{ define "main" }}
 {{ $tilCount := len (where .Site.RegularPages "Section" "til") }}
 
-<div class="xl:flex xl:min-h-screen xl:max-w-[1280px] xl:mx-auto">
+{{/* ══════════════════ MOBILE (< xl) ══════════════════ */}}
+<div class="xl:hidden">
+
+  {{ partial "nav.html" . }}
+
+  <div class="flex flex-col items-center justify-center min-h-[calc(100vh-120px)] px-8 py-12 text-center">
+    <div class="font-mono text-5xl text-nord-accent mb-7 leading-none" aria-hidden="true">_</div>
+    <h1 class="font-serif text-3xl leading-snug text-nord-bright mb-3.5 text-pretty">Nothing here yet.</h1>
+    <p class="font-serif italic text-lg leading-relaxed text-nord-faint max-w-[280px] mb-8">
+      Turns out writing proper blog posts is harder than shipping code. Still working on it.
+    </p>
+    <div class="divider-subtle w-60 mb-7"></div>
+    <p class="font-mono text-xs text-nord-subtle mb-4">In the meantime —</p>
+    <a href="/til/" class="bg-nord-accent/10 border border-nord-accent/30 rounded-xl px-6 py-4 max-w-[280px] w-full no-underline hover:border-nord-accent/60 transition-colors block">
+      <div class="font-mono text-2xs tracking-widest uppercase text-nord-accent mb-2">the til log</div>
+      <p class="text-base leading-relaxed text-nord-body mb-3">That's where the real writing happens — {{ $tilCount }} notes and counting.</p>
+      <span class="font-mono text-md text-nord-accent">browse all til →</span>
+    </a>
+    <div class="mt-8 font-mono text-2xs text-nord-dim">last checked: never · drafts in progress: maybe</div>
+  </div>
+
+</div>
+
+{{/* ══════════════════ DESKTOP (xl+) ══════════════════ */}}
+<div class="hidden xl:grid" style="grid-template-columns:400px 1fr;min-height:100vh;">
 
   {{ partial "left-gutter.html" . }}
 
-  <main class="flex-1 min-w-0">
-
-    <!--
-    <div class="max-w-mobile mx-auto xl:max-w-none">
-    </div>
-  -->
-      {{ partial "nav.html" . }}
-
-    {{/* Empty state — centred vertically */}}
-    <div class="flex flex-col items-center justify-center min-h-[calc(100vh-120px)]
-                px-8 py-12 text-center max-w-mobile mx-auto xl:max-w-none">
-
-      <div class="font-mono text-5xl text-nord-accent mb-7 leading-none" aria-hidden="true">_</div>
-
-      <h1 class="font-serif text-3xl leading-snug text-nord-bright mb-3.5 text-pretty">Nothing here yet.</h1>
-
-      <p class="font-serif italic text-lg leading-relaxed text-nord-faint max-w-[280px] mb-8">
-        Turns out writing proper blog posts is harder than shipping code. Still working on it.
-      </p>
-
-      <div class="divider-subtle w-60 mb-7"></div>
-
-      <p class="font-mono text-xs text-nord-subtle mb-4">In the meantime —</p>
-
-      <a href="/til/"
-         class="bg-nord-accent/10 border border-nord-accent/30 rounded-xl px-6 py-4
-                max-w-[280px] w-full no-underline hover:border-nord-accent/60 transition-colors block">
-        <div class="font-mono text-2xs tracking-widest uppercase text-nord-accent mb-2">the til log</div>
-        <p class="text-base leading-relaxed text-nord-body mb-3">
-          That's where the real writing happens — {{ $tilCount }} notes and counting.
-        </p>
-        <span class="font-mono text-md text-nord-accent">browse all til →</span>
-      </a>
-
-      <div class="mt-8 font-mono text-2xs text-nord-dim">last checked: never · drafts in progress: maybe</div>
-
-    </div>
-
-  </main>
-
-  {{ partial "right-gutter-list.html" . }}
+  <div class="flex flex-col items-center justify-center min-h-screen px-20 text-center" style="background:#252c38;">
+    <div class="font-mono text-[60px] text-nord-accent mb-7 leading-none" aria-hidden="true">_</div>
+    <h1 class="font-serif text-[42px] leading-tight text-nord-bright mb-3.5">Nothing here yet.</h1>
+    <p class="font-serif italic text-lg leading-relaxed text-nord-faint max-w-[420px] mb-9">
+      Turns out writing proper blog posts is harder than shipping code. Still working on it.
+    </p>
+    <div class="divider-subtle w-full max-w-[360px] mb-8"></div>
+    <p class="font-mono text-sm text-nord-subtle mb-[18px]">In the meantime —</p>
+    <a href="/til/" class="bg-nord-accent/10 border border-nord-accent/30 rounded-2xl px-9 py-[26px] max-w-[400px] w-full no-underline hover:border-nord-accent/60 transition-colors block">
+      <div class="font-mono text-xs tracking-widest uppercase text-nord-accent mb-2.5">the til log</div>
+      <p class="text-base leading-relaxed text-nord-body mb-3.5">That's where the real writing happens — {{ $tilCount }} notes and counting.</p>
+      <span class="font-mono text-md text-nord-accent">browse all til →</span>
+    </a>
+    <div class="mt-8 font-mono text-xs text-nord-dim">last checked: never · drafts in progress: maybe</div>
+  </div>
 
 </div>
 {{ end }}

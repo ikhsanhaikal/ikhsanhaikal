@@ -3,6 +3,7 @@ languageCode: "en-us"
 title: "ikhsan haikal"
 theme: "nord"
 publishDir: "docs"
+enableRobotsTXT: true
 
 params:
   author: "ikhsan haikal"
@@ -10,7 +11,7 @@ params:
   tagline: "My bugs have a public record."
   status: "Employed · open to freelance"
   github: "github.com/ikhsanhaikal"
-  email: "hi@ikhsanhaikal.dev"
+  email: "ikhsanhaikal@outlook.co.id"
   role: "software developer"
   roleDetail: "Frontend · Backend · LLM/UI"
 

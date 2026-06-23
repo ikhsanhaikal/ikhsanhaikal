@@ -1,53 +1,68 @@
 {{ define "main" }}
-<div class="xl:flex xl:min-h-screen xl:max-w-[1280px] xl:mx-auto">
+
+{{/* ══════════════════ MOBILE (< xl) ══════════════════ */}}
+<div class="xl:hidden">
+
+  {{ partial "nav.html" . }}
+
+  <div class="px-6 pt-4 pb-2 flex items-center gap-2 font-mono text-sm">
+    <a href="/til/" class="text-nord-accent hover:underline">←</a>
+    <a href="/til/" class="text-nord-faint">til</a>
+    <span class="text-nord-subtle">/</span>
+    <span class="text-nord-bright">#{{ .Title }}</span>
+  </div>
+
+  <div class="px-6 pt-3">
+    <h1 class="font-serif text-5xl text-nord-bright">#{{ .Title }}</h1>
+    <p class="font-mono text-xs text-nord-subtle mt-2">{{ len .Pages }} notes</p>
+  </div>
+
+  <div class="px-6 pt-5">
+    {{ range .Pages }}
+    <a href="{{ .RelPermalink }}" class="flex items-baseline gap-2.5 py-2.5 border-b border-nord-surface no-underline hover:text-nord-accent transition-colors group">
+      <span class="font-mono text-2xs text-nord-subtle flex-none w-10">{{ .Date.Format "Jan 02" }}</span>
+      <span class="text-md text-nord-body flex-1 group-hover:text-nord-bright transition-colors">{{ .Title }}</span>
+      <span class="font-mono text-2xs text-nord-accent flex-none">#{{ index .Params.tags 0 }}</span>
+    </a>
+    {{ end }}
+  </div>
+
+  <div class="px-6 pt-8 pb-12 text-center">
+    <a href="/til/" class="font-mono text-sm text-nord-accent hover:underline">← all notes</a>
+  </div>
+
+</div>
+
+{{/* ══════════════════ DESKTOP (xl+) ══════════════════ */}}
+<div class="hidden xl:grid" style="grid-template-columns:400px 1fr;min-height:100vh;">
 
   {{ partial "left-gutter.html" . }}
 
-  <main class="flex-1 min-w-0">
-
-    <div class="max-w-mobile mx-auto xl:max-w-none">
-      {{ partial "nav.html" . }}
+  <div class="px-16 py-14 overflow-auto">
+    <div class="flex items-center gap-2 font-mono text-sm mb-5">
+      <a href="/til/" class="text-nord-accent hover:underline">←</a>
+      <a href="/til/" class="text-nord-faint">til</a>
+      <span class="text-nord-subtle">/</span>
+      <span class="text-nord-bright">#{{ .Title }}</span>
     </div>
 
-    <!--
-    <div class="max-w-mobile mx-auto xl:max-w-none xl:px-11 xl:py-9">
-    -->
+    <h1 class="font-serif text-[56px] leading-none text-nord-bright">#{{ .Title }}</h1>
+    <p class="font-mono text-sm text-nord-subtle mt-3 mb-7">{{ len .Pages }} notes</p>
 
-    <div class="xl:px-11 xl:py-9">
-
-      {{/* Breadcrumb */}}
-      <div class="px-6 xl:px-0 pt-4 pb-2 flex items-center gap-2 font-mono text-sm">
-        <a href="/til/" class="text-nord-accent hover:underline">←</a>
-        <a href="/til/" class="text-nord-faint">til</a>
-        <span class="text-nord-subtle">/</span>
-        <span class="text-nord-bright">#{{ .Title }}</span>
-      </div>
-
-      <div class="px-6 xl:px-0 pt-3">
-        <h1 class="font-serif text-5xl text-nord-bright">#{{ .Title }}</h1>
-        <p class="font-mono text-xs text-nord-subtle mt-2">{{ len .Pages }} notes</p>
-      </div>
-
-      <div class="px-6 xl:px-0 pt-5 space-y-0">
-        {{ range .Pages }}
-        <a href="{{ .RelPermalink }}"
-           class="flex items-baseline gap-2.5 py-2.5 border-b border-nord-surface no-underline
-                  hover:text-nord-accent transition-colors group">
-          <span class="font-mono text-2xs text-nord-subtle flex-none w-10">{{ .Date.Format "Jan 02" }}</span>
-          <span class="text-md text-nord-body flex-1 group-hover:text-nord-bright transition-colors">{{ .Title }}</span>
-          <span class="font-mono text-2xs text-nord-accent flex-none">#{{ index .Params.tags 0 }}</span>
-        </a>
-        {{ end }}
-      </div>
-
-      <div class="px-6 xl:px-0 pt-8 pb-12 text-center">
-        <a href="/til/" class="font-mono text-sm text-nord-accent hover:underline">← all notes</a>
-      </div>
-
+    <div class="max-w-[620px]">
+      {{ range .Pages }}
+      <a href="{{ .RelPermalink }}" class="flex items-baseline gap-3.5 py-3.5 border-b border-nord-surface no-underline hover:text-nord-accent transition-colors group">
+        <span class="font-mono text-sm text-nord-subtle flex-none w-[54px]">{{ .Date.Format "Jan 02" }}</span>
+        <span class="font-serif text-xl text-nord-body flex-1 group-hover:text-nord-bright transition-colors">{{ .Title }}</span>
+        <span class="font-mono text-sm text-nord-accent flex-none">#{{ index .Params.tags 0 }}</span>
+      </a>
+      {{ end }}
     </div>
-  </main>
 
-  {{ partial "right-gutter-list.html" . }}
+    <div class="pt-8">
+      <a href="/til/" class="font-mono text-sm text-nord-accent hover:underline">← all notes</a>
+    </div>
+  </div>
 
 </div>
 {{ end }}

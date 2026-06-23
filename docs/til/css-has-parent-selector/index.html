@@ -5,6 +5,9 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>CSS :has() is a real parent selector · ikhsan haikal</title>
   <meta name="description" content="form:has(input:invalid) lets you style the whole form when any field is bad. No JS, finally.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style>[x-cloak] { display: none !important; }</style>
@@ -43,91 +46,9 @@
 
 
 
-
-
-
-
-
-
-
-
-<div class="xl:flex xl:min-h-screen xl:max-w-[1280px] xl:mx-auto">
+<div class="xl:hidden">
 
   
-
-
-
-
-
-<aside class="hidden xl:flex flex-col w-[260px] flex-none px-7 py-8 border-r border-nord-border bg-nord-bg2">
-
-  
-  <div class="relative mb-[-8px] flex-none">
-    <img src="/images/avatar.svg" class="w-full block" alt="ikhsan haikal">
-    <div class="absolute bottom-0 left-0 right-0 h-28 pointer-events-none"
-         style="background:linear-gradient(to top,#252c38,transparent)"></div>
-  </div>
-
-  
-  <div class="font-serif text-[20px] text-nord-bright leading-tight relative z-10">ikhsan haikal</div>
-  <div class="font-mono text-xs text-nord-accent mt-1.5">software developer</div>
-  <div class="font-serif italic text-md text-nord-faint mt-1.5 leading-relaxed">"My bugs have a public record."</div>
-
-  
-  <div class="flex items-center gap-1.5 mt-3">
-    <span class="w-2 h-2 rounded-full bg-nord-green flex-none block"></span>
-    <span class="font-mono text-xs text-nord-faint">Employed · open to freelance</span>
-  </div>
-
-  
-  <div class="h-px mt-4 mb-4 flex-none" style="background:linear-gradient(to right,#434c5e,transparent)"></div>
-
-  
-  <nav class="flex flex-col gap-1.5 mb-5">
-    
-    <a href="/til/"
-       class="nav-link text-base py-1 active">
-      til
-    </a>
-    
-    <a href="/blog/"
-       class="nav-link text-base py-1 ">
-      blog
-    </a>
-    
-    <a href="/resume.pdf"
-       class="nav-link text-base py-1 ">
-      resume
-    </a>
-    
-  </nav>
-
-  
-  <div class="flex flex-col gap-2 mb-4">
-    <a href="/resume.pdf" class="btn-primary font-mono text-md py-2.5">Résumé ↓</a>
-    <a href="mailto:hi@ikhsanhaikal.dev" class="btn-outline font-mono text-md py-2.5">Email me</a>
-  </div>
-
-  
-  <div class="font-mono text-xs text-nord-subtle mb-3">
-    <span class="text-nord-accent">2</span> notes ·
-    <span class="text-nord-accent">4</span> tags ·
-    since <span class="text-nord-accent">2024</span>
-  </div>
-
-  
-  <a href="https://github.com/ikhsanhaikal" target="_blank"
-     class="font-mono text-xs text-nord-subtle mt-auto hover:text-nord-accent transition-colors">
-    github.com/ikhsanhaikal ↗
-  </a>
-
-</aside>
-
-
-  <main class="flex-1 min-w-0">
-
-    
-      
 
 <div class="xl:hidden">
   <nav
@@ -176,53 +97,37 @@
   </nav>
 </div>
 
+  <div class="px-6 pt-3.5 flex items-center justify-between">
+    <div class="flex items-center gap-2 font-mono text-sm">
+      <a href="/til/" class="text-nord-accent hover:underline">←</a>
+      <a href="/til/" class="text-nord-faint hover:text-nord-accent transition-colors">til</a>
+      <span class="text-nord-subtle">/</span>
+      <span class="text-nord-bright">#css</span>
+    </div>
+    <div class="flex gap-4 font-mono text-xs text-nord-subtle">
+      <span>⌘K</span>
+      <a href="https://ikhsanhaikal.com/til/css-has-parent-selector/" target="_blank" class="hover:text-nord-accent transition-colors">↗</a>
+    </div>
+  </div>
+
+  <div class="px-6 pt-3.5 flex items-center gap-2.5 flex-wrap">
     
+    <a href="/tags/css/" class="font-mono text-sm rounded-full px-3 py-1 border border-nord-accent/35 bg-nord-accent/10 text-nord-accent hover:bg-nord-accent/20 transition-colors">#css</a>
+    
+    <a href="/tags/frontend/" class="font-mono text-sm rounded-full px-3 py-1 border border-nord-accent/35 bg-nord-accent/10 text-nord-accent hover:bg-nord-accent/20 transition-colors">#frontend</a>
+    
+    <span class="font-mono text-xs text-nord-subtle">Jun 09, 2026</span>
+    <span class="text-nord-border text-xs">·</span>
+    <span class="font-mono text-xs text-nord-subtle">1 min read</span>
+  </div>
 
-    <div class="xl:px-11 xl:py-9">
+  <div class="px-6 pt-4">
+    <h1 class="font-serif text-4xl leading-tight text-nord-bright text-pretty">CSS :has() is a real parent selector</h1>
+  </div>
 
-      
-      <div class="px-6 xl:px-0 pt-3.5 flex items-center justify-between">
-        <div class="flex items-center gap-2 font-mono text-sm">
-          <a href="/til/" class="text-nord-accent hover:underline">←</a>
-          <a href="/til/" class="text-nord-faint hover:text-nord-accent transition-colors">til</a>
-          <span class="text-nord-subtle">/</span>
-          <span class="text-nord-bright">#css</span>
-        </div>
-        <div class="flex gap-4 font-mono text-xs text-nord-subtle">
-          <span>⌘K</span>
-          <a href="https://ikhsanhaikal.com/til/css-has-parent-selector/" target="_blank" class="hover:text-nord-accent transition-colors">↗</a>
-        </div>
-      </div>
+  <div class="divider-accent mx-6 mt-5"></div>
 
-      
-      <div class="px-6 xl:px-0 pt-3.5 flex items-center gap-2.5 flex-wrap">
-        
-        <a href="/tags/css/"
-           class="font-mono text-sm rounded-full px-3 py-1 border border-nord-accent/35 bg-nord-accent/10 text-nord-accent hover:bg-nord-accent/20 transition-colors">
-          #css
-        </a>
-        
-        <a href="/tags/frontend/"
-           class="font-mono text-sm rounded-full px-3 py-1 border border-nord-accent/35 bg-nord-accent/10 text-nord-accent hover:bg-nord-accent/20 transition-colors">
-          #frontend
-        </a>
-        
-        <span class="font-mono text-xs text-nord-subtle">Jun 09, 2026</span>
-        <span class="text-nord-border text-xs">·</span>
-        <span class="font-mono text-xs text-nord-subtle">1 min read</span>
-      </div>
-
-      
-      <div class="px-6 xl:px-0 pt-4">
-        <h1 class="font-serif text-4xl xl:text-[36px] leading-tight text-nord-bright text-pretty">CSS :has() is a real parent selector</h1>
-      </div>
-
-      
-      <div class="divider-accent mx-6 xl:mx-0 mt-5"></div>
-
-      
-      <div class="px-6 xl:px-0 pt-4 til-prose">
-        <p>I&rsquo;ve wanted a parent selector in CSS for as long as I&rsquo;ve been writing CSS. <code>:has()</code> finally delivers it — and it&rsquo;s more powerful than I expected.</p>
+  <div class="px-6 pt-4 til-prose"><p>I&rsquo;ve wanted a parent selector in CSS for as long as I&rsquo;ve been writing CSS. <code>:has()</code> finally delivers it — and it&rsquo;s more powerful than I expected.</p>
 <div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="c">/* style the form when any field is invalid */</span>
 </span></span><span class="line"><span class="cl"><span class="nt">form</span><span class="p">:</span><span class="nd">has</span><span class="o">(</span><span class="nt">input</span><span class="p">:</span><span class="nd">invalid</span><span class="o">)</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">  <span class="k">border-color</span><span class="p">:</span> <span class="mh">#bf616a</span><span class="p">;</span>
@@ -240,125 +145,179 @@
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
 </span></span></code></pre></div><p>The thing that surprised me: <code>:has()</code> can look at <em>siblings too</em>, not just descendants. <code>.item:has(+ .item)</code> selects any <code>.item</code> followed by another <code>.item</code>.</p>
 <p>Browser support is now excellent — all major browsers as of late 2023. The only gotcha: it&rsquo;s unforgiving with unknown selectors inside <code>:has()</code>. If the selector inside is invalid in a browser that <em>does</em> support <code>:has()</code>, the whole rule is dropped. Use <code>@supports selector(:has(a))</code> to guard if you need to be safe.</p>
+</div>
 
-      </div>
-
-      
-      <div class="px-6 xl:px-0 pt-5 flex gap-2 flex-wrap">
-        
-        <a href="/tags/css/"
-           class="tag-chip active">#css</a>
-        
-        <a href="/tags/frontend/"
-           class="tag-chip ">#frontend</a>
-        
-      </div>
-
-      
-      <div class="divider-subtle mx-6 xl:mx-0 mt-6"></div>
-
-      
-      
-      <div class="xl:hidden px-6 pt-4 pb-1 font-mono text-2xs tracking-widest uppercase text-nord-subtle">
-        Related · #css
-      </div>
-      <div class="xl:hidden px-6 space-y-2 pb-2">
-        
-        <a href="/til/css-has-parent-selector/" class="related-card no-underline">
-          <div>
-            <div class="text-base text-nord-bright leading-snug">CSS :has() is a real parent selector</div>
-            <div class="font-mono text-2xs text-nord-subtle mt-1">Jun 09, 2026</div>
-          </div>
-          <span class="text-nord-accent text-base flex-none">→</span>
-        </a>
-        
-      </div>
-      
-
-      
-      <div class="px-6 xl:px-0 pt-3 pb-3 grid grid-cols-2 gap-2.5">
-        <div></div>
-
-        
-        <a href="/til/git-restore-vs-reset/"
-           class="bg-nord-surface border border-nord-border rounded-lg p-3.5 text-right no-underline hover:border-nord-accent/40 transition-colors">
-          <div class="font-mono text-2xs text-nord-subtle mb-1.5">next →</div>
-          <div class="text-md text-nord-body leading-snug">git restore beats git reset</div>
-        </a>
-        
-      </div>
-
-      
-      <div class="px-6 xl:px-0 pt-2 pb-12 text-center">
-        <a href="/til/" class="font-mono text-sm text-nord-accent hover:underline">← back to til</a>
-      </div>
-
-    </div>
-  </main>
-
-  
-
-
-
-
-<aside class="hidden xl:flex flex-col w-[220px] flex-none px-6 py-9 border-l border-nord-border">
-
-  
-  
-  <div class="mb-7">
-    <div class="font-mono text-2xs tracking-widest uppercase text-nord-subtle mb-3">
-      Related · #css
-    </div>
+  <div class="px-6 pt-5 flex gap-2 flex-wrap">
     
-    <a href="/til/css-has-parent-selector/" class="related-card no-underline block mb-2">
+    <a href="/tags/css/" class="tag-chip active">#css</a>
+    
+    <a href="/tags/frontend/" class="tag-chip ">#frontend</a>
+    
+  </div>
+
+  <div class="divider-subtle mx-6 mt-6"></div>
+
+  
+  <div class="px-6 pt-4 pb-1 font-mono text-2xs tracking-widest uppercase text-nord-subtle">Related · #css</div>
+  <div class="px-6 space-y-2 pb-2">
+    
+    <a href="/til/css-has-parent-selector/" class="related-card no-underline">
       <div>
-        <div class="text-md text-nord-bright leading-snug mb-1">CSS :has() is a real parent selector</div>
-        <div class="font-mono text-2xs text-nord-subtle">Jun 09</div>
+        <div class="text-base text-nord-bright leading-snug">CSS :has() is a real parent selector</div>
+        <div class="font-mono text-2xs text-nord-subtle mt-1">Jun 09, 2026</div>
       </div>
-      <span class="text-nord-accent flex-none">→</span>
+      <span class="text-nord-accent text-base flex-none">→</span>
     </a>
     
   </div>
   
 
+  <div class="px-6 pt-3 pb-3 grid grid-cols-2 gap-2.5">
+    <div></div>
+    
+    <a href="/til/git-restore-vs-reset/" class="bg-nord-surface border border-nord-border rounded-lg p-3.5 text-right no-underline hover:border-nord-accent/40 transition-colors">
+      <div class="font-mono text-2xs text-nord-subtle mb-1.5">next →</div>
+      <div class="text-md text-nord-body leading-snug">git restore beats git reset</div>
+    </a>
+    
+  </div>
+
+  <div class="px-6 pt-2 pb-12 text-center">
+    <a href="/til/" class="font-mono text-sm text-nord-accent hover:underline">← back to til</a>
+  </div>
+
+</div>
+
+
+<div class="hidden xl:grid" style="grid-template-columns:400px 1fr;min-height:100vh;">
+
   
-  <div>
-    <div class="font-mono text-2xs tracking-widest uppercase text-nord-subtle mb-3">All tags</div>
-    <div class="font-mono text-md">
+
+
+
+<aside class="hidden xl:block w-[400px] flex-none">
+  <div class="sticky top-0 h-screen relative bg-[#1a2028]">
+
+    
+    <img src="/images/avatar.svg"
+         class="absolute bottom-0 left-0 w-full max-w-none"
+         alt="ikhsan haikal">
+
+    
+    <div class="absolute inset-0" style="background:linear-gradient(to right,transparent 50%,#252c38 100%);"></div>
+    
+    <div class="absolute inset-0" style="background:linear-gradient(to top,#1a2028 0%,transparent 35%);"></div>
+
+    
+    <div class="absolute top-[22px] left-6 right-6 flex justify-between items-center">
       
-      <div class="flex justify-between py-1.5 border-b border-nord-surface last:border-0">
-        <a href="/tags/git/"
-           class="text-nord-faint hover:text-nord-accent transition-colors">
-          #git
-        </a>
-      </div>
+      <a href="/" class="no-underline font-serif italic" style="font-size:22px;color:rgba(236,239,244,.7);">ih</a>
       
-      <div class="flex justify-between py-1.5 border-b border-nord-surface last:border-0">
-        <a href="/tags/workflow/"
-           class="text-nord-faint hover:text-nord-accent transition-colors">
-          #workflow
+      <div class="flex gap-[18px]" style="font-family:'IBM Plex Mono',monospace;font-size:16px;">
+        
+        
+        
+        
+        <a href="/til/"
+           class="no-underline"
+           style="color:#88c0d0;border-bottom:1px solid rgba(136,192,208,.6);padding-bottom:2px;">
+          til
         </a>
+        
+        
+        
+        
+        <a href="/blog/"
+           class="no-underline"
+           style="color:rgba(154,164,186,.7);">
+          blog
+        </a>
+        
+        
+        
+        
+        <a href="/resume.pdf"
+           class="no-underline"
+           style="color:rgba(154,164,186,.7);">
+          resume ↗
+        </a>
+        
       </div>
+    </div>
+
+    
+    <div class="absolute bottom-[22px] left-6 flex items-center gap-[7px]">
+      <span class="w-[7px] h-[7px] rounded-full bg-nord-green flex-none block"></span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:rgba(154,164,186,.65);">open to freelance</span>
+    </div>
+
+  </div>
+</aside>
+
+  <div class="px-16 py-14 overflow-auto" style="background:#252c38;">
+    
+    <div class="flex items-center gap-2 font-mono text-md mb-5">
+      <a href="/til/" class="text-nord-accent hover:underline text-lg leading-none">←</a>
+      <a href="/til/" class="text-nord-faint hover:text-nord-accent transition-colors">til</a>
+      <span class="text-nord-subtle">/</span>
+      <span class="text-nord-bright">#css</span>
+    </div>
+
+    
+    <div class="flex items-center gap-2.5 mb-5">
+      <span class="font-mono text-sm rounded-full px-3 py-1 border border-nord-accent/35 bg-nord-accent/10 text-nord-accent">#css</span>
+      <span class="font-mono text-sm text-nord-subtle">Jun 09, 2026</span>
+      <span class="text-nord-border">·</span>
+      <span class="font-mono text-sm text-nord-subtle">1 min read</span>
+    </div>
+
+    
+    <h1 class="font-serif text-5xl leading-tight text-nord-bright text-pretty">CSS :has() is a real parent selector</h1>
+
+    
+    <div class="divider-accent my-6"></div>
+
+    
+    <div class="til-prose max-w-[620px]"><p>I&rsquo;ve wanted a parent selector in CSS for as long as I&rsquo;ve been writing CSS. <code>:has()</code> finally delivers it — and it&rsquo;s more powerful than I expected.</p>
+<div class="highlight"><pre tabindex="0" class="chroma"><code class="language-css" data-lang="css"><span class="line"><span class="cl"><span class="c">/* style the form when any field is invalid */</span>
+</span></span><span class="line"><span class="cl"><span class="nt">form</span><span class="p">:</span><span class="nd">has</span><span class="o">(</span><span class="nt">input</span><span class="p">:</span><span class="nd">invalid</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border-color</span><span class="p">:</span> <span class="mh">#bf616a</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">/* style a card when its checkbox is checked */</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">card</span><span class="p">:</span><span class="nd">has</span><span class="o">(</span><span class="nt">input</span><span class="o">[</span><span class="nt">type</span><span class="o">=</span><span class="s2">&#34;checkbox&#34;</span><span class="o">]</span><span class="p">:</span><span class="nd">checked</span><span class="o">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">background</span><span class="p">:</span> <span class="nb">rgba</span><span class="p">(</span><span class="mi">163</span><span class="p">,</span> <span class="mi">190</span><span class="p">,</span> <span class="mi">140</span><span class="p">,</span> <span class="mf">0.1</span><span class="p">);</span>
+</span></span><span class="line"><span class="cl">  <span class="k">border-color</span><span class="p">:</span> <span class="mh">#a3be8c</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span><span class="line"><span class="cl">
+</span></span><span class="line"><span class="cl"><span class="c">/* select a label that comes after a focused input */</span>
+</span></span><span class="line"><span class="cl"><span class="p">.</span><span class="nc">field</span><span class="p">:</span><span class="nd">has</span><span class="o">(</span><span class="nt">input</span><span class="p">:</span><span class="nd">focus</span><span class="o">)</span> <span class="nt">label</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">  <span class="k">color</span><span class="p">:</span> <span class="mh">#88c0d0</span><span class="p">;</span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span></code></pre></div><p>The thing that surprised me: <code>:has()</code> can look at <em>siblings too</em>, not just descendants. <code>.item:has(+ .item)</code> selects any <code>.item</code> followed by another <code>.item</code>.</p>
+<p>Browser support is now excellent — all major browsers as of late 2023. The only gotcha: it&rsquo;s unforgiving with unknown selectors inside <code>:has()</code>. If the selector inside is invalid in a browser that <em>does</em> support <code>:has()</code>, the whole rule is dropped. Use <code>@supports selector(:has(a))</code> to guard if you need to be safe.</p>
+</div>
+
+    
+    <div class="flex gap-2 flex-wrap mt-7 mb-7 max-w-[620px]">
       
-      <div class="flex justify-between py-1.5 border-b border-nord-surface last:border-0">
-        <a href="/tags/frontend/"
-           class="text-nord-faint hover:text-nord-accent transition-colors">
-          #frontend
-        </a>
-      </div>
+      <a href="/tags/css/" class="tag-chip active">#css</a>
       
-      <div class="flex justify-between py-1.5 border-b border-nord-surface last:border-0">
-        <a href="/tags/css/"
-           class="text-nord-accent transition-colors">
-          #css
-        </a>
-      </div>
+      <a href="/tags/frontend/" class="tag-chip ">#frontend</a>
+      
+    </div>
+
+    
+    <div class="grid grid-cols-2 gap-3.5 border-t border-nord-surface pt-6 max-w-[620px]">
+      <div></div>
+      
+      <a href="/til/git-restore-vs-reset/" class="bg-nord-surface border border-nord-border rounded-[13px] p-4 text-right no-underline hover:border-nord-accent/40 transition-colors">
+        <div class="font-mono text-2xs text-nord-subtle mb-1.5">next →</div>
+        <div class="text-base text-nord-body leading-snug">git restore beats git reset</div>
+      </a>
       
     </div>
   </div>
-
-</aside>
-
 
 </div>
 
