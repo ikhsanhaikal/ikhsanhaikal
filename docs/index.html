@@ -13,7 +13,7 @@
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
   <style>[x-cloak] { display: none !important; }</style>
 </head>
-<body class="bg-nord-bg min-h-screen">
+<body class="bg-nord-bg min-h-screen" x-data="{ navOpen: false }">
   
 
 
@@ -23,55 +23,6 @@
 
 
 <div class="xl:hidden">
-
-  
-
-<div class="xl:hidden">
-  <nav
-    x-data="{ scrolled: false, isInner: false }"
-    x-init="
-      if (!isInner) {
-        var avatar = document.getElementById('avatar-row');
-        if (avatar) {
-          new IntersectionObserver((entries) => {
-            scrolled = !entries[0].isIntersecting;
-          }, { threshold: 0, rootMargin: '-10px 0px 0px 0px' }).observe(avatar);
-        }
-      }
-    "
-    :class="(scrolled || isInner) ? 'bg-nord-bg2 border-nord-border' : 'bg-transparent border-transparent'"
-    class="sticky top-0 z-50 w-full border-b transition-all duration-200 px-6 py-2.5 flex justify-between items-center"
-  >
-    <a href="/"
-      :class="(scrolled || isInner) ? 'opacity-100 translate-y-0 pointer-events-auto' : 'opacity-0 -translate-y-2 pointer-events-none'"
-      class="flex items-center gap-2.5 transition-all duration-200 no-underline"
-    >
-      <img src="/images/avatar.svg"
-           class="w-[30px] h-[30px] rounded-full object-cover border border-nord-accent/80 flex-none"
-           style="object-position:50% 12%"
-           alt="ikhsan haikal">
-      <span class="font-mono text-sm text-nord-bright">ikhsan haikal</span>
-    </a>
-    <div class="flex gap-5 ml-auto">
-      
-      <a href="/til/"
-         class="nav-link ">
-        til
-      </a>
-      
-      <a href="/blog/"
-         class="nav-link ">
-        blog
-      </a>
-      
-      <a href="/resume.pdf"
-         class="nav-link ">
-        resume
-      </a>
-      
-    </div>
-  </nav>
-</div>
 
   <div class="px-6 pt-5 pb-6">
     <div id="avatar-row" class="flex items-center gap-4 mb-6">
@@ -164,13 +115,110 @@
     
   </div>
 
-  <div class="px-6 pt-4 pb-12 text-center">
+  
+  <div class="px-6 pt-4 pb-[100px] text-center">
     <a href="/til/"
-       class="font-mono text-sm text-nord-accent border border-nord-accent/30 rounded-lg px-6 py-3 inline-block hover:border-nord-accent/60 transition-colors">
+       class="font-mono text-sm text-nord-accent border border-nord-accent/30
+              rounded-lg px-6 py-3 inline-block hover:border-nord-accent/60 transition-colors">
       browse all til →
     </a>
   </div>
 
+</div>
+
+
+
+
+
+<div class="xl:hidden"
+     @click="navOpen = true"
+     style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);width:fit-content;z-index:50;cursor:pointer;background:#3b4252;border:1px solid #4c566a;border-radius:999px;padding:10px 20px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,.4);white-space:nowrap;">
+  <span style="font-family:'Newsreader',serif;font-style:italic;font-size:15px;color:#eceff4;">ih</span>
+  <span style="width:1px;height:14px;background:#4c566a;display:block;flex:none;"></span>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#88c0d0;letter-spacing:.04em;">≡</span>
+</div>
+
+
+<div class="xl:hidden"
+     x-show="navOpen"
+     x-transition:enter="transition ease-out duration-200"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="transition ease-in duration-150"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0"
+     @click="navOpen = false"
+     style="position:fixed;inset:0;z-index:60;background:rgba(20,25,33,.7);backdrop-filter:blur(2px);"
+     x-cloak></div>
+
+
+<div class="xl:hidden"
+     x-show="navOpen"
+     x-transition:enter="transition ease-[cubic-bezier(.32,.72,0,1)] duration-300"
+     x-transition:enter-start="translate-y-full"
+     x-transition:enter-end="translate-y-0"
+     x-transition:leave="transition ease-[cubic-bezier(.32,.72,0,1)] duration-300"
+     x-transition:leave-start="translate-y-0"
+     x-transition:leave-end="translate-y-full"
+     style="position:fixed;bottom:0;left:0;width:100%;z-index:70;background:#252c38;border-radius:20px 20px 0 0;border-top:1px solid #3b4252;box-shadow:0 -8px 40px rgba(0,0,0,.5);"
+     x-cloak>
+
+  
+  <div style="display:flex;justify-content:center;padding:12px 0 8px;">
+    <div style="width:36px;height:4px;border-radius:2px;background:#4c566a;"></div>
+  </div>
+  <div style="height:1px;background:#3b4252;margin:4px 0 0;"></div>
+
+  <div style="padding-bottom:32px;">
+
+    
+    <a href="/til/" @click="navOpen = false"
+       style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;text-decoration:none;">
+      <div>
+        <div style="font-family:'Newsreader',serif;font-size:22px;color:#88c0d0;line-height:1.1;">til</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#7b88a1;margin-top:3px;letter-spacing:.08em;">TECHNICAL LOG</div>
+      </div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#88c0d0;">→</span>
+    </a>
+
+    <div style="height:1px;background:#3b4252;margin:0 24px;"></div>
+
+    
+    <a href="/blog/" @click="navOpen = false"
+       style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;text-decoration:none;">
+      <div>
+        <div style="font-family:'Newsreader',serif;font-size:22px;color:#eceff4;line-height:1.1;">blog</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#7b88a1;margin-top:3px;letter-spacing:.08em;">ESSAYS &amp; NOTES</div>
+      </div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#7b88a1;">→</span>
+    </a>
+
+    <div style="height:1px;background:#3b4252;margin:0 24px;"></div>
+
+    
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;opacity:.45;cursor:default;">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-family:'Newsreader',serif;font-size:22px;color:#eceff4;line-height:1.1;">about</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;background:rgba(136,192,208,.12);color:#88c0d0;border:1px solid rgba(136,192,208,.3);border-radius:999px;padding:2px 8px;letter-spacing:.06em;">soon</span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#7b88a1;margin-top:3px;letter-spacing:.08em;">THE PERSON BEHIND THE BUGS</div>
+      </div>
+    </div>
+
+    <div style="height:1px;background:#3b4252;margin:0 24px;"></div>
+
+    
+    <a href="https://github.com/ikhsanhaikal" target="_blank" @click="navOpen = false"
+       style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;text-decoration:none;">
+      <div>
+        <div style="font-family:'Newsreader',serif;font-size:22px;color:#eceff4;line-height:1.1;">github</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#7b88a1;margin-top:3px;letter-spacing:.08em;">github.com/ikhsanhaikal</div>
+      </div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#7b88a1;">↗</span>
+    </a>
+
+  </div>
 </div>
 
 
@@ -241,37 +289,24 @@
 
   
   <div class="overflow-auto" style="padding:72px 64px;background:#252c38;">
-    
     <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#88c0d0;letter-spacing:.08em;margin-bottom:12px;">software developer</div>
-    
     <div style="font-family:'Newsreader',serif;font-size:72px;line-height:1;color:#eceff4;letter-spacing:-.02em;">ikhsan haikal</div>
-    
     <div style="font-family:'Newsreader',serif;font-style:italic;font-size:28px;color:#9aa4ba;margin-top:14px;line-height:1.3;">"My bugs have a public record."</div>
-    
     <div style="font-size:17px;line-height:1.65;color:#d8dee9;margin-top:18px;max-width:520px;">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems.</div>
-    
     <div class="flex items-center gap-2" style="margin-top:16px;">
       <span class="w-[7px] h-[7px] rounded-full bg-nord-green flex-none block"></span>
       <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#9aa4ba;">Employed · open to freelance</span>
     </div>
-    
     <div class="flex gap-3" style="margin-top:24px;">
       <a href="/resume.pdf" class="no-underline" style="background:#88c0d0;color:#252c38;font-weight:600;font-size:15px;font-family:'IBM Plex Mono',monospace;border-radius:11px;padding:13px 28px;">Résumé ↓</a>
       <a href="mailto:ikhsanhaikal@outlook.co.id" class="no-underline" style="color:#eceff4;font-size:15px;font-family:'IBM Plex Mono',monospace;border:1px solid #434c5e;border-radius:11px;padding:13px 28px;">Email me</a>
     </div>
-    
     <div style="margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#7b88a1;">github.com/ikhsanhaikal ↗</div>
-
-    
     <div class="divider-accent" style="margin:36px 0 28px;"></div>
-
-    
     <div class="flex justify-between items-baseline" style="margin-bottom:20px;">
       <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#88c0d0;">latest from the log</span>
       <a href="/til/" class="no-underline" style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#88c0d0;">browse all →</a>
     </div>
-
-    
     <div class="grid grid-cols-2 gap-3.5">
       
       <a href="/til/git-restore-vs-reset/" class="no-underline block" style="background:#3b4252;border:1px solid #434c5e;border-radius:14px;padding:20px;">
