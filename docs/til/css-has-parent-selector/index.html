@@ -206,32 +206,32 @@
 
 
 
-<aside class="hidden xl:block w-[400px] flex-none">
-  <div class="sticky top-0 h-screen relative bg-[#1a2028]">
+<aside class="hidden xl:block flex-none" style="width:100%;">
+  <div class="sticky top-0 overflow-hidden" style="height:100vh;background:#080c10;">
 
     
     <img src="/images/avatar.svg"
-         class="absolute bottom-0 left-0 w-full max-w-none"
+         style="width:100%;height:100%;object-fit:cover;object-position:50% 0%;display:block;filter:brightness(.72);"
          alt="ikhsan haikal">
 
     
-    <div class="absolute inset-0" style="background:linear-gradient(to right,transparent 50%,#252c38 100%);"></div>
+    <div class="absolute inset-0" style="background:linear-gradient(to right,transparent 45%,#0e1218 100%);"></div>
     
-    <div class="absolute inset-0" style="background:linear-gradient(to top,#1a2028 0%,transparent 35%);"></div>
+    <div class="absolute inset-0" style="background:linear-gradient(to top,#080c10 0%,transparent 45%);"></div>
 
     
-    <div class="absolute top-[22px] left-6 right-6 flex justify-between items-center">
+    <div style="position:absolute;top:0;left:0;right:0;width:100%;display:flex;justify-content:space-between;align-items:center;padding:clamp(20px,2.2vw,36px) clamp(24px,2.5vw,40px);">
       
-      <a href="/" class="no-underline font-serif italic" style="font-size:22px;color:rgba(236,239,244,.7);">ih</a>
+      <a href="/" class="no-underline" style="font-family:'Fraunces',serif;font-style:italic;font-size:clamp(22px,1.8vw,30px);color:rgba(236,239,244,.75);">ih</a>
       
-      <div class="flex gap-[18px]" style="font-family:'IBM Plex Mono',monospace;font-size:16px;">
+      <div style="display:flex;gap:clamp(24px,2.5vw,40px);font-family:'IBM Plex Mono',monospace;">
         
         
         
         
         <a href="/til/"
-           class="no-underline"
-           style="color:#88c0d0;border-bottom:1px solid rgba(136,192,208,.6);padding-bottom:2px;">
+           class="nav-link no-underline"
+           style="font-size:clamp(16px,1.4vw,22px);color:#88c0d0;border-bottom:1px solid rgba(136,192,208,.4);padding-bottom:2px;">
           til
         </a>
         
@@ -239,8 +239,8 @@
         
         
         <a href="/blog/"
-           class="no-underline"
-           style="color:rgba(154,164,186,.7);">
+           class="nav-link no-underline"
+           style="font-size:clamp(16px,1.4vw,22px);color:rgba(154,164,186,.6);">
           blog
         </a>
         
@@ -248,8 +248,8 @@
         
         
         <a href="/resume.pdf"
-           class="no-underline"
-           style="color:rgba(154,164,186,.7);">
+           class="nav-link no-underline"
+           style="font-size:clamp(16px,1.4vw,22px);color:rgba(154,164,186,.6);">
           resume ↗
         </a>
         
@@ -257,9 +257,16 @@
     </div>
 
     
-    <div class="absolute bottom-[22px] left-6 flex items-center gap-[7px]">
-      <span class="w-[7px] h-[7px] rounded-full bg-nord-green flex-none block"></span>
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:rgba(154,164,186,.65);">open to freelance</span>
+    <div class="absolute bottom-0 left-0" style="padding:0 clamp(24px,2.5vw,40px) clamp(28px,2.8vw,44px);">
+      <div class="font-mono" style="font-size:clamp(9px,0.65vw,11px);color:#88c0d0;letter-spacing:.2em;text-transform:uppercase;margin-bottom:10px;">software developer</div>
+      <div style="font-family:'Fraunces',serif;font-size:clamp(48px,4.8vw,80px);font-weight:900;line-height:.84;color:#eceff4;letter-spacing:-.04em;">
+        ikhsan<br>
+        <span style="font-weight:300;font-style:italic;font-size:clamp(42px,4.2vw,72px);">haikal</span>
+      </div>
+      <div class="flex items-center" style="gap:8px;margin-top:16px;">
+        <span style="width:7px;height:7px;border-radius:50%;background:#a3be8c;flex:none;display:block;"></span>
+        <span class="font-mono" style="font-size:clamp(10px,0.8vw,13px);color:rgba(154,164,186,.55);">Employed · open to freelance</span>
+      </div>
     </div>
 
   </div>

@@ -28,6 +28,10 @@
          alt="{{ .Site.Params.author }}">
     {{/* gradient overlays */}}
     <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(14,18,24,.35) 0%,rgba(14,18,24,0) 25%,rgba(14,18,24,.55) 60%,#0e1218 100%);"></div>
+    {{/* status bar floats over hero */}}
+    <div style="position:absolute;top:0;left:0;right:0;display:flex;justify-content:space-between;padding:14px 24px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(255,255,255,.45);pointer-events:none;">
+      <span>9:41</span><span>5G ▮▮▮</span>
+    </div>
     {{/* editorial title — bottom-left */}}
     <div style="position:absolute;bottom:0;left:0;right:0;padding:0 28px 28px;">
       <div class="font-mono" style="font-size:10px;color:#88c0d0;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px;">{{ .Site.Params.role }}</div>
@@ -113,7 +117,7 @@
   </div>
 
   {{/* featured notes divider */}}
-  <div style="display:flex;align-items:center;gap:12px;margin:28px 28px 28px 0;">
+  <div style="display:flex;align-items:center;gap:12px;margin:28px 28px 0;">
     <div style="flex:1;height:1px;background:#1e2730;"></div>
     <span class="font-mono" style="font-size:9.5px;letter-spacing:.18em;color:#3b4252;text-transform:uppercase;">featured notes</span>
     <div style="flex:1;height:1px;background:#1e2730;"></div>
@@ -236,7 +240,7 @@
 {{/* ══════════════════ FLOATING PILL + SHEET — mobile only ══════════════════ */}}
 
 {{/* PILL */}}
-<div class="xl:hidden mobile-glow-pill"
+<div class="xl:hidden mobile-pill mobile-glow-pill"
      @click="navOpen = true"
      style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);width:fit-content;z-index:50;cursor:pointer;background:#141920;border:1px solid rgba(136,192,208,.55);border-radius:999px;padding:10px 22px;display:flex;align-items:center;gap:12px;white-space:nowrap;">
   <span style="font-family:'Newsreader',serif;font-style:italic;font-size:15px;color:#eceff4;">ih</span>
@@ -245,7 +249,7 @@
 </div>
 
 {{/* BACKDROP */}}
-<div class="xl:hidden"
+<div class="xl:hidden mobile-backdrop"
      x-show="navOpen"
      x-transition:enter="transition ease-out duration-200"
      x-transition:enter-start="opacity-0"
@@ -258,7 +262,7 @@
      x-cloak></div>
 
 {{/* BOTTOM SHEET */}}
-<div class="xl:hidden"
+<div class="xl:hidden mobile-sheet"
      x-show="navOpen"
      x-transition:enter="transition ease-[cubic-bezier(.32,.72,0,1)] duration-300"
      x-transition:enter-start="translate-y-full"
@@ -324,45 +328,164 @@
 </div>
 
 {{/* ══════════════════ DESKTOP (xl+) ══════════════════ */}}
-<div class="hidden xl:grid" style="grid-template-columns:400px 1fr;min-height:100vh;">
+<style>
+  .nav-link  { cursor:pointer; transition:color 160ms; }
+  .nav-link:hover { color:#88c0d0!important; }
+  .icon-btn  { transition:all 160ms; }
+  .icon-btn:hover { border-color:rgba(136,192,208,.7)!important; box-shadow:0 0 0 1px rgba(136,192,208,.3),0 4px 20px rgba(136,192,208,.2)!important; }
+  .til-card  { transition:all 160ms; cursor:pointer; }
+  .til-card:hover { border-color:rgba(136,192,208,.25)!important; background:#171e28!important; }
+  @media (min-width:1280px) {
+    #mobile-sticky-header,
+    #mobile-sticky-header + script,
+    .mobile-pill,
+    .mobile-backdrop,
+    .mobile-sheet { display:none!important; }
+  }
+</style>
+
+<div class="hidden xl:grid" style="grid-template-columns:minmax(420px,42%) 1fr;min-height:100vh;">
 
   {{ partial "left-gutter.html" . }}
 
-  {{/* Right content */}}
-  <div class="overflow-auto" style="padding:72px 64px;background:#252c38;">
-    <div style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#88c0d0;letter-spacing:.08em;margin-bottom:12px;">{{ .Site.Params.role }}</div>
-    <div style="font-family:'Newsreader',serif;font-size:72px;line-height:1;color:#eceff4;letter-spacing:-.02em;">{{ .Site.Params.author }}</div>
-    <div style="font-family:'Newsreader',serif;font-style:italic;font-size:28px;color:#9aa4ba;margin-top:14px;line-height:1.3;">"{{ .Site.Params.tagline }}"</div>
-    <div style="font-size:17px;line-height:1.65;color:#d8dee9;margin-top:18px;max-width:520px;">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems.</div>
-    <div class="flex items-center gap-2" style="margin-top:16px;">
-      <span class="w-[7px] h-[7px] rounded-full bg-nord-green flex-none block"></span>
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#9aa4ba;">{{ .Site.Params.status }}</span>
+  {{/* ── RIGHT: content — vertically centered, left-aligned ── */}}
+  <div class="flex items-center" style="background:#0e1218;min-height:100vh;padding:clamp(40px,5vw,80px) clamp(32px,3.5vw,56px);font-family:'DM Sans',sans-serif;">
+    <div style="width:100%;">
+
+    {{/* tagline */}}
+    <div style="font-family:'Fraunces',serif;font-style:italic;font-size:clamp(22px,2vw,32px);color:#9aa4ba;line-height:1.3;border-left:2px solid #88c0d0;padding-left:18px;margin-bottom:18px;">"{{ .Site.Params.tagline }}"</div>
+
+    {{/* bio */}}
+    <div style="font-size:clamp(14px,1.1vw,18px);line-height:1.75;color:#5c6878;max-width:clamp(380px,55%,560px);margin-bottom:22px;">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems. Frontend · Backend · LLM/UI.</div>
+
+    {{/* status */}}
+    <div class="flex items-center" style="gap:8px;margin-bottom:24px;">
+      <span style="width:7px;height:7px;border-radius:50%;background:#a3be8c;flex:none;display:block;"></span>
+      <span class="font-mono" style="font-size:clamp(11px,0.9vw,14px);color:#4c566a;">{{ .Site.Params.status }}</span>
     </div>
-    <div class="flex gap-3" style="margin-top:24px;">
-      <a href="/resume.pdf" class="no-underline" style="background:#88c0d0;color:#252c38;font-weight:600;font-size:15px;font-family:'IBM Plex Mono',monospace;border-radius:11px;padding:13px 28px;">Résumé ↓</a>
-      <a href="mailto:{{ .Site.Params.email }}" class="no-underline" style="color:#eceff4;font-size:15px;font-family:'IBM Plex Mono',monospace;border:1px solid #434c5e;border-radius:11px;padding:13px 28px;">Email me</a>
+
+    {{/* CTAs + social icon buttons */}}
+    <div class="flex items-center flex-wrap" style="gap:10px;margin-bottom:36px;">
+      <a href="/resume.pdf" class="no-underline font-semibold"
+         style="background:#88c0d0;color:#0e1218;font-size:clamp(13px,1vw,16px);border-radius:12px;padding:13px 30px;">Résumé ↓</a>
+      <a href="mailto:{{ .Site.Params.email }}" class="no-underline"
+         style="color:#eceff4;font-size:clamp(13px,1vw,16px);border:1px solid #1e2730;border-radius:12px;padding:13px 30px;">Email me</a>
+      {{/* GitHub icon btn */}}
+      <a href="https://{{ .Site.Params.github }}" target="_blank"
+         class="icon-btn no-underline flex items-center justify-center"
+         style="width:clamp(48px,3.8vw,60px);height:clamp(48px,3.8vw,60px);border-radius:50%;border:1px solid rgba(136,192,208,.4);background:#141920;box-shadow:0 0 0 1px rgba(136,192,208,.12),0 4px 16px rgba(136,192,208,.08);">
+        <svg style="width:clamp(18px,1.4vw,24px);height:clamp(18px,1.4vw,24px);" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" fill="#88c0d0"/>
+        </svg>
+      </a>
+      {{/* Instagram icon btn */}}
+      <a href="https://instagram.com/{{ .Site.Params.instagram }}" target="_blank"
+         class="icon-btn no-underline flex items-center justify-center"
+         style="width:clamp(48px,3.8vw,60px);height:clamp(48px,3.8vw,60px);border-radius:50%;border:1px solid rgba(136,192,208,.4);background:#141920;box-shadow:0 0 0 1px rgba(136,192,208,.12),0 4px 16px rgba(136,192,208,.08);">
+        <svg style="width:clamp(17px,1.3vw,22px);height:clamp(17px,1.3vw,22px);" viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="#88c0d0" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="4" stroke="#88c0d0" stroke-width="1.8"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="#88c0d0"/>
+        </svg>
+      </a>
     </div>
-    <div style="margin-top:12px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#7b88a1;">{{ .Site.Params.github }} ↗</div>
-    <div class="divider-accent" style="margin:36px 0 28px;"></div>
-    <div class="flex justify-between items-baseline" style="margin-bottom:20px;">
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;letter-spacing:.16em;text-transform:uppercase;color:#88c0d0;">latest from the log</span>
-      <a href="/til/" class="no-underline" style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#88c0d0;">browse all →</a>
+
+    {{/* featured notes divider */}}
+    <div class="flex items-center" style="gap:16px;margin-bottom:clamp(16px,1.5vw,24px);">
+      <div style="flex:1;height:1px;background:#1e2730;"></div>
+      <span class="font-mono" style="font-size:clamp(9px,0.7vw,11px);letter-spacing:.18em;color:#2a3040;text-transform:uppercase;">featured notes</span>
+      <div style="flex:1;height:1px;background:#1e2730;"></div>
     </div>
-    <div class="grid grid-cols-2 gap-3.5">
+
+    {{/* 2×2 TIL cards grid */}}
+    <div class="grid grid-cols-2" style="gap:13px;margin-bottom:22px;">
       {{ range first 4 $tilPages }}
-      <a href="{{ .RelPermalink }}" class="no-underline block" style="background:#3b4252;border:1px solid #434c5e;border-radius:14px;padding:20px;">
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7b88a1;margin-bottom:9px;">{{ .Date.Format "Jan 02" }} · #{{ index .Params.tags 0 }}</div>
-        <div style="font-family:'Newsreader',serif;font-size:22px;line-height:1.3;color:#eceff4;margin-bottom:9px;">{{ .Title }}</div>
-        <div style="font-size:15px;line-height:1.55;color:#9aa4ba;">{{ .Description | default (.Summary | truncate 90) }}</div>
-        {{ with .Params.code_preview }}
-        <div style="background:#252c38;border-radius:8px;padding:10px 13px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#d8dee9;margin-top:13px;">
-          <span style="color:#81a1c1;">git</span> restore --staged <span style="color:#a3be8c;">file</span>
+      {{ $tag := index .Params.tags 0 }}
+
+      {{/* per-tag strip colors — desktop strips are smaller (64px, align-items:center) */}}
+      {{ $stripBg     := "rgba(136,192,208,.1)" }}
+      {{ $stripBgFade := "rgba(136,192,208,.02)" }}
+      {{ $keywordColor := "rgba(136,192,208,.2)" }}
+      {{ $tagColor    := "rgba(136,192,208,.5)" }}
+      {{ $tagBg       := "rgba(136,192,208,.07)" }}
+      {{ $tagBorder   := "rgba(136,192,208,.16)" }}
+      {{ $keyword     := $tag }}
+
+      {{ if eq $tag "postgres" }}
+        {{ $stripBg      = "rgba(235,203,139,.08)" }}
+        {{ $stripBgFade  = "rgba(235,203,139,.02)" }}
+        {{ $keywordColor = "rgba(235,203,139,.18)" }}
+        {{ $tagColor     = "rgba(235,203,139,.5)" }}
+        {{ $tagBg        = "rgba(235,203,139,.06)" }}
+        {{ $tagBorder    = "rgba(235,203,139,.14)" }}
+        {{ $keyword      = "psql" }}
+      {{ else if eq $tag "css" }}
+        {{ $stripBg      = "rgba(180,142,173,.08)" }}
+        {{ $stripBgFade  = "rgba(180,142,173,.02)" }}
+        {{ $keywordColor = "rgba(180,142,173,.18)" }}
+        {{ $tagColor     = "rgba(180,142,173,.5)" }}
+        {{ $tagBg        = "rgba(180,142,173,.06)" }}
+        {{ $tagBorder    = "rgba(180,142,173,.14)" }}
+        {{ $keyword      = "css" }}
+      {{ else if eq $tag "docker" }}
+        {{ $stripBg      = "rgba(163,190,140,.08)" }}
+        {{ $stripBgFade  = "rgba(163,190,140,.02)" }}
+        {{ $keywordColor = "rgba(163,190,140,.18)" }}
+        {{ $tagColor     = "rgba(163,190,140,.5)" }}
+        {{ $tagBg        = "rgba(163,190,140,.06)" }}
+        {{ $tagBorder    = "rgba(163,190,140,.14)" }}
+        {{ $keyword      = "docker" }}
+      {{ else if eq $tag "react" }}
+        {{ $stripBg      = "rgba(129,161,193,.1)" }}
+        {{ $stripBgFade  = "rgba(129,161,193,.02)" }}
+        {{ $keywordColor = "rgba(129,161,193,.2)" }}
+        {{ $tagColor     = "rgba(129,161,193,.5)" }}
+        {{ $tagBg        = "rgba(129,161,193,.06)" }}
+        {{ $tagBorder    = "rgba(129,161,193,.14)" }}
+        {{ $keyword      = "react" }}
+      {{ else if eq $tag "js" }}
+        {{ $stripBg      = "rgba(235,203,139,.08)" }}
+        {{ $stripBgFade  = "rgba(235,203,139,.02)" }}
+        {{ $keywordColor = "rgba(235,203,139,.18)" }}
+        {{ $tagColor     = "rgba(235,203,139,.5)" }}
+        {{ $tagBg        = "rgba(235,203,139,.06)" }}
+        {{ $tagBorder    = "rgba(235,203,139,.14)" }}
+        {{ $keyword      = "js" }}
+      {{ else if eq $tag "linux" }}
+        {{ $stripBg      = "rgba(163,190,140,.08)" }}
+        {{ $stripBgFade  = "rgba(163,190,140,.02)" }}
+        {{ $keywordColor = "rgba(163,190,140,.18)" }}
+        {{ $tagColor     = "rgba(163,190,140,.5)" }}
+        {{ $tagBg        = "rgba(163,190,140,.06)" }}
+        {{ $tagBorder    = "rgba(163,190,140,.14)" }}
+        {{ $keyword      = "linux" }}
+      {{ end }}
+
+      <a href="{{ .RelPermalink }}" class="til-card no-underline block" style="background:#141920;border:1px solid #1e2730;border-radius:16px;overflow:hidden;">
+        {{/* strip */}}
+        <div style="{{ printf "height:clamp(56px,5vw,72px);background:linear-gradient(135deg,%s 0%%,%s 100%%);border-bottom:1px solid #1e2730;display:flex;align-items:center;justify-content:space-between;padding:0 16px;" $stripBg $stripBgFade | safeCSS }}">
+          <span class="font-mono" style="{{ printf "font-size:clamp(18px,1.6vw,26px);font-weight:500;color:%s;letter-spacing:-.02em;" $keywordColor | safeCSS }}">{{ $keyword }}</span>
+          <span class="font-mono" style="{{ printf "font-size:clamp(9px,0.7vw,11px);color:%s;background:%s;border:1px solid %s;border-radius:5px;padding:2px 8px;" $tagColor $tagBg $tagBorder | safeCSS }}">#{{ $tag }}</span>
         </div>
-        {{ end }}
+        {{/* content */}}
+        <div style="padding:clamp(12px,1.1vw,18px) clamp(14px,1.2vw,20px);">
+          <div class="font-mono" style="font-size:clamp(9px,0.65vw,11px);color:#2a3040;margin-bottom:7px;">{{ .Date.Format "Jan 02" }}</div>
+          <div style="font-family:'Fraunces',serif;font-size:clamp(15px,1.3vw,20px);color:#eceff4;line-height:1.25;margin-bottom:7px;">{{ .Title }}</div>
+          <div style="font-size:clamp(12px,0.9vw,15px);line-height:1.55;color:#5c6878;">{{ .Description | default (.Summary | truncate 90) }}</div>
+        </div>
       </a>
       {{ end }}
     </div>
-  </div>
 
-</div>
+    {{/* browse all pill */}}
+    <div class="flex justify-center" style="margin-top:clamp(16px,1.5vw,24px);">
+      <a href="/til/" class="no-underline inline-flex items-center"
+         style="background:#141920;border:1px solid rgba(136,192,208,.4);border-radius:999px;padding:10px 24px;box-shadow:0 0 0 1px rgba(136,192,208,.12),0 4px 20px rgba(136,192,208,.1);">
+        <span class="font-mono" style="font-size:clamp(11px,0.9vw,14px);color:#88c0d0;letter-spacing:.06em;">browse all {{ $tilCount }} notes</span>
+      </a>
+    </div>
+
+    </div>{{/* end inner max-width content block */}}
+  </div>{{/* end right panel */}}
+</div>{{/* end desktop grid */}}
 {{ end }}
