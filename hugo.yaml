@@ -7,11 +7,14 @@ enableRobotsTXT: true
 
 params:
   author: "ikhsan haikal"
+  authorFirst: "ikhsan"
+  authorLast: "haikal"
   description: "software developer — frontend · backend · llm/ui"
   tagline: "My bugs have a public record."
   status: "Employed · open to freelance"
   github: "github.com/ikhsanhaikal"
   email: "ikhsanhaikal@outlook.co.id"
+  instagram: "cantitican"
   role: "software developer"
   roleDetail: "Frontend · Backend · LLM/UI"
 

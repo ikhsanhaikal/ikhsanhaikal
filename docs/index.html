@@ -18,7 +18,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,700;0,9..144,900;1,9..144,300;1,9..144,700&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,600;1,6..72,400&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/css/main.css">
 
   <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -33,120 +33,233 @@
 
 
 
-<div class="xl:hidden">
+<div id="mobile-sticky-header"
+     class="xl:hidden"
+     style="position:fixed;top:0;left:50%;width:100%;max-width:390px;z-index:80;background:rgba(14,18,24,.88);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-bottom:1px solid #1e2730;padding:14px 28px 12px;display:flex;align-items:center;justify-content:space-between;transform:translateX(-50%) translateY(-110%);transition:transform 280ms cubic-bezier(.32,.72,0,1);">
+  <div style="font-family:'Fraunces',serif;font-size:18px;font-weight:700;color:#eceff4;letter-spacing:-.02em;">
+    ikhsan <em style="font-weight:300;">haikal</em>
+  </div>
+  <div style="display:flex;align-items:center;gap:6px;">
+    <span style="width:6px;height:6px;border-radius:50%;background:#a3be8c;flex:none;display:block;"></span>
+    <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#6b7a8d;letter-spacing:.06em;">freelance</span>
+  </div>
+</div>
 
-  <div class="px-6 pt-5 pb-6">
-    <div id="avatar-row" class="flex items-center gap-4 mb-6">
-      <div class="relative flex-none">
-        <img src="/images/avatar.svg"
-             class="w-[88px] h-[88px] rounded-full object-cover border-2 border-nord-accent"
-             style="object-position:50% 12%; box-shadow:0 0 0 4px rgba(136,192,208,0.1);"
-             alt="ikhsan haikal">
-        <span class="absolute bottom-1 right-1 w-3.5 h-3.5 rounded-full bg-nord-green border-[2.5px] border-nord-bg block"></span>
-      </div>
-      <div class="flex-1">
-        <div class="font-serif text-2xl text-nord-bright leading-tight">ikhsan haikal</div>
-        <div class="font-mono text-xs text-nord-accent mt-1">software developer</div>
-        <div class="font-mono text-xs text-nord-faint mt-1">Frontend · Backend · LLM/UI</div>
+
+<div class="xl:hidden relative" style="background:#0e1218;">
+
+  
+  <div id="mobile-hero" class="relative overflow-hidden" style="height:480px;">
+    <img src="/images/avatar.svg"
+         style="width:100%;height:540px;object-fit:cover;object-position:50% 0%;display:block;"
+         alt="ikhsan haikal">
+    
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(14,18,24,.35) 0%,rgba(14,18,24,0) 25%,rgba(14,18,24,.55) 60%,#0e1218 100%);"></div>
+    
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:0 28px 28px;">
+      <div class="font-mono" style="font-size:10px;color:#88c0d0;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px;">software developer</div>
+      <div style="font-family:'Fraunces',serif;font-size:64px;font-weight:900;line-height:.84;color:#eceff4;letter-spacing:-.03em;">
+        ikhsan<br>
+        <span style="font-weight:300;font-style:italic;font-size:56px;">haikal</span>
       </div>
     </div>
-    <h1 class="font-serif text-4xl leading-tight text-nord-bright text-pretty">My bugs have a public record.</h1>
-    <p class="text-base text-nord-faint leading-relaxed mt-3">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems.</p>
-    <div class="flex items-center gap-2 mt-3.5">
+  </div>
+
+  
+  <div class="px-7 pt-6">
+
+    
+    <div style="font-family:'Fraunces',serif;font-style:italic;font-size:21px;color:#9aa4ba;line-height:1.3;border-left:2px solid #88c0d0;padding-left:14px;">"My bugs have a public record."</div>
+
+    
+    <p style="font-size:14px;line-height:1.7;color:#5c6878;margin-top:12px;">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems. Frontend · Backend · LLM/UI.</p>
+
+    
+    <div class="flex items-center gap-2 mt-3">
       <span class="w-2 h-2 rounded-full bg-nord-green flex-none block"></span>
-      <span class="font-mono text-xs text-nord-faint">Employed · open to freelance</span>
+      <span class="font-mono" style="font-size:10.5px;color:#5c6878;letter-spacing:.04em;">Employed · open to freelance</span>
     </div>
+
+    
     <div class="flex gap-2.5 mt-5">
-      <a href="/resume.pdf" class="btn-primary flex-1">Résumé ↓</a>
-      <a href="mailto:ikhsanhaikal@outlook.co.id" class="btn-outline flex-1">Email me</a>
+      <a href="/resume.pdf" class="no-underline flex-1 text-center font-semibold"
+         style="background:#88c0d0;color:#0e1218;font-size:14px;border-radius:12px;padding:13px;">Résumé ↓</a>
+      <a href="mailto:ikhsanhaikal@outlook.co.id" class="no-underline flex-1 text-center"
+         style="color:#eceff4;font-size:14px;border:1px solid #2a3040;border-radius:12px;padding:13px;">Email me</a>
     </div>
-    <div class="text-center mt-3">
+
+    
+    <div class="flex gap-2.5 mt-2.5">
+      
       <a href="https://github.com/ikhsanhaikal" target="_blank"
-         class="font-mono text-xs text-nord-subtle hover:text-nord-accent transition-colors">
-        github.com/ikhsanhaikal ↗
+         class="no-underline flex-1 flex items-center justify-center gap-2 mobile-glow-icon"
+         style="background:#141920;border:1px solid rgba(136,192,208,.4);border-radius:12px;padding:13px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" fill="#88c0d0"/>
+        </svg>
+        <span class="font-mono" style="font-size:11.5px;color:#88c0d0;">GitHub</span>
+      </a>
+      
+      <a href="https://instagram.com/cantitican" target="_blank"
+         class="no-underline flex-1 flex items-center justify-center gap-2 mobile-glow-icon"
+         style="background:#141920;border:1px solid rgba(136,192,208,.4);border-radius:12px;padding:13px;">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
+          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="#88c0d0" stroke-width="1.8"/>
+          <circle cx="12" cy="12" r="4" stroke="#88c0d0" stroke-width="1.8"/>
+          <circle cx="17.5" cy="6.5" r="1" fill="#88c0d0"/>
+        </svg>
+        <span class="font-mono" style="font-size:11.5px;color:#88c0d0;">Instagram</span>
       </a>
     </div>
   </div>
 
-  <div class="divider-subtle mx-6"></div>
-
-  <div class="px-6 pt-5 pb-2 flex justify-between items-baseline">
-    <span class="font-mono text-2xs tracking-widest uppercase text-nord-accent">The log</span>
-    <span class="font-mono text-xs text-nord-subtle">2 notes</span>
-  </div>
-  <p class="px-6 pb-1.5 text-md text-nord-faint leading-relaxed">
-    Everything I learn, written down so future-me doesn't debug the same thing twice.
-  </p>
-
-  <div class="px-6 pt-3.5">
-    <div class="flex items-center gap-2.5 bg-nord-surface border border-nord-border rounded-xl px-4 py-3">
-      <span class="text-nord-faint text-lg flex-none">⌕</span>
-      <span class="text-md text-nord-subtle flex-1">Search 2 notes…</span>
-      <span class="font-mono text-xs text-nord-dim border border-nord-border rounded px-1.5 py-0.5">⌘K</span>
+  
+  <div style="margin:28px 28px 0;background:#141920;border:1px solid #1e2730;border-radius:20px;overflow:hidden;">
+    
+    <div style="padding:18px 20px 14px;border-bottom:1px solid #1e2730;">
+      <div style="font-family:'Fraunces',serif;font-size:20px;color:#eceff4;margin-bottom:6px;">About me</div>
+      <div style="font-size:13.5px;line-height:1.65;color:#5c6878;">I build web apps, APIs, and lately, LLM-powered interfaces. I care deeply about the details — from query plans to pixel spacing.</div>
+    </div>
+    
+    <div style="padding:14px 20px 18px;">
+      <div class="font-mono" style="font-size:9.5px;letter-spacing:.18em;color:#3b4252;text-transform:uppercase;margin-bottom:12px;">Tech stack</div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;">
+        
+        <span class="font-mono" style="font-size:11.5px;background:rgba(136,192,208,.08);color:#88c0d0;border:1px solid rgba(136,192,208,.2);border-radius:8px;padding:5px 12px;">React</span>
+        <span class="font-mono" style="font-size:11.5px;background:rgba(136,192,208,.08);color:#88c0d0;border:1px solid rgba(136,192,208,.2);border-radius:8px;padding:5px 12px;">Next.js</span>
+        
+        <span class="font-mono" style="font-size:11.5px;background:#1a2030;color:#9aa4ba;border:1px solid #2a3040;border-radius:8px;padding:5px 12px;">TypeScript</span>
+        <span class="font-mono" style="font-size:11.5px;background:#1a2030;color:#9aa4ba;border:1px solid #2a3040;border-radius:8px;padding:5px 12px;">Node.js</span>
+        <span class="font-mono" style="font-size:11.5px;background:#1a2030;color:#9aa4ba;border:1px solid #2a3040;border-radius:8px;padding:5px 12px;">PostgreSQL</span>
+        <span class="font-mono" style="font-size:11.5px;background:#1a2030;color:#9aa4ba;border:1px solid #2a3040;border-radius:8px;padding:5px 12px;">Docker</span>
+        <span class="font-mono" style="font-size:11.5px;background:#1a2030;color:#9aa4ba;border:1px solid #2a3040;border-radius:8px;padding:5px 12px;">Python</span>
+        
+        <span class="font-mono" style="font-size:11.5px;background:rgba(163,190,140,.08);color:#a3be8c;border:1px solid rgba(163,190,140,.2);border-radius:8px;padding:5px 12px;">LLM / AI</span>
+      </div>
     </div>
   </div>
 
-  <div class="chips flex gap-2 px-6 pt-3.5 pb-1 overflow-x-auto">
-    
-    <a href="/tags/git/" class="flex-none tag-chip">#git</a>
-    
-    <a href="/tags/workflow/" class="flex-none tag-chip">#workflow</a>
-    
-    <a href="/tags/frontend/" class="flex-none tag-chip">#frontend</a>
-    
-    <a href="/tags/css/" class="flex-none tag-chip">#css</a>
-    
+  
+  <div style="display:flex;align-items:center;gap:12px;margin:28px 28px 28px 0;">
+    <div style="flex:1;height:1px;background:#1e2730;"></div>
+    <span class="font-mono" style="font-size:9.5px;letter-spacing:.18em;color:#3b4252;text-transform:uppercase;">featured notes</span>
+    <div style="flex:1;height:1px;background:#1e2730;"></div>
   </div>
 
-  <div class="flex items-center gap-3 px-6 pt-5 pb-2.5">
-    <div class="flex-1 h-px bg-nord-surface"></div>
-    <span class="font-mono text-2xs tracking-widest uppercase text-nord-subtle flex-none">June 2026</span>
-    <div class="flex-1 h-px bg-nord-surface"></div>
-  </div>
-
-  <div class="px-6 grid gap-3">
+  
+  <div class="px-7 pt-[18px] flex flex-col gap-3.5">
     
-    <a href="/til/git-restore-vs-reset/" class="til-card block no-underline">
-      <div class="font-serif text-xl text-nord-bright leading-snug">git restore beats git reset</div>
-      <div class="text-md text-nord-faint leading-relaxed mt-1.5">--staged unstages without touching your working tree. No more accidental --hard disasters.</div>
-      <div class="flex justify-between items-center mt-3">
-        <span class="font-mono text-sm text-nord-accent">#git #workflow #frontend </span>
-        <span class="font-mono text-xs text-nord-subtle">Jun 18</span>
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+
+    <a href="/til/git-restore-vs-reset/" class="no-underline block" style="background:#141920;border:1px solid #1e2730;border-radius:18px;overflow:hidden;">
+      
+      <div style="height:90px;background:linear-gradient(135deg,rgba(136,192,208,.12) 0%,rgba(136,192,208,.04) 100%);border-bottom:1px solid #1e2730;display:flex;align-items:flex-end;justify-content:space-between;padding:14px 18px;">
+        <span class="font-mono" style="font-size:28px;font-weight:500;color:rgba(136,192,208,.25);letter-spacing:-.02em;">git</span>
+        <span class="font-mono" style="font-size:11px;color:rgba(136,192,208,.5);background:rgba(136,192,208,.08);border:1px solid rgba(136,192,208,.2);border-radius:6px;padding:3px 10px;">#git</span>
+      </div>
+      
+      <div style="padding:16px 18px 18px;">
+        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-bottom:8px;">Jun 18</div>
+        <div style="font-family:'Newsreader',serif;font-size:19px;line-height:1.28;color:#eceff4;margin-bottom:8px;">git restore beats git reset</div>
+        <div style="font-size:13.5px;line-height:1.6;color:#5c6878;">--staged unstages without touching your working tree. No more accidental --hard disasters.</div>
+        
+        <div class="font-mono" style="font-size:12px;background:#0e1218;border:1px solid #1e2730;border-radius:10px;padding:11px 14px;margin-top:13px;line-height:1.7;">
+          <span style="color:#81a1c1;">git</span> restore --staged <span style="color:#a3be8c;">file</span>
+        </div>
+        
       </div>
     </a>
     
-    <a href="/til/css-has-parent-selector/" class="til-card block no-underline">
-      <div class="font-serif text-xl text-nord-bright leading-snug">CSS :has() is a real parent selector</div>
-      <div class="text-md text-nord-faint leading-relaxed mt-1.5">form:has(input:invalid) lets you style the whole form when any field is bad. No JS, finally.</div>
-      <div class="flex justify-between items-center mt-3">
-        <span class="font-mono text-sm text-nord-accent">#css #frontend </span>
-        <span class="font-mono text-xs text-nord-subtle">Jun 09</span>
+    
+
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+
+    
+      
+      
+      
+      
+      
+      
+      
+    
+
+    <a href="/til/css-has-parent-selector/" class="no-underline block" style="background:#141920;border:1px solid #1e2730;border-radius:18px;overflow:hidden;">
+      
+      <div style="height:90px;background:linear-gradient(135deg,rgba(180,142,173,.1) 0%,rgba(180,142,173,.03) 100%);border-bottom:1px solid #1e2730;display:flex;align-items:flex-end;justify-content:space-between;padding:14px 18px;">
+        <span class="font-mono" style="font-size:28px;font-weight:500;color:rgba(180,142,173,.22);letter-spacing:-.02em;">css</span>
+        <span class="font-mono" style="font-size:11px;color:rgba(180,142,173,.6);background:rgba(180,142,173,.06);border:1px solid rgba(180,142,173,.18);border-radius:6px;padding:3px 10px;">#css</span>
+      </div>
+      
+      <div style="padding:16px 18px 18px;">
+        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-bottom:8px;">Jun 09</div>
+        <div style="font-family:'Newsreader',serif;font-size:19px;line-height:1.28;color:#eceff4;margin-bottom:8px;">CSS :has() is a real parent selector</div>
+        <div style="font-size:13.5px;line-height:1.6;color:#5c6878;">form:has(input:invalid) lets you style the whole form when any field is bad. No JS, finally.</div>
+        
       </div>
     </a>
     
   </div>
 
   
-  <div class="px-6 pt-4 pb-[100px] text-center">
+  <div class="px-7 pt-4 pb-[120px] text-center">
     <a href="/til/"
-       class="font-mono text-sm text-nord-accent border border-nord-accent/30
-              rounded-lg px-6 py-3 inline-block hover:border-nord-accent/60 transition-colors">
-      browse all til →
+       class="font-mono no-underline inline-block"
+       style="font-size:12px;color:#88c0d0;border:1px solid rgba(136,192,208,.2);border-radius:12px;padding:13px 24px;">
+      browse all 2 til →
     </a>
   </div>
 
 </div>
 
 
+<script>
+(function() {
+  var header = document.getElementById('mobile-sticky-header');
+  var hero   = document.getElementById('mobile-hero');
+  if (!header || !hero) return;
+  window.addEventListener('scroll', function() {
+    var past = hero.getBoundingClientRect().bottom < 72;
+    header.style.transform = past
+      ? 'translateX(-50%) translateY(0)'
+      : 'translateX(-50%) translateY(-110%)';
+  }, { passive: true });
+})();
+</script>
 
 
 
-<div class="xl:hidden"
+
+<div class="xl:hidden mobile-glow-pill"
      @click="navOpen = true"
-     style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);width:fit-content;z-index:50;cursor:pointer;background:#3b4252;border:1px solid #4c566a;border-radius:999px;padding:10px 20px;display:flex;align-items:center;gap:10px;box-shadow:0 8px 32px rgba(0,0,0,.4);white-space:nowrap;">
+     style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);width:fit-content;z-index:50;cursor:pointer;background:#141920;border:1px solid rgba(136,192,208,.55);border-radius:999px;padding:10px 22px;display:flex;align-items:center;gap:12px;white-space:nowrap;">
   <span style="font-family:'Newsreader',serif;font-style:italic;font-size:15px;color:#eceff4;">ih</span>
-  <span style="width:1px;height:14px;background:#4c566a;display:block;flex:none;"></span>
-  <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#88c0d0;letter-spacing:.04em;">≡</span>
+  <span style="width:1px;height:14px;background:#2a3040;display:block;flex:none;"></span>
+  <span class="font-mono" style="font-size:13px;color:#88c0d0;">≡</span>
 </div>
 
 
@@ -159,7 +272,7 @@
      x-transition:leave-start="opacity-100"
      x-transition:leave-end="opacity-0"
      @click="navOpen = false"
-     style="position:fixed;inset:0;z-index:60;background:rgba(20,25,33,.7);backdrop-filter:blur(2px);"
+     style="position:fixed;inset:0;z-index:60;background:rgba(8,10,14,.78);backdrop-filter:blur(3px);"
      x-cloak></div>
 
 
@@ -171,62 +284,58 @@
      x-transition:leave="transition ease-[cubic-bezier(.32,.72,0,1)] duration-300"
      x-transition:leave-start="translate-y-0"
      x-transition:leave-end="translate-y-full"
-     style="position:fixed;bottom:0;left:0;width:100%;z-index:70;background:#252c38;border-radius:20px 20px 0 0;border-top:1px solid #3b4252;box-shadow:0 -8px 40px rgba(0,0,0,.5);"
+     style="position:fixed;bottom:0;left:0;width:100%;z-index:70;background:#0e1218;border-radius:22px 22px 0 0;border-top:1px solid #1e2730;box-shadow:0 -8px 48px rgba(0,0,0,.7);"
      x-cloak>
 
   
   <div style="display:flex;justify-content:center;padding:12px 0 8px;">
-    <div style="width:36px;height:4px;border-radius:2px;background:#4c566a;"></div>
+    <div style="width:36px;height:4px;border-radius:2px;background:#2a3040;"></div>
   </div>
-  <div style="height:1px;background:#3b4252;margin:4px 0 0;"></div>
+  <div style="height:1px;background:#1e2730;margin:4px 0 0;"></div>
 
-  <div style="padding-bottom:32px;">
+  <div style="padding-bottom:36px;">
 
-    
     <a href="/til/" @click="navOpen = false"
-       style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;text-decoration:none;">
+       style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
       <div>
-        <div style="font-family:'Newsreader',serif;font-size:22px;color:#88c0d0;line-height:1.1;">til</div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#7b88a1;margin-top:3px;letter-spacing:.08em;">TECHNICAL LOG</div>
+        <div style="font-family:'Newsreader',serif;font-size:24px;color:#88c0d0;line-height:1;">til</div>
+        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">TECHNICAL LOG</div>
       </div>
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#88c0d0;">→</span>
+      <span class="font-mono" style="font-size:14px;color:#88c0d0;">→</span>
     </a>
 
-    <div style="height:1px;background:#3b4252;margin:0 24px;"></div>
+    <div style="height:1px;background:#1e2730;margin:0 28px;"></div>
 
-    
     <a href="/blog/" @click="navOpen = false"
-       style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;text-decoration:none;">
+       style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
       <div>
-        <div style="font-family:'Newsreader',serif;font-size:22px;color:#eceff4;line-height:1.1;">blog</div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#7b88a1;margin-top:3px;letter-spacing:.08em;">ESSAYS &amp; NOTES</div>
+        <div style="font-family:'Newsreader',serif;font-size:24px;color:#eceff4;line-height:1;">blog</div>
+        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">ESSAYS &amp; NOTES</div>
       </div>
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#7b88a1;">→</span>
+      <span class="font-mono" style="font-size:14px;color:#3b4252;">→</span>
     </a>
 
-    <div style="height:1px;background:#3b4252;margin:0 24px;"></div>
+    <div style="height:1px;background:#1e2730;margin:0 28px;"></div>
 
-    
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;opacity:.45;cursor:default;">
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;opacity:.4;cursor:default;">
       <div>
-        <div style="display:flex;align-items:center;gap:10px;">
-          <span style="font-family:'Newsreader',serif;font-size:22px;color:#eceff4;line-height:1.1;">about</span>
-          <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;background:rgba(136,192,208,.12);color:#88c0d0;border:1px solid rgba(136,192,208,.3);border-radius:999px;padding:2px 8px;letter-spacing:.06em;">soon</span>
+        <div class="flex items-center gap-2.5">
+          <span style="font-family:'Newsreader',serif;font-size:24px;color:#eceff4;line-height:1;">about</span>
+          <span class="font-mono" style="font-size:9px;background:rgba(136,192,208,.1);color:#88c0d0;border:1px solid rgba(136,192,208,.25);border-radius:999px;padding:2px 8px;letter-spacing:.06em;">soon</span>
         </div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#7b88a1;margin-top:3px;letter-spacing:.08em;">THE PERSON BEHIND THE BUGS</div>
+        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">THE PERSON BEHIND THE BUGS</div>
       </div>
     </div>
 
-    <div style="height:1px;background:#3b4252;margin:0 24px;"></div>
+    <div style="height:1px;background:#1e2730;margin:0 28px;"></div>
 
-    
     <a href="https://github.com/ikhsanhaikal" target="_blank" @click="navOpen = false"
-       style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;text-decoration:none;">
+       style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
       <div>
-        <div style="font-family:'Newsreader',serif;font-size:22px;color:#eceff4;line-height:1.1;">github</div>
-        <div style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#7b88a1;margin-top:3px;letter-spacing:.08em;">github.com/ikhsanhaikal</div>
+        <div style="font-family:'Newsreader',serif;font-size:24px;color:#eceff4;line-height:1;">github</div>
+        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">github.com/ikhsanhaikal</div>
       </div>
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#7b88a1;">↗</span>
+      <span class="font-mono" style="font-size:14px;color:#3b4252;">↗</span>
     </a>
 
   </div>
@@ -323,9 +432,9 @@
       <a href="/til/git-restore-vs-reset/" class="no-underline block" style="background:#3b4252;border:1px solid #434c5e;border-radius:14px;padding:20px;">
         <div style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:#7b88a1;margin-bottom:9px;">Jun 18 · #git</div>
         <div style="font-family:'Newsreader',serif;font-size:22px;line-height:1.3;color:#eceff4;margin-bottom:9px;">git restore beats git reset</div>
-        <div style="font-size:15px;line-height:1.55;color:#9aa4ba;margin-bottom:13px;">--staged unstages without touching your working tree. No more accidental --hard disasters.</div>
+        <div style="font-size:15px;line-height:1.55;color:#9aa4ba;">--staged unstages without touching your working tree. No more accidental --hard disasters.</div>
         
-        <div style="background:#252c38;border-radius:8px;padding:10px 13px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#d8dee9;">
+        <div style="background:#252c38;border-radius:8px;padding:10px 13px;font-family:'IBM Plex Mono',monospace;font-size:13px;color:#d8dee9;margin-top:13px;">
           <span style="color:#81a1c1;">git</span> restore --staged <span style="color:#a3be8c;">file</span>
         </div>
         
