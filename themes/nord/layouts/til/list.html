@@ -7,94 +7,254 @@
 {{ $grouped := $tilPages.GroupByDate "January 2006" }}
 
 {{/* ══════════════════ MOBILE (< xl) ══════════════════ */}}
-<div class="xl:hidden">
+<div class="xl:hidden" style="background:#0e1218;min-height:100vh;">
 
-  {{ partial "nav.html" . }}
-
-  <div class="px-6 pt-6 pb-0">
-    <h1 class="font-serif text-5xl text-nord-bright tracking-tight">til</h1>
-    <p class="font-serif italic text-base text-nord-faint mt-1.5">today i learned — a running log of things I want to remember</p>
-    <div class="flex gap-4 mt-3.5 font-mono text-xs text-nord-subtle">
-      <span><span class="text-nord-accent">{{ $tilCount }}</span> notes</span>
-      <span class="text-nord-border">·</span>
-      <span><span class="text-nord-accent">{{ len $uniqueTags }}</span> tags</span>
-      <span class="text-nord-border">·</span>
-      <span>since <span class="text-nord-accent">2024</span></span>
+  {{/* compact nav bar */}}
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 24px 14px;">
+    {{/* circular back button */}}
+    <a href="/" class="no-underline" style="display:flex;align-items:center;gap:10px;">
+      <div style="width:36px;height:36px;border-radius:50%;border:1px solid #1e2730;background:#141920;display:flex;align-items:center;justify-content:center;flex:none;">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#88c0d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="15 18 9 12 15 6"></polyline>
+        </svg>
+      </div>
+    </a>
+    {{/* til label */}}
+    <span style="font-family:'Fraunces',serif;font-size:26px;font-weight:900;color:#eceff4;letter-spacing:-.03em;">til</span>
+    {{/* status dot */}}
+    <div style="display:flex;align-items:center;gap:5px;">
+      <span style="width:6px;height:6px;border-radius:50%;background:#a3be8c;flex:none;display:block;"></span>
+      <span class="font-mono" style="font-size:9.5px;color:#2a3040;">freelance</span>
     </div>
   </div>
 
-  <div class="px-6 pt-5 flex flex-col gap-3">
-    <div class="flex items-center gap-2.5 bg-nord-surface border border-nord-border rounded-xl px-4 py-3 flex-1">
-      <span class="text-nord-faint text-lg flex-none">⌕</span>
-      <span class="text-md text-nord-subtle flex-1">Search notes…</span>
-      <span class="font-mono text-xs text-nord-dim border border-nord-border rounded px-1.5 py-0.5">⌘K</span>
-    </div>
-    <div class="flex gap-1.5 font-mono text-xs flex-none">
-      <span class="tag-chip active">2026</span>
-      <span class="tag-chip">2025</span>
-      <span class="tag-chip">all time</span>
+  {{/* thin rule */}}
+  <div style="height:1px;background:#1e2730;margin:0 24px;"></div>
+
+  {{/* search */}}
+  <div style="padding:16px 28px 0;">
+    <div style="display:flex;align-items:center;gap:10px;background:#141920;border:1px solid #1e2730;border-radius:14px;padding:13px 16px;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="#4c566a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+      <span class="font-mono flex-1" style="font-size:13px;color:#3b4252;">Search {{ $tilCount }} notes…</span>
+      <span class="font-mono" style="font-size:10px;color:#2a3040;border:1px solid #1e2730;border-radius:5px;padding:2px 7px;">⌘K</span>
     </div>
   </div>
 
-  <div class="chips flex gap-2 px-6 pt-3 overflow-x-auto">
-    <a href="/til/" class="flex-none tag-chip active">all</a>
+  {{/* tag chips */}}
+  <div class="chips" style="display:flex;gap:8px;padding:14px 28px 0;overflow-x:auto;">
+    <a href="/til/" class="no-underline flex-none font-mono" style="font-size:11.5px;background:rgba(136,192,208,.12);color:#88c0d0;border:1px solid rgba(136,192,208,.35);border-radius:999px;padding:5px 14px;">all</a>
     {{ range $uniqueTags }}
-    <a href="/tags/{{ . | urlize }}/" class="flex-none tag-chip">#{{ . }}</a>
+    <a href="/tags/{{ . | urlize }}/" class="no-underline flex-none font-mono" style="font-size:11.5px;background:#141920;color:#6b7a8d;border:1px solid #1e2730;border-radius:999px;padding:5px 14px;">#{{ . }}</a>
     {{ end }}
   </div>
 
+  {{/* grouped by month */}}
   {{ range $grouped }}
-  <div class="pt-5 pb-2 px-6 flex items-center gap-3">
-    <div class="flex-1 h-px bg-nord-surface"></div>
-    <span class="font-mono text-2xs tracking-widest uppercase text-nord-subtle flex-none">{{ .Key }} · {{ len .Pages }} notes</span>
-    <div class="flex-1 h-px bg-nord-surface"></div>
+
+  {{/* month divider */}}
+  <div style="display:flex;align-items:center;gap:12px;margin:24px 28px 0;">
+    <div style="flex:1;height:1px;background:#1e2730;"></div>
+    <span class="font-mono" style="font-size:9.5px;letter-spacing:.18em;color:#2a3040;text-transform:uppercase;">{{ .Key }} · {{ len .Pages }} notes</span>
+    <div style="flex:1;height:1px;background:#1e2730;"></div>
   </div>
 
-  <div class="px-6" x-data="{ expanded: '{{ (index .Pages 0).File.UniqueID }}' }">
+  {{/* cards */}}
+  <div style="padding:16px 28px 0;display:flex;flex-direction:column;gap:14px;">
     {{ range .Pages }}
-    {{ $uid := .File.UniqueID }}
-    <div class="mb-0.5">
-      <div
-        @click="expanded = expanded === '{{ $uid }}' ? null : '{{ $uid }}'"
-        :class="expanded === '{{ $uid }}' ? 'bg-nord-surface border border-nord-border rounded-xl rounded-b-none border-b-0' : 'hover:bg-nord-surface/40 rounded-xl'"
-        class="flex items-baseline gap-2.5 px-3.5 py-2.5 cursor-pointer transition-colors duration-150"
-      >
-        <span class="font-mono text-2xs text-nord-subtle flex-none w-10">{{ .Date.Format "Jan 02" }}</span>
-        <span class="text-md text-nord-bright flex-1 leading-snug">{{ .Title }}</span>
-        <span class="font-mono text-2xs text-nord-accent flex-none">
-          <span x-text="expanded === '{{ $uid }}' ? '▾' : '▸'">▸</span>
-          #{{ index .Params.tags 0 }}
-        </span>
+    {{ $tag := index .Params.tags 0 }}
+
+    {{/* per-tag strip colors */}}
+    {{ $stripBg     := "rgba(136,192,208,.12)" }}
+    {{ $stripBgFade := "rgba(136,192,208,.03)" }}
+    {{ $keywordColor := "rgba(136,192,208,.2)" }}
+    {{ $tagColor    := "rgba(136,192,208,.55)" }}
+    {{ $tagBg       := "rgba(136,192,208,.08)" }}
+    {{ $tagBorder   := "rgba(136,192,208,.18)" }}
+    {{ $keyword     := $tag }}
+
+    {{ if eq $tag "postgres" }}
+      {{ $stripBg      = "rgba(235,203,139,.1)" }}
+      {{ $stripBgFade  = "rgba(235,203,139,.02)" }}
+      {{ $keywordColor = "rgba(235,203,139,.18)" }}
+      {{ $tagColor     = "rgba(235,203,139,.6)" }}
+      {{ $tagBg        = "rgba(235,203,139,.06)" }}
+      {{ $tagBorder    = "rgba(235,203,139,.16)" }}
+      {{ $keyword      = "psql" }}
+    {{ else if eq $tag "css" }}
+      {{ $stripBg      = "rgba(180,142,173,.1)" }}
+      {{ $stripBgFade  = "rgba(180,142,173,.02)" }}
+      {{ $keywordColor = "rgba(180,142,173,.18)" }}
+      {{ $tagColor     = "rgba(180,142,173,.6)" }}
+      {{ $tagBg        = "rgba(180,142,173,.06)" }}
+      {{ $tagBorder    = "rgba(180,142,173,.16)" }}
+      {{ $keyword      = "css" }}
+    {{ else if eq $tag "docker" }}
+      {{ $stripBg      = "rgba(163,190,140,.1)" }}
+      {{ $stripBgFade  = "rgba(163,190,140,.02)" }}
+      {{ $keywordColor = "rgba(163,190,140,.18)" }}
+      {{ $tagColor     = "rgba(163,190,140,.6)" }}
+      {{ $tagBg        = "rgba(163,190,140,.06)" }}
+      {{ $tagBorder    = "rgba(163,190,140,.16)" }}
+      {{ $keyword      = "docker" }}
+    {{ else if eq $tag "react" }}
+      {{ $stripBg      = "rgba(129,161,193,.12)" }}
+      {{ $stripBgFade  = "rgba(129,161,193,.02)" }}
+      {{ $keywordColor = "rgba(129,161,193,.18)" }}
+      {{ $tagColor     = "rgba(129,161,193,.6)" }}
+      {{ $tagBg        = "rgba(129,161,193,.06)" }}
+      {{ $tagBorder    = "rgba(129,161,193,.16)" }}
+      {{ $keyword      = "react" }}
+    {{ else if eq $tag "js" }}
+      {{ $stripBg      = "rgba(235,203,139,.08)" }}
+      {{ $stripBgFade  = "rgba(235,203,139,.02)" }}
+      {{ $keywordColor = "rgba(235,203,139,.18)" }}
+      {{ $tagColor     = "rgba(235,203,139,.55)" }}
+      {{ $tagBg        = "rgba(235,203,139,.05)" }}
+      {{ $tagBorder    = "rgba(235,203,139,.15)" }}
+      {{ $keyword      = "js" }}
+    {{ else if eq $tag "linux" }}
+      {{ $stripBg      = "rgba(163,190,140,.08)" }}
+      {{ $stripBgFade  = "rgba(163,190,140,.02)" }}
+      {{ $keywordColor = "rgba(163,190,140,.18)" }}
+      {{ $tagColor     = "rgba(163,190,140,.55)" }}
+      {{ $tagBg        = "rgba(163,190,140,.05)" }}
+      {{ $tagBorder    = "rgba(163,190,140,.15)" }}
+      {{ $keyword      = "linux" }}
+    {{ end }}
+
+    <a href="{{ .RelPermalink }}" class="no-underline block" style="background:#141920;border:1px solid #1e2730;border-radius:18px;overflow:hidden;">
+      {{/* colored strip */}}
+      <div style="{{ printf "height:88px;background:linear-gradient(135deg,%s 0%%,%s 100%%);border-bottom:1px solid #1e2730;display:flex;align-items:flex-end;justify-content:space-between;padding:14px 18px;" $stripBg $stripBgFade | safeCSS }}">
+        <span class="font-mono" style="{{ printf "font-size:30px;font-weight:500;color:%s;letter-spacing:-.02em;" $keywordColor | safeCSS }}">{{ $keyword }}</span>
+        <span class="font-mono" style="{{ printf "font-size:11px;color:%s;background:%s;border:1px solid %s;border-radius:6px;padding:3px 10px;" $tagColor $tagBg $tagBorder | safeCSS }}">#{{ $tag }}</span>
       </div>
-      <div
-        x-show="expanded === '{{ $uid }}'"
-        x-transition:enter="transition ease-out duration-150"
-        x-transition:enter-start="opacity-0 -translate-y-1"
-        x-transition:enter-end="opacity-100 translate-y-0"
-        class="bg-nord-surface border border-nord-border border-t-0 rounded-xl rounded-t-none px-3.5 pb-3.5 pt-3"
-      >
-        <p class="text-md text-nord-faint leading-relaxed">{{ .Description | default .Summary }}</p>
+      {{/* content */}}
+      <div style="padding:16px 18px 18px;">
+        <div class="font-mono" style="font-size:10px;color:#2a3040;margin-bottom:8px;">{{ .Date.Format "Jan 02" }}</div>
+        <div style="font-family:'Fraunces',serif;font-size:20px;line-height:1.25;color:#eceff4;margin-bottom:8px;">{{ .Title }}</div>
+        <div style="font-size:13.5px;line-height:1.6;color:#5c6878;">{{ .Description | default (.Summary | truncate 120) }}</div>
         {{ with .Params.code_preview }}
-        <div class="code-block mt-2.5"><div class="code-block-body text-nord-body text-xs">{{ . | safeHTML }}</div></div>
+        <div class="font-mono" style="font-size:12px;background:#0e1218;border:1px solid #1e2730;border-radius:10px;padding:11px 14px;margin-top:13px;line-height:1.7;">{{ . | safeHTML }}</div>
         {{ end }}
-        <a href="{{ .RelPermalink }}" class="inline-block mt-2.5 font-mono text-xs text-nord-accent hover:underline">read full note →</a>
       </div>
-    </div>
-    <div x-show="expanded !== '{{ $uid }}'" class="border-t border-nord-surface/60"></div>
+    </a>
     {{ end }}
   </div>
+
   {{ end }}
 
-  <div class="px-6 pt-5 pb-12 text-center">
-    <button class="font-mono text-sm text-nord-accent border border-nord-accent/30 rounded-lg px-6 py-3 hover:border-nord-accent/60 transition-colors w-full">
-      load older notes ↓
-    </button>
+  {{/* load more */}}
+  <div style="padding:24px 28px 130px;">
+    <div class="font-mono" style="font-size:11.5px;color:#88c0d0;border:1px solid rgba(136,192,208,.2);border-radius:12px;padding:14px;text-align:center;cursor:pointer;">load older notes ↓</div>
   </div>
 
 </div>
 
+{{/* ══════════════════ FLOATING PILL — mobile only ══════════════════ */}}
+<div class="xl:hidden mobile-pill mobile-glow-pill"
+     @click="navOpen = true"
+     style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#141920;border:1px solid rgba(136,192,208,.55);border-radius:999px;padding:10px 22px;display:flex;align-items:center;gap:12px;cursor:pointer;z-index:50;white-space:nowrap;">
+  <span style="font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:#eceff4;">ih</span>
+  <span style="width:1px;height:14px;background:#2a3040;display:block;flex:none;"></span>
+  <span class="font-mono" style="font-size:13px;color:#88c0d0;">≡</span>
+</div>
+
+{{/* BACKDROP */}}
+<div class="xl:hidden mobile-backdrop"
+     x-show="navOpen"
+     x-transition:enter="transition ease-out duration-200"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="transition ease-in duration-150"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0"
+     @click="navOpen = false"
+     style="position:fixed;inset:0;z-index:60;background:rgba(8,10,14,.78);backdrop-filter:blur(3px);"
+     x-cloak></div>
+
+{{/* BOTTOM SHEET */}}
+<div class="xl:hidden mobile-sheet"
+     x-show="navOpen"
+     x-transition:enter="transition ease-[cubic-bezier(.32,.72,0,1)] duration-300"
+     x-transition:enter-start="translate-y-full"
+     x-transition:enter-end="translate-y-0"
+     x-transition:leave="transition ease-[cubic-bezier(.32,.72,0,1)] duration-300"
+     x-transition:leave-start="translate-y-0"
+     x-transition:leave-end="translate-y-full"
+     style="position:fixed;bottom:0;left:0;width:100%;z-index:70;background:#0e1218;border-radius:22px 22px 0 0;border-top:1px solid #1e2730;box-shadow:0 -8px 48px rgba(0,0,0,.7);"
+     x-cloak>
+
+  {{/* handle */}}
+  <div style="display:flex;justify-content:center;padding:12px 0 8px;">
+    <div style="width:36px;height:4px;border-radius:2px;background:#2a3040;"></div>
+  </div>
+  <div style="height:1px;background:#1e2730;margin:4px 0 0;"></div>
+
+  <div style="padding:8px 0 36px;">
+
+    {{/* home */}}
+    <a href="/" @click="navOpen = false"
+       style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-size:24px;color:#eceff4;line-height:1;">home</div>
+        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">{{ .Site.Params.author | upper }}</div>
+      </div>
+      <span class="font-mono" style="font-size:14px;color:#3b4252;">→</span>
+    </a>
+
+    <div style="height:1px;background:#1e2730;margin:0 28px;"></div>
+
+    {{/* til — active */}}
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-size:24px;color:#88c0d0;line-height:1;">til</div>
+        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">TECHNICAL LOG · {{ $tilCount }} NOTES</div>
+      </div>
+      <span class="font-mono" style="font-size:14px;color:#88c0d0;">→</span>
+    </div>
+
+    <div style="height:1px;background:#1e2730;margin:0 28px;"></div>
+
+    <a href="/blog/" @click="navOpen = false"
+       style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-size:24px;color:#eceff4;line-height:1;">blog</div>
+        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">ESSAYS &amp; NOTES</div>
+      </div>
+      <span class="font-mono" style="font-size:14px;color:#3b4252;">→</span>
+    </a>
+
+    <div style="height:1px;background:#1e2730;margin:0 28px;"></div>
+
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;opacity:.4;">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-family:'Fraunces',serif;font-size:24px;color:#eceff4;line-height:1;">about</span>
+          <span class="font-mono" style="font-size:9px;background:rgba(136,192,208,.1);color:#88c0d0;border:1px solid rgba(136,192,208,.25);border-radius:999px;padding:2px 8px;letter-spacing:.06em;">soon</span>
+        </div>
+        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">THE PERSON BEHIND THE BUGS</div>
+      </div>
+    </div>
+
+    <div style="height:1px;background:#1e2730;margin:0 28px;"></div>
+
+    <a href="https://{{ .Site.Params.github }}" target="_blank" @click="navOpen = false"
+       style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-size:24px;color:#eceff4;line-height:1;">github</div>
+        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">{{ .Site.Params.github }}</div>
+      </div>
+      <span class="font-mono" style="font-size:14px;color:#3b4252;">↗</span>
+    </a>
+
+  </div>
+</div>
+
 {{/* ══════════════════ DESKTOP (xl+) ══════════════════ */}}
-<div class="hidden xl:grid" style="grid-template-columns:400px 1fr;min-height:100vh;">
+<div class="hidden xl:grid" style="grid-template-columns:minmax(420px,42%) 1fr;min-height:100vh;">
 
   {{ partial "left-gutter.html" . }}
 
