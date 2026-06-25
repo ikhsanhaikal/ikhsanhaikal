@@ -5,6 +5,49 @@
 {{ range $tilPages }}{{ range .Params.tags }}{{ $allTags = $allTags | append . }}{{ end }}{{ end }}
 {{ $uniqueTags := $allTags | uniq }}
 
+
+{{/* ══════════════════ MOBILE ANIMATIONS ══════════════════ */}}
+<style>
+  @keyframes heroFadeIn {
+    from { opacity:0; transform:scale(1.06); }
+    to   { opacity:1; transform:scale(1); }
+  }
+  @keyframes slideUpSpring {
+    0%   { opacity:0; transform:translateY(48px); }
+    60%  { opacity:1; transform:translateY(-6px); }
+    80%  { transform:translateY(3px); }
+    100% { opacity:1; transform:translateY(0); }
+  }
+  @keyframes slideUp {
+    from { opacity:0; transform:translateY(28px); }
+    to   { opacity:1; transform:translateY(0); }
+  }
+  @keyframes orbFloat {
+    0%   { transform:translate(0,0) scale(1); }
+    33%  { transform:translate(40px,-30px) scale(1.08); }
+    66%  { transform:translate(-20px,40px) scale(.94); }
+    100% { transform:translate(0,0) scale(1); }
+  }
+  @keyframes scrollBounce {
+    0%,100% { transform:translateY(0); opacity:.4; }
+    50%      { transform:translateY(6px); opacity:.7; }
+  }
+  .anim-hero   { animation:heroFadeIn 1.1s cubic-bezier(.22,1,.36,1) both; }
+  .anim-label  { animation:slideUp .6s cubic-bezier(.22,1,.36,1) both; animation-delay:.45s; }
+  .anim-name   { animation:slideUpSpring .9s cubic-bezier(.22,1,.36,1) both; animation-delay:.55s; }
+  .anim-status { animation:slideUp .5s cubic-bezier(.22,1,.36,1) both; animation-delay:.78s; }
+  .scroll-hint { animation:scrollBounce 1.4s ease-in-out infinite; }
+  .reveal {
+    opacity:0; transform:translateY(36px);
+    transition:opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
+  }
+  .reveal.visible { opacity:1; transform:translateY(0); }
+  .reveal.delay-1 { transition-delay:.1s; }
+  .reveal.delay-2 { transition-delay:.18s; }
+  .reveal.delay-3 { transition-delay:.26s; }
+  .mobile-glow-pill { box-shadow:0 0 0 1px rgba(136,192,208,.45),0 8px 32px rgba(136,192,208,.22),0 2px 10px rgba(0,0,0,.7); }
+</style>
+
 {{/* ══════════════════ STICKY HEADER — mobile only ══════════════════ */}}
 <div id="mobile-sticky-header"
      class="xl:hidden"
@@ -19,229 +62,177 @@
 </div>
 
 {{/* ══════════════════ MOBILE (< xl) ══════════════════ */}}
-<div class="xl:hidden relative" style="background:#0e1218;">
+<div class="xl:hidden" style="background:#0e1218;position:relative;">
 
-  {{/* ── HERO ── */}}
-  <div id="mobile-hero" class="relative overflow-hidden" style="height:480px;">
-    <img src="/images/avatar.svg"
-         style="width:100%;height:540px;object-fit:cover;object-position:50% 0%;display:block;"
+  {{/* ── PAGE 1: HERO — full viewport height ── */}}
+  <div id="mobile-hero" style="position:relative;height:100vh;overflow:hidden;">
+
+    <img class="anim-hero" src="/images/avatar.svg"
+         style="width:100%;height:100%;object-fit:cover;object-position:50% 0%;display:block;"
          alt="{{ .Site.Params.author }}">
-    {{/* gradient overlays */}}
-    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(14,18,24,.35) 0%,rgba(14,18,24,0) 25%,rgba(14,18,24,.55) 60%,#0e1218 100%);"></div>
-    {{/* editorial title — bottom-left */}}
-    <div style="position:absolute;bottom:0;left:0;right:0;padding:0 28px 28px;">
-      <div class="font-mono" style="font-size:10px;color:#88c0d0;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px;">{{ .Site.Params.role }}</div>
-      <div style="font-family:'Fraunces',serif;font-size:64px;font-weight:900;line-height:.84;color:#eceff4;letter-spacing:-.03em;">
-        {{ .Site.Params.authorFirst }}<br>
-        <span style="font-weight:300;font-style:italic;font-size:56px;">{{ .Site.Params.authorLast }}</span>
+
+    {{/* gradient overlay */}}
+    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(14,18,24,.35) 0%,rgba(14,18,24,0) 20%,rgba(14,18,24,.5) 55%,#0e1218 100%);"></div>
+
+    {{/* name block — bottom-left */}}
+    <div style="position:absolute;bottom:0;left:0;right:0;padding:0 28px 100px;">
+      <div class="anim-label" style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#88c0d0;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px;">{{ .Site.Params.role }}</div>
+      <div class="anim-name" style="font-family:'Fraunces',serif;font-size:64px;font-weight:900;line-height:.84;color:#eceff4;letter-spacing:-.03em;">
+        {{ index (split .Site.Params.author " ") 0 }}<br>
+        <span style="font-weight:300;font-style:italic;font-size:56px;">{{ index (split .Site.Params.author " ") 1 }}</span>
       </div>
+      <div class="anim-status" style="display:flex;align-items:center;gap:7px;margin-top:16px;">
+        <span style="width:7px;height:7px;border-radius:50%;background:#a3be8c;flex:none;display:block;"></span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:rgba(154,164,186,.6);letter-spacing:.04em;">{{ .Site.Params.status }}</span>
+      </div>
+    </div>
+
+    {{/* scroll hint */}}
+    <div class="anim-status" style="position:absolute;bottom:36px;left:0;right:0;display:flex;flex-direction:column;align-items:center;gap:6px;">
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:rgba(136,192,208,.4);letter-spacing:.14em;text-transform:uppercase;">scroll</span>
+      <svg class="scroll-hint" width="12" height="20" viewBox="0 0 12 20" fill="none">
+        <path d="M6 0v16M1 11l5 5 5-5" stroke="#88c0d0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
     </div>
   </div>
 
-  {{/* ── BIO + CTA ── */}}
-  <div class="px-7 pt-6">
+  {{/* ── PAGE 2: BIO + ABOUT — full viewport height ── */}}
+  <div style="min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 28px;position:relative;overflow:hidden;">
 
-    {{/* tagline with left accent border */}}
-    <div style="font-family:'Fraunces',serif;font-style:italic;font-size:21px;color:#9aa4ba;line-height:1.3;border-left:2px solid #88c0d0;padding-left:14px;">"{{ .Site.Params.tagline }}"</div>
-
-    {{/* description */}}
-    <p style="font-size:14px;line-height:1.7;color:#5c6878;margin-top:12px;">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems. Frontend · Backend · LLM/UI.</p>
-
-    {{/* status dot */}}
-    <div class="flex items-center gap-2 mt-3">
-      <span class="w-2 h-2 rounded-full bg-nord-green flex-none block"></span>
-      <span class="font-mono" style="font-size:10.5px;color:#5c6878;letter-spacing:.04em;">{{ .Site.Params.status }}</span>
+    {{/* ambient orbs */}}
+    <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">
+      <div style="position:absolute;width:320px;height:320px;border-radius:50%;background:radial-gradient(circle,rgba(66,105,106,.22) 0%,transparent 70%);animation:orbFloat 8s ease-in-out infinite;top:10%;left:-80px;"></div>
+      <div style="position:absolute;width:240px;height:240px;border-radius:50%;background:radial-gradient(circle,rgba(134,159,159,.14) 0%,transparent 70%);animation:orbFloat 11s ease-in-out infinite reverse;bottom:15%;right:-60px;animation-delay:-4s;"></div>
     </div>
 
-    {{/* primary CTAs */}}
-    <div class="flex gap-2.5 mt-5">
-      <a href="/resume.pdf" class="no-underline flex-1 text-center font-semibold"
-         style="background:#88c0d0;color:#0e1218;font-size:14px;border-radius:12px;padding:13px;">Résumé ↓</a>
-      <a href="mailto:{{ .Site.Params.email }}" class="no-underline flex-1 text-center"
-         style="color:#eceff4;font-size:14px;border:1px solid #2a3040;border-radius:12px;padding:13px;">Email me</a>
-    </div>
+    <div class="reveal" data-reveal style="position:relative;z-index:1;">
 
-    {{/* social icon buttons */}}
-    <div class="flex gap-2.5 mt-2.5">
-      {{/* GitHub */}}
-      <a href="https://{{ .Site.Params.github }}" target="_blank"
-         class="no-underline flex-1 flex items-center justify-center gap-2 mobile-glow-icon"
-         style="background:#141920;border:1px solid rgba(136,192,208,.4);border-radius:12px;padding:13px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" fill="#88c0d0"/>
-        </svg>
-        <span class="font-mono" style="font-size:11.5px;color:#88c0d0;">GitHub</span>
+      <div style="font-family:'Fraunces',serif;font-style:italic;font-size:28px;color:#d8dee9;line-height:1.25;border-left:2px solid #88c0d0;padding-left:18px;margin-bottom:22px;">"{{ .Site.Params.tagline }}"</div>
+
+      <div style="font-size:15px;line-height:1.8;color:#5c6878;margin-bottom:18px;">Lately having fun slicing UI with LLMs. Open to freelance &amp; interesting problems. Frontend · Backend · LLM/UI.</div>
+
+      <div style="display:flex;align-items:center;gap:7px;margin-bottom:32px;">
+        <span style="width:7px;height:7px;border-radius:50%;background:#a3be8c;flex:none;display:block;"></span>
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:#4c566a;letter-spacing:.04em;">{{ .Site.Params.status }}</span>
+      </div>
+
+      {{/* 4 circular icon buttons */}}
+      <div style="display:flex;gap:14px;margin-bottom:32px;">
+        <a href="/resume.pdf" class="no-underline" style="width:52px;height:52px;border-radius:50%;background:#88c0d0;display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 0 0 1px rgba(136,192,208,.5),0 4px 20px rgba(136,192,208,.25);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#0e1218" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><line x1="9" y1="15" x2="15" y2="15"/>
+          </svg>
+        </a>
+        <a href="mailto:{{ .Site.Params.email }}" class="no-underline" style="width:52px;height:52px;border-radius:50%;background:#141920;border:1px solid #1e2730;display:flex;align-items:center;justify-content:center;flex:none;">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="#6b7a8d" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/>
+          </svg>
+        </a>
+        <a href="https://{{ .Site.Params.github }}" target="_blank" class="no-underline" style="width:52px;height:52px;border-radius:50%;background:#141920;border:1px solid rgba(136,192,208,.4);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 0 0 1px rgba(136,192,208,.15),0 4px 18px rgba(136,192,208,.12);">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
+            <path d="M12 2C6.477 2 2 6.477 2 12c0 4.418 2.865 8.166 6.839 9.489.5.092.682-.217.682-.482 0-.237-.009-.868-.013-1.703-2.782.604-3.369-1.341-3.369-1.341-.454-1.155-1.11-1.463-1.11-1.463-.908-.62.069-.608.069-.608 1.003.07 1.531 1.03 1.531 1.03.892 1.529 2.341 1.087 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.11-4.555-4.943 0-1.091.39-1.984 1.029-2.683-.103-.253-.446-1.27.098-2.647 0 0 .84-.269 2.75 1.025A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.294 2.747-1.025 2.747-1.025.546 1.377.202 2.394.1 2.647.64.699 1.028 1.592 1.028 2.683 0 3.842-2.339 4.687-4.566 4.935.359.309.678.919.678 1.852 0 1.336-.012 2.415-.012 2.743 0 .267.18.578.688.48C19.138 20.163 22 16.418 22 12c0-5.523-4.477-10-10-10z" fill="#88c0d0"/>
+          </svg>
+        </a>
+        <a href="https://instagram.com/{{ .Site.Params.instagram }}" target="_blank" class="no-underline" style="width:52px;height:52px;border-radius:50%;background:#141920;border:1px solid rgba(136,192,208,.4);display:flex;align-items:center;justify-content:center;flex:none;box-shadow:0 0 0 1px rgba(136,192,208,.15),0 4px 18px rgba(136,192,208,.12);">
+          <svg width="19" height="19" viewBox="0 0 24 24" fill="none">
+            <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="#88c0d0" stroke-width="1.8"/>
+            <circle cx="12" cy="12" r="4" stroke="#88c0d0" stroke-width="1.8"/>
+            <circle cx="17.5" cy="6.5" r="1" fill="#88c0d0"/>
+          </svg>
+        </a>
+      </div>
+
+      <a href="#" class="no-underline" style="display:inline-flex;align-items:center;background:#141920;border:1px solid rgba(136,192,208,.35);border-radius:999px;padding:11px 24px;box-shadow:0 0 0 1px rgba(136,192,208,.1),0 4px 16px rgba(136,192,208,.08);">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#88c0d0;letter-spacing:.06em;">more about me</span>
       </a>
-      {{/* Instagram */}}
-      <a href="https://instagram.com/{{ .Site.Params.instagram }}" target="_blank"
-         class="no-underline flex-1 flex items-center justify-center gap-2 mobile-glow-icon"
-         style="background:#141920;border:1px solid rgba(136,192,208,.4);border-radius:12px;padding:13px;">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none">
-          <rect x="2" y="2" width="20" height="20" rx="5.5" stroke="#88c0d0" stroke-width="1.8"/>
-          <circle cx="12" cy="12" r="4" stroke="#88c0d0" stroke-width="1.8"/>
-          <circle cx="17.5" cy="6.5" r="1" fill="#88c0d0"/>
-        </svg>
-        <span class="font-mono" style="font-size:11.5px;color:#88c0d0;">Instagram</span>
-      </a>
+
     </div>
   </div>
 
-  {{/* ── ABOUT + TECH STACK ── */}}
-  <div style="margin:28px 28px 0;background:#141920;border:1px solid #1e2730;border-radius:20px;overflow:hidden;">
-    {{/* header */}}
-    <div style="padding:18px 20px 14px;border-bottom:1px solid #1e2730;">
-      <div style="font-family:'Fraunces',serif;font-size:20px;color:#eceff4;margin-bottom:6px;">About me</div>
-      <div style="font-size:13.5px;line-height:1.65;color:#5c6878;">I build web apps, APIs, and lately, LLM-powered interfaces. I care deeply about the details — from query plans to pixel spacing.</div>
+  {{/* ── PAGE 3: FEATURED NOTES ── */}}
+  <div style="padding:0 28px 120px;">
+
+    <div class="reveal" data-reveal style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
+      <div style="flex:1;height:1px;background:#1e2730;"></div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;letter-spacing:.18em;color:#3b4252;text-transform:uppercase;">featured notes</span>
+      <div style="flex:1;height:1px;background:#1e2730;"></div>
     </div>
-    {{/* tech stack */}}
-    <div style="padding:14px 20px 18px;">
-      <div class="font-mono" style="font-size:9.5px;letter-spacing:.18em;color:#3b4252;text-transform:uppercase;margin-bottom:12px;">Tech stack</div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px;">
-        {{/* teal — primary */}}
-        <span class="font-mono" style="font-size:11.5px;background:rgba(136,192,208,.08);color:#88c0d0;border:1px solid rgba(136,192,208,.2);border-radius:8px;padding:5px 12px;">React</span>
-        <span class="font-mono" style="font-size:11.5px;background:rgba(136,192,208,.08);color:#88c0d0;border:1px solid rgba(136,192,208,.2);border-radius:8px;padding:5px 12px;">Next.js</span>
-        {{/* neutral */}}
-        <span class="font-mono" style="font-size:11.5px;background:#1a2030;color:#9aa4ba;border:1px solid #2a3040;border-radius:8px;padding:5px 12px;">TypeScript</span>
-        <span class="font-mono" style="font-size:11.5px;background:#1a2030;color:#9aa4ba;border:1px solid #2a3040;border-radius:8px;padding:5px 12px;">Node.js</span>
-        <span class="font-mono" style="font-size:11.5px;background:#1a2030;color:#9aa4ba;border:1px solid #2a3040;border-radius:8px;padding:5px 12px;">PostgreSQL</span>
-        <span class="font-mono" style="font-size:11.5px;background:#1a2030;color:#9aa4ba;border:1px solid #2a3040;border-radius:8px;padding:5px 12px;">Docker</span>
-        <span class="font-mono" style="font-size:11.5px;background:#1a2030;color:#9aa4ba;border:1px solid #2a3040;border-radius:8px;padding:5px 12px;">Python</span>
-        {{/* green — LLM accent */}}
-        <span class="font-mono" style="font-size:11.5px;background:rgba(163,190,140,.08);color:#a3be8c;border:1px solid rgba(163,190,140,.2);border-radius:8px;padding:5px 12px;">LLM / AI</span>
-      </div>
-    </div>
-  </div>
 
-  {{/* featured notes divider */}}
-  <div style="display:flex;align-items:center;gap:12px;margin:28px 28px 28px 0;">
-    <div style="flex:1;height:1px;background:#1e2730;"></div>
-    <span class="font-mono" style="font-size:9.5px;letter-spacing:.18em;color:#3b4252;text-transform:uppercase;">featured notes</span>
-    <div style="flex:1;height:1px;background:#1e2730;"></div>
-  </div>
-
-  {{/* TIL cards — colored strip per tag */}}
-  <div class="px-7 pt-[18px] flex flex-col gap-3.5">
-    {{ range first 4 $tilPages }}
-    {{ $tag := index .Params.tags 0 }}
-
-    {{/* strip gradient */}}
-    {{ $stripBg     := "rgba(136,192,208,.12)" }}
-    {{ $stripBgFade := "rgba(136,192,208,.04)" }}
-    {{/* big keyword color — direct alpha, no opacity override */}}
-    {{ $keywordColor := "rgba(136,192,208,.25)" }}
-    {{/* tag badge */}}
-    {{ $tagColor  := "rgba(136,192,208,.5)" }}
-    {{ $tagBg     := "rgba(136,192,208,.08)" }}
-    {{ $tagBorder := "rgba(136,192,208,.2)" }}
-    {{/* display keyword in strip */}}
-    {{ $keyword := $tag }}
-
-    {{ if eq $tag "postgres" }}
-      {{ $stripBg      = "rgba(235,203,139,.1)" }}
-      {{ $stripBgFade  = "rgba(235,203,139,.03)" }}
-      {{ $keywordColor = "rgba(235,203,139,.2)" }}
-      {{ $tagColor     = "rgba(235,203,139,.6)" }}
-      {{ $tagBg        = "rgba(235,203,139,.06)" }}
-      {{ $tagBorder    = "rgba(235,203,139,.18)" }}
-      {{ $keyword      = "psql" }}
-    {{ else if eq $tag "css" }}
-      {{ $stripBg      = "rgba(180,142,173,.1)" }}
-      {{ $stripBgFade  = "rgba(180,142,173,.03)" }}
-      {{ $keywordColor = "rgba(180,142,173,.22)" }}
-      {{ $tagColor     = "rgba(180,142,173,.6)" }}
-      {{ $tagBg        = "rgba(180,142,173,.06)" }}
-      {{ $tagBorder    = "rgba(180,142,173,.18)" }}
-      {{ $keyword      = "css" }}
-    {{ else if eq $tag "docker" }}
-      {{ $stripBg      = "rgba(163,190,140,.1)" }}
-      {{ $stripBgFade  = "rgba(163,190,140,.03)" }}
-      {{ $keywordColor = "rgba(163,190,140,.2)" }}
-      {{ $tagColor     = "rgba(163,190,140,.6)" }}
-      {{ $tagBg        = "rgba(163,190,140,.06)" }}
-      {{ $tagBorder    = "rgba(163,190,140,.18)" }}
-      {{ $keyword      = "docker" }}
-    {{ else if eq $tag "react" }}
-      {{ $stripBg      = "rgba(129,161,193,.12)" }}
-      {{ $stripBgFade  = "rgba(129,161,193,.04)" }}
-      {{ $keywordColor = "rgba(129,161,193,.22)" }}
-      {{ $tagColor     = "rgba(129,161,193,.6)" }}
-      {{ $tagBg        = "rgba(129,161,193,.06)" }}
-      {{ $tagBorder    = "rgba(129,161,193,.18)" }}
-      {{ $keyword      = "react" }}
-    {{ else if eq $tag "js" }}
-      {{ $stripBg      = "rgba(235,203,139,.08)" }}
-      {{ $stripBgFade  = "rgba(235,203,139,.02)" }}
-      {{ $keywordColor = "rgba(235,203,139,.18)" }}
-      {{ $tagColor     = "rgba(235,203,139,.55)" }}
-      {{ $tagBg        = "rgba(235,203,139,.05)" }}
-      {{ $tagBorder    = "rgba(235,203,139,.15)" }}
-      {{ $keyword      = "js" }}
-    {{ else if eq $tag "linux" }}
-      {{ $stripBg      = "rgba(163,190,140,.08)" }}
-      {{ $stripBgFade  = "rgba(163,190,140,.02)" }}
-      {{ $keywordColor = "rgba(163,190,140,.18)" }}
-      {{ $tagColor     = "rgba(163,190,140,.55)" }}
-      {{ $tagBg        = "rgba(163,190,140,.05)" }}
-      {{ $tagBorder    = "rgba(163,190,140,.15)" }}
-      {{ $keyword      = "linux" }}
-    {{ end }}
-
-    <a href="{{ .RelPermalink }}" class="no-underline block" style="background:#141920;border:1px solid #1e2730;border-radius:18px;overflow:hidden;">
-      {{/* colored strip header */}}
-      <div style="{{ printf "height:90px;background:linear-gradient(135deg,%s 0%%,%s 100%%);border-bottom:1px solid #1e2730;display:flex;align-items:flex-end;justify-content:space-between;padding:14px 18px;" $stripBg $stripBgFade | safeCSS }}">
-        <span class="font-mono" style="{{ printf "font-size:28px;font-weight:500;color:%s;letter-spacing:-.02em;" $keywordColor | safeCSS }}">{{ $keyword }}</span>
-        <span class="font-mono" style="{{ printf "font-size:11px;color:%s;background:%s;border:1px solid %s;border-radius:6px;padding:3px 10px;" $tagColor $tagBg $tagBorder | safeCSS }}">#{{ $tag }}</span>
-      </div>
-      {{/* content */}}
-      <div style="padding:16px 18px 18px;">
-        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-bottom:8px;">{{ .Date.Format "Jan 02" }}</div>
-        <div style="font-family:'Newsreader',serif;font-size:19px;line-height:1.28;color:#eceff4;margin-bottom:8px;">{{ .Title }}</div>
-        <div style="font-size:13.5px;line-height:1.6;color:#5c6878;">{{ .Description | default (.Summary | truncate 110) }}</div>
-        {{ with .Params.code_preview }}
-        <div class="font-mono" style="font-size:12px;background:#0e1218;border:1px solid #1e2730;border-radius:10px;padding:11px 14px;margin-top:13px;line-height:1.7;">
-          <span style="color:#81a1c1;">git</span> restore --staged <span style="color:#a3be8c;">file</span>
+    <div style="display:flex;flex-direction:column;gap:14px;">
+      {{ range first 4 $tilPages }}
+      {{ $tag := index .Params.tags 0 }}
+      {{ $stripBg     := "rgba(136,192,208,.12)" }}
+      {{ $stripBgFade := "rgba(136,192,208,.04)" }}
+      {{ $keywordColor := "rgba(136,192,208,.25)" }}
+      {{ $tagColor    := "rgba(136,192,208,.5)" }}
+      {{ $tagBg       := "rgba(136,192,208,.08)" }}
+      {{ $tagBorder   := "rgba(136,192,208,.2)" }}
+      {{ $keyword     := $tag }}
+      {{ if eq $tag "postgres" }}
+        {{ $stripBg      = "rgba(235,203,139,.1)" }}{{ $stripBgFade  = "rgba(235,203,139,.03)" }}
+        {{ $keywordColor = "rgba(235,203,139,.2)" }}{{ $tagColor     = "rgba(235,203,139,.6)" }}
+        {{ $tagBg        = "rgba(235,203,139,.06)" }}{{ $tagBorder    = "rgba(235,203,139,.18)" }}
+        {{ $keyword      = "psql" }}
+      {{ else if eq $tag "css" }}
+        {{ $stripBg      = "rgba(180,142,173,.1)" }}{{ $stripBgFade  = "rgba(180,142,173,.03)" }}
+        {{ $keywordColor = "rgba(180,142,173,.22)" }}{{ $tagColor     = "rgba(180,142,173,.6)" }}
+        {{ $tagBg        = "rgba(180,142,173,.06)" }}{{ $tagBorder    = "rgba(180,142,173,.18)" }}
+        {{ $keyword      = "css" }}
+      {{ else if eq $tag "docker" }}
+        {{ $stripBg      = "rgba(163,190,140,.1)" }}{{ $stripBgFade  = "rgba(163,190,140,.03)" }}
+        {{ $keywordColor = "rgba(163,190,140,.2)" }}{{ $tagColor     = "rgba(163,190,140,.6)" }}
+        {{ $tagBg        = "rgba(163,190,140,.06)" }}{{ $tagBorder    = "rgba(163,190,140,.18)" }}
+        {{ $keyword      = "docker" }}
+      {{ else if eq $tag "react" }}
+        {{ $stripBg      = "rgba(129,161,193,.12)" }}{{ $stripBgFade  = "rgba(129,161,193,.04)" }}
+        {{ $keywordColor = "rgba(129,161,193,.22)" }}{{ $tagColor     = "rgba(129,161,193,.6)" }}
+        {{ $tagBg        = "rgba(129,161,193,.06)" }}{{ $tagBorder    = "rgba(129,161,193,.18)" }}
+        {{ $keyword      = "react" }}
+      {{ else if eq $tag "js" }}
+        {{ $stripBg      = "rgba(235,203,139,.08)" }}{{ $stripBgFade  = "rgba(235,203,139,.02)" }}
+        {{ $keywordColor = "rgba(235,203,139,.18)" }}{{ $tagColor     = "rgba(235,203,139,.55)" }}
+        {{ $tagBg        = "rgba(235,203,139,.05)" }}{{ $tagBorder    = "rgba(235,203,139,.15)" }}
+        {{ $keyword      = "js" }}
+      {{ else if eq $tag "linux" }}
+        {{ $stripBg      = "rgba(163,190,140,.08)" }}{{ $stripBgFade  = "rgba(163,190,140,.02)" }}
+        {{ $keywordColor = "rgba(163,190,140,.18)" }}{{ $tagColor     = "rgba(163,190,140,.55)" }}
+        {{ $tagBg        = "rgba(163,190,140,.05)" }}{{ $tagBorder    = "rgba(163,190,140,.15)" }}
+        {{ $keyword      = "linux" }}
+      {{ end }}
+      <a href="{{ .RelPermalink }}" class="no-underline block reveal delay-1" data-reveal
+         style="background:#141920;border:1px solid #1e2730;border-radius:18px;overflow:hidden;">
+        <div style="{{ printf "height:90px;background:linear-gradient(135deg,%s 0%%,%s 100%%);border-bottom:1px solid #1e2730;display:flex;align-items:flex-end;justify-content:space-between;padding:14px 18px;" $stripBg $stripBgFade | safeCSS }}">
+          <span style="{{ printf "font-family:'IBM Plex Mono',monospace;font-size:28px;font-weight:500;color:%s;letter-spacing:-.02em;" $keywordColor | safeCSS }}">{{ $keyword }}</span>
+          <span style="{{ printf "font-family:'IBM Plex Mono',monospace;font-size:11px;color:%s;background:%s;border:1px solid %s;border-radius:6px;padding:3px 10px;" $tagColor $tagBg $tagBorder | safeCSS }}">#{{ $tag }}</span>
         </div>
-        {{ end }}
-      </div>
-    </a>
-    {{ end }}
-  </div>
+        <div style="padding:16px 18px 18px;">
+          <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3b4252;margin-bottom:8px;">{{ .Date.Format "Jan 02" }}</div>
+          <div style="font-family:'Fraunces',serif;font-size:20px;line-height:1.25;color:#eceff4;margin-bottom:8px;">{{ .Title }}</div>
+          <div style="font-size:13.5px;line-height:1.6;color:#5c6878;">{{ .Description | default (.Summary | truncate 110) }}</div>
+        </div>
+      </a>
+      {{ end }}
+    </div>
 
-  {{/* browse all */}}
-  <div class="px-7 pt-4 pb-[120px] text-center">
-    <a href="/til/"
-       class="font-mono no-underline inline-block"
-       style="font-size:12px;color:#88c0d0;border:1px solid rgba(136,192,208,.2);border-radius:12px;padding:13px 24px;">
-      browse all {{ $tilCount }} til →
-    </a>
+    <div class="reveal" data-reveal style="margin-top:20px;text-align:center;">
+      <a href="/til/" class="no-underline inline-flex items-center"
+         style="background:#141920;border:1px solid rgba(136,192,208,.4);border-radius:999px;padding:10px 22px;box-shadow:0 0 0 1px rgba(136,192,208,.15),0 4px 20px rgba(136,192,208,.12);">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:#88c0d0;letter-spacing:.06em;">browse all {{ $tilCount }} notes →</span>
+      </a>
+    </div>
+
   </div>
 
 </div>
 
-{{/* scroll listener — placed after both #mobile-sticky-header and #mobile-hero exist in DOM */}}
-<script>
-(function() {
-  var header = document.getElementById('mobile-sticky-header');
-  var hero   = document.getElementById('mobile-hero');
-  if (!header || !hero) return;
-  window.addEventListener('scroll', function() {
-    var past = hero.getBoundingClientRect().bottom < 72;
-    header.style.transform = past
-      ? 'translateX(-50%) translateY(0)'
-      : 'translateX(-50%) translateY(-110%)';
-  }, { passive: true });
-})();
-</script>
-
-{{/* ══════════════════ FLOATING PILL + SHEET — mobile only ══════════════════ */}}
-
-{{/* PILL */}}
-<div class="xl:hidden mobile-pill mobile-glow-pill"
+{{/* ══════════════════ FLOATING PILL — mobile only ══════════════════ */}}
+<div id="mobile-pill-el"
+     class="xl:hidden mobile-pill mobile-glow-pill"
      @click="navOpen = true"
-     style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);width:fit-content;z-index:50;cursor:pointer;background:#141920;border:1px solid rgba(136,192,208,.55);border-radius:999px;padding:10px 22px;display:flex;align-items:center;gap:12px;white-space:nowrap;">
-  <span style="font-family:'Newsreader',serif;font-style:italic;font-size:15px;color:#eceff4;">ih</span>
+     style="position:fixed;bottom:28px;left:50%;transform:translateX(-50%);background:#141920;border:1px solid rgba(136,192,208,.55);border-radius:999px;padding:10px 22px;display:flex;align-items:center;gap:12px;cursor:pointer;z-index:50;white-space:nowrap;opacity:0;pointer-events:none;transition:opacity 400ms cubic-bezier(.22,1,.36,1);">
+  <span style="font-family:'Fraunces',serif;font-style:italic;font-size:15px;color:#eceff4;">ih</span>
   <span style="width:1px;height:14px;background:#2a3040;display:block;flex:none;"></span>
-  <span class="font-mono" style="font-size:13px;color:#88c0d0;">≡</span>
+  <span style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#88c0d0;">≡</span>
 </div>
 
 {{/* BACKDROP */}}
@@ -268,60 +259,88 @@
      x-transition:leave-end="translate-y-full"
      style="position:fixed;bottom:0;left:0;width:100%;z-index:70;background:#0e1218;border-radius:22px 22px 0 0;border-top:1px solid #1e2730;box-shadow:0 -8px 48px rgba(0,0,0,.7);"
      x-cloak>
-
-  {{/* handle */}}
   <div style="display:flex;justify-content:center;padding:12px 0 8px;">
     <div style="width:36px;height:4px;border-radius:2px;background:#2a3040;"></div>
   </div>
   <div style="height:1px;background:#1e2730;margin:4px 0 0;"></div>
-
-  <div style="padding-bottom:36px;">
-
-    <a href="/til/" @click="navOpen = false"
-       style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
+  <div style="padding:8px 0 36px;">
+    <a href="/" @click="navOpen = false" style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
       <div>
-        <div style="font-family:'Newsreader',serif;font-size:24px;color:#88c0d0;line-height:1;">til</div>
-        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">TECHNICAL LOG</div>
+        <div style="font-family:'Fraunces',serif;font-size:24px;color:#eceff4;line-height:1;">home</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">{{ .Site.Params.author | upper }}</div>
       </div>
-      <span class="font-mono" style="font-size:14px;color:#88c0d0;">→</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#3b4252;">→</span>
     </a>
-
     <div style="height:1px;background:#1e2730;margin:0 28px;"></div>
-
-    <a href="/blog/" @click="navOpen = false"
-       style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
+    <a href="/til/" @click="navOpen = false" style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
       <div>
-        <div style="font-family:'Newsreader',serif;font-size:24px;color:#eceff4;line-height:1;">blog</div>
-        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">ESSAYS &amp; NOTES</div>
+        <div style="font-family:'Fraunces',serif;font-size:24px;color:#88c0d0;line-height:1;">til</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">TECHNICAL LOG</div>
       </div>
-      <span class="font-mono" style="font-size:14px;color:#3b4252;">→</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#88c0d0;">→</span>
     </a>
-
     <div style="height:1px;background:#1e2730;margin:0 28px;"></div>
-
-    <div style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;opacity:.4;cursor:default;">
+    <a href="/blog/" @click="navOpen = false" style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
       <div>
-        <div class="flex items-center gap-2.5">
-          <span style="font-family:'Newsreader',serif;font-size:24px;color:#eceff4;line-height:1;">about</span>
-          <span class="font-mono" style="font-size:9px;background:rgba(136,192,208,.1);color:#88c0d0;border:1px solid rgba(136,192,208,.25);border-radius:999px;padding:2px 8px;letter-spacing:.06em;">soon</span>
+        <div style="font-family:'Fraunces',serif;font-size:24px;color:#eceff4;line-height:1;">blog</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">ESSAYS &amp; NOTES</div>
+      </div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#3b4252;">→</span>
+    </a>
+    <div style="height:1px;background:#1e2730;margin:0 28px;"></div>
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;opacity:.4;">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-family:'Fraunces',serif;font-size:24px;color:#eceff4;line-height:1;">about</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;background:rgba(136,192,208,.1);color:#88c0d0;border:1px solid rgba(136,192,208,.25);border-radius:999px;padding:2px 8px;letter-spacing:.06em;">soon</span>
         </div>
-        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">THE PERSON BEHIND THE BUGS</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">THE PERSON BEHIND THE BUGS</div>
       </div>
     </div>
-
     <div style="height:1px;background:#1e2730;margin:0 28px;"></div>
-
-    <a href="https://{{ .Site.Params.github }}" target="_blank" @click="navOpen = false"
-       style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
+    <a href="https://{{ .Site.Params.github }}" target="_blank" @click="navOpen = false" style="display:flex;align-items:center;justify-content:space-between;padding:17px 28px;text-decoration:none;">
       <div>
-        <div style="font-family:'Newsreader',serif;font-size:24px;color:#eceff4;line-height:1;">github</div>
-        <div class="font-mono" style="font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">{{ .Site.Params.github }}</div>
+        <div style="font-family:'Fraunces',serif;font-size:24px;color:#eceff4;line-height:1;">github</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">{{ .Site.Params.github }}</div>
       </div>
-      <span class="font-mono" style="font-size:14px;color:#3b4252;">↗</span>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:14px;color:#3b4252;">↗</span>
     </a>
-
   </div>
 </div>
+
+{{/* scroll + reveal script — placed after all mobile elements exist in DOM */}}
+<script>
+(function() {
+  var hero   = document.getElementById('mobile-hero');
+  var header = document.getElementById('mobile-sticky-header');
+  var pill   = document.getElementById('mobile-pill-el');
+
+  // IntersectionObserver for .reveal elements
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) entry.target.classList.add('visible');
+    });
+  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('[data-reveal]').forEach(function(el) {
+    observer.observe(el);
+  });
+
+  if (!hero || !header || !pill) return;
+
+  window.addEventListener('scroll', function() {
+    var rect = hero.getBoundingClientRect();
+    // sticky header
+    header.style.transform = rect.bottom < 72
+      ? 'translateX(-50%) translateY(0)'
+      : 'translateX(-50%) translateY(-110%)';
+    // pill fades in after scrolling 50% past hero
+    var pillVisible = rect.bottom < window.innerHeight * 0.5;
+    pill.style.opacity       = pillVisible ? '1' : '0';
+    pill.style.pointerEvents = pillVisible ? 'auto' : 'none';
+  }, { passive: true });
+})();
+</script>
 
 {{/* ══════════════════ DESKTOP (xl+) ══════════════════ */}}
 <style>
