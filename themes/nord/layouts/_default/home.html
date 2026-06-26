@@ -8,18 +8,20 @@
 
 {{/* ══════════════════ MOBILE ANIMATIONS ══════════════════ */}}
 <style>
-  @keyframes heroFadeIn {
+  @keyframes fadeIn {
     from { opacity:0; }
     to   { opacity:1; }
   }
-  @keyframes slideUpSpring {
-    0%   { opacity:0; transform:translateY(48px); }
-    60%  { opacity:1; transform:translateY(-6px); }
-    80%  { transform:translateY(3px); }
-    100% { opacity:1; transform:translateY(0); }
+  @keyframes photoReveal {
+    from { opacity:0; transform:translateY(12px); }
+    to   { opacity:1; transform:translateY(0); }
   }
-  @keyframes slideUp {
-    from { opacity:0; transform:translateY(28px); }
+  @keyframes folioReveal {
+    from { opacity:0; transform:scale(.92); }
+    to   { opacity:1; transform:scale(1); }
+  }
+  @keyframes riseUp {
+    from { opacity:0; transform:translateY(20px); }
     to   { opacity:1; transform:translateY(0); }
   }
   @keyframes orbFloat {
@@ -29,13 +31,14 @@
     100% { transform:translate(0,0) scale(1); }
   }
   @keyframes scrollBounce {
-    0%,100% { transform:translateY(0); opacity:.4; }
-    50%      { transform:translateY(6px); opacity:.7; }
+    0%,100% { transform:translateY(0); }
+    50%      { transform:translateY(5px); }
   }
-  .anim-hero   { animation:heroFadeIn 1.1s cubic-bezier(.22,1,.36,1) both; }
-  .anim-label  { animation:slideUp .6s cubic-bezier(.22,1,.36,1) both; animation-delay:.45s; }
-  .anim-name   { animation:slideUpSpring .9s cubic-bezier(.22,1,.36,1) both; animation-delay:.55s; }
-  .anim-status { animation:slideUp .5s cubic-bezier(.22,1,.36,1) both; animation-delay:.78s; }
+  .a1 { animation:photoReveal 1.4s cubic-bezier(.22,1,.36,1) both; }
+  .a2 { animation:folioReveal 1s cubic-bezier(.22,1,.36,1) both; animation-delay:.05s; }
+  .a3 { animation:riseUp .6s cubic-bezier(.22,1,.36,1) both; animation-delay:.35s; }
+  .a4 { animation:riseUp .6s cubic-bezier(.22,1,.36,1) both; animation-delay:.55s; }
+  .a5 { animation:riseUp .6s cubic-bezier(.22,1,.36,1) both; animation-delay:.7s; }
   .scroll-hint { animation:scrollBounce 1.4s ease-in-out infinite; }
   .reveal {
     opacity:0; transform:translateY(36px);
@@ -62,47 +65,76 @@
 </div>
 
 {{/* ══════════════════ MOBILE (< xl) ══════════════════ */}}
-<div class="xl:hidden" style="background:#0e1218;position:relative;">
+<div class="xl:hidden" style="background:#0c0f15;position:relative;">
 
-  {{/* ── PAGE 1: HERO — full viewport height ── */}}
-  <div id="mobile-hero" style="position:relative;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:space-between;">
+  {{/* ── PAGE 1: HERO — magazine cover ── */}}
+  <div id="mobile-hero" style="background:#0c0f15;height:100vh;height:100svh;position:relative;overflow:hidden;font-family:'DM Sans',sans-serif;">
 
-    {{/* full-bleed image — absolute background */}}
-    <img class="anim-hero" src="/images/avatar.svg"
-         style="position:absolute;inset:0;width:100%;height:100vh;height:100svh;min-height:600px;object-fit:cover;object-position:50% 0%;display:block;will-change:opacity;"
-         alt="{{ .Site.Params.author }}">
-
-    {{/* gradient overlay */}}
-    <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(14,18,24,.35) 0%,rgba(14,18,24,0) 20%,rgba(14,18,24,.5) 55%,#0e1218 100%);z-index:1;"></div>
-
-    {{/* status bar — top */}}
-    <div style="position:relative;z-index:2;display:flex;justify-content:space-between;padding:14px 24px;font-family:'IBM Plex Mono',monospace;font-size:11px;color:rgba(255,255,255,.45);">
-      <span>9:41</span><span>5G ▮▮▮</span>
+    {{/* top category strip — a3 */}}
+    <div class="a3" style="position:absolute;top:22px;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 22px;">
+      <div style="flex:1;height:1px;background:rgba(255,255,255,.15);"></div>
+      <span style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:.22em;text-transform:uppercase;white-space:nowrap;">{{ .Site.Params.roleDetail }}</span>
+      <div style="flex:1;height:1px;background:rgba(255,255,255,.15);"></div>
     </div>
 
-    {{/* spacer — pushes name to lower third */}}
-    <div style="flex:1;"></div>
+    {{/* huge masthead "folio" — z-index:2 so photo overlaps it — a2 */}}
+    <div class="a2" style="position:absolute;top:68px;left:0;right:0;z-index:2;text-align:center;pointer-events:none;">
+      <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:148px;color:rgba(245,238,220,.92);letter-spacing:-.03em;line-height:1;text-transform:lowercase;">folio</div>
+    </div>
 
-    {{/* name block — in flow, lower third */}}
-    <div style="position:relative;z-index:2;padding:0 28px 0;">
-      <div class="anim-label" style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#88c0d0;letter-spacing:.16em;text-transform:uppercase;margin-bottom:10px;">{{ .Site.Params.role }}</div>
-      <div class="anim-name" style="font-family:'Fraunces',serif;font-size:64px;font-weight:900;line-height:.84;color:#eceff4;letter-spacing:-.03em;">
-        {{ index (split .Site.Params.author " ") 0 }}<br>
-        <span style="font-weight:300;font-style:italic;font-size:56px;">{{ index (split .Site.Params.author " ") 1 }}</span>
+    {{/* photo — starts at top:162px, cuts into masthead — a1 */}}
+    <div class="a1" style="position:absolute;top:162px;left:0;right:0;bottom:0;z-index:5;overflow:hidden;">
+      <img src="/images/avatar.svg"
+           style="width:100%;height:100%;object-fit:cover;object-position:45% 0%;display:block;"
+           alt="{{ .Site.Params.author }}">
+      {{/* bottom fade */}}
+      <div style="position:absolute;inset:0;background:linear-gradient(to bottom,rgba(12,15,21,.08) 0%,rgba(12,15,21,0) 20%,rgba(12,15,21,0) 52%,rgba(12,15,21,.6) 75%,#0c0f15 100%);"></div>
+      {{/* side vignette */}}
+      <div style="position:absolute;inset:0;background:radial-gradient(ellipse at 50% 40%,transparent 45%,rgba(12,15,21,.35) 100%);"></div>
+    </div>
+
+    {{/* right meta — website + date — a3 */}}
+    <div class="a3" style="position:absolute;top:54px;right:18px;z-index:20;text-align:right;">
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:7.5px;color:rgba(255,255,255,.35);letter-spacing:.1em;line-height:1.6;">{{ .Site.Params.github | replaceRE "github.com/" "" | printf "%s.dev" }}<br>{{ now.Format "January 2006" }} · Free</div>
+    </div>
+
+    {{/* left coverlines — vertically centered — a4 */}}
+    <div class="a4" style="position:absolute;left:18px;top:30%;transform:translateY(-50%);z-index:15;display:flex;flex-direction:column;gap:14px;max-width:100px;">
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:13px;color:#fff;text-transform:uppercase;letter-spacing:.04em;line-height:1.2;text-shadow:0 1px 12px rgba(0,0,0,1);">{{ index (split .Site.Params.author " ") 0 }}<br>{{ index (split .Site.Params.author " ") 1 }}</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:rgba(255,255,255,.55);line-height:1.4;margin-top:3px;text-shadow:0 1px 8px rgba(0,0,0,1);">building at the<br>intersection of<br>code &amp; craft</div>
       </div>
-      <div class="anim-status" style="display:flex;align-items:center;gap:7px;margin-top:16px;">
-        <span style="width:7px;height:7px;border-radius:50%;background:#a3be8c;flex:none;display:block;"></span>
-        <span style="font-family:'IBM Plex Mono',monospace;font-size:10.5px;color:rgba(154,164,186,.6);letter-spacing:.04em;">{{ .Site.Params.status }}</span>
+      <div style="width:24px;height:1px;background:rgba(255,255,255,.2);"></div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:12px;color:#fff;text-transform:uppercase;letter-spacing:.04em;line-height:1.2;text-shadow:0 1px 12px rgba(0,0,0,1);">From The<br>Terminal</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:rgba(255,255,255,.55);line-height:1.4;margin-top:3px;text-shadow:0 1px 8px rgba(0,0,0,1);">{{ $tilCount }} open source<br>TIL notes</div>
+      </div>
+      <div style="width:24px;height:1px;background:rgba(255,255,255,.2);"></div>
+      <div>
+        <div style="font-family:'Cormorant Garamond',serif;font-weight:700;font-size:12px;color:#fff;text-transform:uppercase;letter-spacing:.04em;line-height:1.2;text-shadow:0 1px 12px rgba(0,0,0,1);">Finest<br>Builds</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:8.5px;color:rgba(255,255,255,.55);line-height:1.4;margin-top:3px;text-shadow:0 1px 8px rgba(0,0,0,1);">LLM interfaces<br>done right</div>
       </div>
     </div>
 
-    {{/* scroll hint — bottom, safe area aware */}}
-    <div class="anim-status" style="position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:6px;padding:24px 0 calc(20px + env(safe-area-inset-bottom, 0px));">
-      <span style="font-family:'IBM Plex Mono',monospace;font-size:9.5px;color:rgba(136,192,208,.4);letter-spacing:.14em;text-transform:uppercase;">scroll</span>
-      <svg class="scroll-hint" width="12" height="20" viewBox="0 0 12 20" fill="none">
-        <path d="M6 0v16M1 11l5 5 5-5" stroke="#88c0d0" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
+    {{/* bottom name + details — a5 */}}
+    <div style="position:absolute;bottom:0;left:0;right:0;z-index:20;padding:0 22px calc(56px + env(safe-area-inset-bottom, 0px));">
+      <div class="a5">
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,.4);letter-spacing:.2em;text-transform:uppercase;margin-bottom:14px;">{{ .Site.Params.role }}</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-size:60px;font-weight:700;color:#fff;line-height:.84;letter-spacing:-.02em;">{{ index (split .Site.Params.author " ") 0 | upper }}</div>
+        <div style="font-family:'Cormorant Garamond',serif;font-style:italic;font-size:52px;font-weight:300;color:rgba(245,238,220,.85);line-height:.9;margin-top:3px;">{{ index (split .Site.Params.author " ") 1 | title }}</div>
+      </div>
+      <div class="a5" style="height:1px;background:rgba(255,255,255,.15);margin:16px 0 13px;"></div>
+      <div class="a5" style="display:flex;align-items:center;justify-content:space-between;">
+        <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,.3);letter-spacing:.08em;">{{ .Site.Params.location }}</span>
+        <div style="display:flex;align-items:center;gap:6px;">
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;color:rgba(255,255,255,.28);letter-spacing:.14em;text-transform:uppercase;">scroll</span>
+          <svg class="scroll-hint" width="10" height="14" viewBox="0 0 10 18" fill="none" style="opacity:.4;">
+            <path d="M5 0v14M1 10l4 4 4-4" stroke="#fff" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+      </div>
     </div>
+
   </div>
 
   {{/* ── PAGE 2: BIO + ABOUT — full viewport height ── */}}
