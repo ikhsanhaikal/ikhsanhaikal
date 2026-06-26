@@ -1,0 +1,131 @@
+{{/*
+  Mobile floating pill + bottom sheet nav.
+  Usage:
+    {{ partial "mobile-nav.html" (dict "Site" .Site "active" "home") }}
+    {{ partial "mobile-nav.html" (dict "Site" .Site "active" "til") }}
+*/}}
+{{ $active := .active }}
+
+{{/* ── KEYFRAME + PILL CSS ── */}}
+<style>
+  @keyframes glowPulse {
+    0%,100% { box-shadow:0 0 0 0px rgba(136,192,208,0),0 0 8px rgba(136,192,208,.3); opacity:.7; }
+    50%      { box-shadow:0 0 0 4px rgba(136,192,208,.08),0 0 16px rgba(136,192,208,.5); opacity:1; }
+  }
+  @keyframes pillEnter {
+    from { opacity:0; transform:translateX(-50%) translateY(20px); }
+    to   { opacity:1; transform:translateX(-50%) translateY(0); }
+  }
+  .pill-line {
+    height:1.5px; border-radius:2px;
+    transition:transform 260ms cubic-bezier(.22,1,.36,1), width 260ms, background 200ms;
+  }
+</style>
+
+{{/* ── FLOATING PILL ── */}}
+<div id="mobile-pill-el"
+     class="xl:hidden mobile-pill"
+     @click="navOpen = true"
+     style="position:fixed;bottom:calc(32px + env(safe-area-inset-bottom,0px));left:50%;transform:translateX(-50%);background:rgba(12,15,21,.92);border:1px solid rgba(136,192,208,.22);border-radius:999px;padding:11px 20px;display:flex;align-items:center;gap:12px;cursor:pointer;z-index:70;white-space:nowrap;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px);box-shadow:0 2px 24px rgba(0,0,0,.6),0 0 0 1px rgba(136,192,208,.1);opacity:0;pointer-events:none;transition:opacity 400ms cubic-bezier(.22,1,.36,1);">
+
+  {{/* glowing status dot */}}
+  <div style="width:7px;height:7px;border-radius:50%;background:#88c0d0;flex:none;animation:glowPulse 2.6s ease-in-out infinite;"></div>
+
+  {{/* thin divider */}}
+  <div style="width:1px;height:12px;background:rgba(255,255,255,.08);flex:none;"></div>
+
+  {{/* animated hamburger lines */}}
+  <div style="display:flex;flex-direction:column;gap:3.5px;padding:1px 0;">
+    <div class="pill-line" style="width:18px;background:rgba(236,239,244,.5);"></div>
+    <div class="pill-line" style="width:12px;background:rgba(236,239,244,.3);"></div>
+  </div>
+
+</div>
+
+{{/* ── BACKDROP ── */}}
+<div class="xl:hidden mobile-backdrop"
+     x-show="navOpen"
+     x-transition:enter="transition ease-out duration-200"
+     x-transition:enter-start="opacity-0"
+     x-transition:enter-end="opacity-100"
+     x-transition:leave="transition ease-in duration-150"
+     x-transition:leave-start="opacity-100"
+     x-transition:leave-end="opacity-0"
+     @click="navOpen = false"
+     style="position:fixed;inset:0;z-index:60;background:rgba(8,10,14,.7);backdrop-filter:blur(4px);"
+     x-cloak></div>
+
+{{/* ── BOTTOM SHEET ── */}}
+<div class="xl:hidden mobile-sheet"
+     x-show="navOpen"
+     x-transition:enter="transition ease-[cubic-bezier(.32,.72,0,1)] duration-340"
+     x-transition:enter-start="translate-y-full"
+     x-transition:enter-end="translate-y-0"
+     x-transition:leave="transition ease-[cubic-bezier(.32,.72,0,1)] duration-340"
+     x-transition:leave-start="translate-y-0"
+     x-transition:leave-end="translate-y-full"
+     style="position:fixed;bottom:0;left:0;width:100%;z-index:65;background:rgba(10,13,20,.82);backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);border-radius:22px 22px 0 0;border-top:1px solid #1e2730;box-shadow:0 -12px 60px rgba(0,0,0,.7);"
+     x-cloak>
+
+  {{/* handle */}}
+  <div style="display:flex;justify-content:center;padding:12px 0 8px;">
+    <div style="width:32px;height:3px;border-radius:2px;background:#2a3040;"></div>
+  </div>
+  <div style="height:1px;background:rgba(255,255,255,.06);"></div>
+
+  <div style="padding:8px 0 calc(36px + env(safe-area-inset-bottom,0px));">
+
+    {{/* home */}}
+    <a href="/" @click="navOpen = false"
+       style="display:flex;align-items:center;justify-content:space-between;padding:18px 28px;text-decoration:none;">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-size:26px;color:{{ if eq $active "home" }}#88c0d0{{ else }}#eceff4{{ end }};line-height:1;">home</div>
+      </div>
+      {{ if eq $active "home" }}
+      <div style="width:7px;height:7px;border-radius:50%;background:#88c0d0;animation:glowPulse 2.6s ease-in-out infinite;"></div>
+      {{ end }}
+    </a>
+
+    <div style="height:1px;background:rgba(255,255,255,.06);margin:0 28px;"></div>
+
+    {{/* til */}}
+    <a href="/til/" @click="navOpen = false"
+       style="display:flex;align-items:center;justify-content:space-between;padding:18px 28px;text-decoration:none;">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-size:26px;color:{{ if eq $active "til" }}#88c0d0{{ else }}#eceff4{{ end }};line-height:1;">til</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">TECHNICAL LOG</div>
+      </div>
+      {{ if eq $active "til" }}
+      <div style="width:7px;height:7px;border-radius:50%;background:#88c0d0;animation:glowPulse 2.6s ease-in-out infinite;"></div>
+      {{ end }}
+    </a>
+
+    <div style="height:1px;background:rgba(255,255,255,.06);margin:0 28px;"></div>
+
+    {{/* blog */}}
+    <a href="/blog/" @click="navOpen = false"
+       style="display:flex;align-items:center;justify-content:space-between;padding:18px 28px;text-decoration:none;">
+      <div>
+        <div style="font-family:'Fraunces',serif;font-size:26px;color:{{ if eq $active "blog" }}#88c0d0{{ else }}#eceff4{{ end }};line-height:1;">blog</div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">ESSAYS &amp; NOTES</div>
+      </div>
+      {{ if eq $active "blog" }}
+      <div style="width:7px;height:7px;border-radius:50%;background:#88c0d0;animation:glowPulse 2.6s ease-in-out infinite;"></div>
+      {{ end }}
+    </a>
+
+    <div style="height:1px;background:rgba(255,255,255,.06);margin:0 28px;"></div>
+
+    {{/* about — disabled */}}
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:18px 28px;opacity:.35;">
+      <div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span style="font-family:'Fraunces',serif;font-size:26px;color:#eceff4;line-height:1;">about</span>
+          <span style="font-family:'IBM Plex Mono',monospace;font-size:9px;background:rgba(136,192,208,.08);color:#88c0d0;border:1px solid rgba(136,192,208,.2);border-radius:999px;padding:2px 8px;letter-spacing:.06em;">soon</span>
+        </div>
+        <div style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:#3b4252;margin-top:3px;letter-spacing:.1em;">THE PERSON BEHIND THE BUGS</div>
+      </div>
+    </div>
+
+  </div>
+</div>
