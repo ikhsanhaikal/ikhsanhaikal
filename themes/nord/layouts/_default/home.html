@@ -95,7 +95,7 @@
 
     {{/* right meta — website + date — a3 */}}
     <div class="a3" style="position:absolute;top:54px;right:18px;z-index:20;text-align:right;">
-      <div style="font-family:'IBM Plex Mono',monospace;font-size:7.5px;color:rgba(255,255,255,.35);letter-spacing:.1em;line-height:1.6;">{{ .Site.Params.github | replaceRE "github.com/" "" | printf "%s.dev" }}<br>{{ now.Format "January 2006" }} · Free</div>
+      <div style="font-family:'IBM Plex Mono',monospace;font-size:7.5px;color:rgba(255,255,255,.35);letter-spacing:.1em;line-height:1.6;">{{ .Site.Params.github | replaceRE "github.com/" "" | printf "%s.com" }}<br>{{ now.Format "January 2006" }} · Free</div>
     </div>
 
     {{/* left coverlines — vertically centered — a4 */}}
