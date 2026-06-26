@@ -92,10 +92,10 @@
 </div>
 
 
-<div class="xl:hidden" style="background:#0c0f15;position:relative;">
+<div id="mobile-scroll-container" class="xl:hidden" style="background:#0c0f15;position:relative;height:100vh;height:100svh;overflow-y:scroll;scroll-snap-type:y mandatory;scroll-padding-top:36px;-webkit-overflow-scrolling:touch;">
 
   
-  <div id="mobile-hero" style="background:#0c0f15;height:100vh;height:100svh;position:relative;overflow:hidden;font-family:'DM Sans',sans-serif;">
+  <div id="mobile-hero" style="background:#0c0f15;height:100vh;height:100svh;position:relative;font-family:'DM Sans',sans-serif;scroll-snap-align:start;flex-shrink:0;">
 
     
     <div class="a3" style="position:absolute;top:22px;left:0;right:0;z-index:30;display:flex;align-items:center;justify-content:center;gap:10px;padding:0 22px;">
@@ -165,7 +165,7 @@
   </div>
 
   
-  <div style="min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 28px;position:relative;overflow:hidden;">
+  <div style="height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 28px;position:relative;overflow:hidden;scroll-snap-align:start;flex-shrink:0;">
 
     
     <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">
@@ -218,7 +218,7 @@
   </div>
 
   
-  <div style="padding:0 28px 120px;">
+  <div style="padding:36px 28px 120px;scroll-snap-align:start;">
 
     <div class="reveal" data-reveal style="display:flex;align-items:center;gap:12px;margin-bottom:20px;">
       <div style="flex:1;height:1px;background:#1e2730;"></div>
@@ -376,31 +376,34 @@
 
 <script>
 (function() {
-  var hero   = document.getElementById('mobile-hero');
-  var header = document.getElementById('mobile-sticky-header');
-  var pill   = document.getElementById('mobile-pill-el');
+  var container = document.getElementById('mobile-scroll-container');
+  var hero      = document.getElementById('mobile-hero');
+  var header    = document.getElementById('mobile-sticky-header');
+  var pill      = document.getElementById('mobile-pill-el');
 
   
   var observer = new IntersectionObserver(function(entries) {
     entries.forEach(function(entry) {
       if (entry.isIntersecting) entry.target.classList.add('visible');
     });
-  }, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+  }, { root: container, threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
 
   document.querySelectorAll('[data-reveal]').forEach(function(el) {
     observer.observe(el);
   });
 
-  if (!hero || !header || !pill) return;
+  if (!container || !hero || !header || !pill) return;
 
-  window.addEventListener('scroll', function() {
-    var rect = hero.getBoundingClientRect();
+  var heroHeight = hero.offsetHeight;
+
+  container.addEventListener('scroll', function() {
+    var scrollTop = container.scrollTop;
     
-    header.style.transform = rect.bottom < 72
+    header.style.transform = scrollTop > heroHeight - 72
       ? 'translateX(-50%) translateY(0)'
       : 'translateX(-50%) translateY(-110%)';
     
-    var pillVisible = rect.bottom < window.innerHeight * 0.5;
+    var pillVisible = scrollTop > heroHeight * 0.5;
     pill.style.opacity       = pillVisible ? '1' : '0';
     pill.style.pointerEvents = pillVisible ? 'auto' : 'none';
   }, { passive: true });
