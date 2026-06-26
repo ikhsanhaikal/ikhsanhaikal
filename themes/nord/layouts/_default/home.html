@@ -65,11 +65,11 @@
 <div class="xl:hidden" style="background:#0e1218;position:relative;">
 
   {{/* ── PAGE 1: HERO — full viewport height ── */}}
-  <div id="mobile-hero" style="position:relative;height:100vh;height:100dvh;display:flex;flex-direction:column;justify-content:space-between;">
+  <div id="mobile-hero" style="position:relative;height:100vh;height:100svh;display:flex;flex-direction:column;justify-content:space-between;">
 
     {{/* full-bleed image — absolute background */}}
     <img class="anim-hero" src="/images/avatar.svg"
-         style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 0%;display:block;will-change:opacity;"
+         style="position:absolute;inset:0;width:100%;height:100vh;height:100svh;min-height:600px;object-fit:cover;object-position:50% 0%;display:block;will-change:opacity;"
          alt="{{ .Site.Params.author }}">
 
     {{/* gradient overlay */}}
@@ -106,7 +106,7 @@
   </div>
 
   {{/* ── PAGE 2: BIO + ABOUT — full viewport height ── */}}
-  <div style="min-height:100vh;min-height:100dvh;display:flex;flex-direction:column;justify-content:center;padding:0 28px;position:relative;overflow:hidden;">
+  <div style="min-height:100vh;min-height:100svh;display:flex;flex-direction:column;justify-content:center;padding:0 28px;position:relative;overflow:hidden;">
 
     {{/* ambient orbs */}}
     <div style="position:absolute;inset:0;pointer-events:none;overflow:hidden;">

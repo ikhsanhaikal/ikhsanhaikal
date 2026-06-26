@@ -2,33 +2,33 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>http://localhost:1313/tags/frontend/</loc>
+    <loc>https://ikhsanhaikal.com/tags/frontend/</loc>
     <lastmod>2026-06-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/git/</loc>
+    <loc>https://ikhsanhaikal.com/tags/git/</loc>
     <lastmod>2026-06-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/til/git-restore-vs-reset/</loc>
+    <loc>https://ikhsanhaikal.com/til/git-restore-vs-reset/</loc>
     <lastmod>2026-06-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/</loc>
+    <loc>https://ikhsanhaikal.com/</loc>
     <lastmod>2026-06-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/</loc>
+    <loc>https://ikhsanhaikal.com/tags/</loc>
     <lastmod>2026-06-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/til/</loc>
+    <loc>https://ikhsanhaikal.com/til/</loc>
     <lastmod>2026-06-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/workflow/</loc>
+    <loc>https://ikhsanhaikal.com/tags/workflow/</loc>
     <lastmod>2026-06-18T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/tags/css/</loc>
+    <loc>https://ikhsanhaikal.com/tags/css/</loc>
     <lastmod>2026-06-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/til/css-has-parent-selector/</loc>
+    <loc>https://ikhsanhaikal.com/til/css-has-parent-selector/</loc>
     <lastmod>2026-06-09T00:00:00+00:00</lastmod>
   </url><url>
-    <loc>http://localhost:1313/blog/</loc>
+    <loc>https://ikhsanhaikal.com/blog/</loc>
   </url>
 </urlset>

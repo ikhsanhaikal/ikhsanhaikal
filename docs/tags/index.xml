@@ -2,38 +2,38 @@
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
     <title>Tags on ikhsan haikal</title>
-    <link>http://localhost:1313/tags/</link>
+    <link>https://ikhsanhaikal.com/tags/</link>
     <description>Recent content in Tags on ikhsan haikal</description>
     <generator>Hugo</generator>
     <language>en-us</language>
     <lastBuildDate>Thu, 18 Jun 2026 00:00:00 +0000</lastBuildDate>
-    <atom:link href="http://localhost:1313/tags/index.xml" rel="self" type="application/rss+xml" />
+    <atom:link href="https://ikhsanhaikal.com/tags/index.xml" rel="self" type="application/rss+xml" />
     <item>
       <title>Frontend</title>
-      <link>http://localhost:1313/tags/frontend/</link>
+      <link>https://ikhsanhaikal.com/tags/frontend/</link>
       <pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/frontend/</guid>
+      <guid>https://ikhsanhaikal.com/tags/frontend/</guid>
       <description></description>
     </item>
     <item>
       <title>Git</title>
-      <link>http://localhost:1313/tags/git/</link>
+      <link>https://ikhsanhaikal.com/tags/git/</link>
       <pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/git/</guid>
+      <guid>https://ikhsanhaikal.com/tags/git/</guid>
       <description></description>
     </item>
     <item>
       <title>Workflow</title>
-      <link>http://localhost:1313/tags/workflow/</link>
+      <link>https://ikhsanhaikal.com/tags/workflow/</link>
       <pubDate>Thu, 18 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/workflow/</guid>
+      <guid>https://ikhsanhaikal.com/tags/workflow/</guid>
       <description></description>
     </item>
     <item>
       <title>Css</title>
-      <link>http://localhost:1313/tags/css/</link>
+      <link>https://ikhsanhaikal.com/tags/css/</link>
       <pubDate>Tue, 09 Jun 2026 00:00:00 +0000</pubDate>
-      <guid>http://localhost:1313/tags/css/</guid>
+      <guid>https://ikhsanhaikal.com/tags/css/</guid>
       <description></description>
     </item>
   </channel>
